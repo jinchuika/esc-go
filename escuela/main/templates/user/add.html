@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">	
+	<div class="row">
+		<div class="col-md-12">
+			<legend><h1>Perfil</h1></legend>
+			<form action="{{ action }}" method="post">
+				<table class="table table-striped">
+					{% csrf_token %}
+					{{ form.as_table }}
+				</table>
+				<input type="submit" class="btn btn-info" value="Guardar">
+			</form>
+			<hr>
+		</div>
+	</div>
+</div>
+{% endblock content %}

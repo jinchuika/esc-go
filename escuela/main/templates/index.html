@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 well"></div>
+		<div class="col-md-7 well">
+			<legend>Equipos</legend>
+			<ul>
+				{% for equipo in equipo_list %}
+					<li><a href="{% url "equipo_detail" id_equipo=equipo.id %}">{{ equipo }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-3 well">
+			<legend>Tabla de posiciones</legend>
+			<ul>
+				{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
+					<li>{{ profile }} - {{ profile.puntos }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			Siguiente reto: <a href="{% url "reto_detail" id_reto=reto.id %}">{{ reto }}</a>
+		</div>
+	</div>
+</div>
+{% endblock content %}

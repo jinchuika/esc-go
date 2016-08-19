@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 well"></div>
+		<div class="col-md-7 well">
+			<legend>{{ equipo.nombre }}</legend>
+			<ul>
+				{% for alumno in alumno_list %}
+					<li>{{ alumno.nombre }} {{ alumno.apellido }} {{ alumno.promedio }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-3 well">
+		</div>
+	</div>
+</div>
+{% endblock content %}

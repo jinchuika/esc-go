@@ -1,0 +1,25 @@
+{% load staticfiles %}
+{% include "base/nav_bar.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Xumak</title>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.css'%}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+	{% block base_navbar %}
+	{% endblock base_navbar %}
+
+	{% block content %}
+	{% endblock content %}
+
+	{% block javascript %}
+	    
+	{% endblock javascript %}
+</body>
+</html>

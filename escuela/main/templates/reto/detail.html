@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 well"></div>
+		<div class="col-md-7 well">
+			<legend>{{ reto.materia }}</legend>
+			Este reto termina el {{ reto.fecha }}
+			<h4>Puntuaciones para este reto</h4>
+			<ul>
+				<li>Primer lugar: {{ reto.pt_1 }} puntos</li>
+				<li>Segundo lugar: {{ reto.pt_2 }} puntos</li>
+				<li>Tercer lugar: {{ reto.pt_3 }} puntos</li>
+			</ul>
+			<h4>Notas de este reto</h4>
+			<ul>
+				{% for nota in nota_list|dictsortreversed:"nota" %}
+					<li>{{ nota.lugar }}.  {{ nota.alumno }} - {{ nota.nota }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-3 well">
+			<legend>Apuestas de este reto</legend>
+			<ul>
+				{% for apuesta in apuesta_list|dictsortreversed:"punteo" %}
+					<li>
+						{{ apuesta.user }} por equipo <b>{{ apuesta.nota.alumno.equipo }}</b><br>
+						{{ apuesta.tokens }} tokens - ({{ apuesta.punteo }} puntos)
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+{% block javascript %}
+    
+{% endblock javascript %}
