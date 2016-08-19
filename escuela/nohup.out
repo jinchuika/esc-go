@@ -1,0 +1,314 @@
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:05:03
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 14:26:31] "GET /admin/ HTTP/1.1" 200 10318
+[19/Aug/2016 14:26:31] "GET /admin/ HTTP/1.1" 200 10318
+[19/Aug/2016 14:26:31] "GET /admin/main/punteo/ HTTP/1.1" 200 4411
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:05:30
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 14:26:42] "GET /admin/ HTTP/1.1" 200 9876
+[19/Aug/2016 14:26:42] "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/css/fonts.css HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[19/Aug/2016 14:26:42] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 304 0
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:26:40
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 14:27:00] "GET /admin/ HTTP/1.1" 200 9876
+[19/Aug/2016 14:27:00] "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/css/fonts.css HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[19/Aug/2016 14:27:00] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[19/Aug/2016 14:27:02] "GET /admin/main/reto/ HTTP/1.1" 200 4416
+[19/Aug/2016 14:27:02] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 363
+[19/Aug/2016 14:27:02] "GET /static/admin/js/core.js HTTP/1.1" 200 8366
+[19/Aug/2016 14:27:02] "GET /static/admin/css/changelists.css HTTP/1.1" 200 6100
+[19/Aug/2016 14:27:02] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 7171
+[19/Aug/2016 14:27:02] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 247597
+[19/Aug/2016 14:27:02] "GET /static/admin/js/actions.js HTTP/1.1" 200 6259
+[19/Aug/2016 14:27:02] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 14:27:02] "GET /static/admin/js/urlify.js HTTP/1.1" 200 7693
+[19/Aug/2016 14:27:02] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1538
+[19/Aug/2016 14:27:02] "GET /static/admin/js/vendor/xregexp/xregexp.min.js HTTP/1.1" 200 62474
+[19/Aug/2016 14:27:02] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[19/Aug/2016 14:27:04] "GET /admin/main/reto/add/ HTTP/1.1" 200 7023
+[19/Aug/2016 14:27:04] "GET /static/admin/css/forms.css HTTP/1.1" 200 7750
+[19/Aug/2016 14:27:04] "GET /static/admin/js/calendar.js HTTP/1.1" 200 6875
+[19/Aug/2016 14:27:04] "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 18563
+[19/Aug/2016 14:27:04] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 14:27:04] "GET /static/admin/css/widgets.css HTTP/1.1" 200 10340
+[19/Aug/2016 14:27:04] "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+[19/Aug/2016 14:27:11] "POST /admin/main/reto/add/ HTTP/1.1" 302 0
+[19/Aug/2016 14:27:11] "GET /admin/main/reto/ HTTP/1.1" 200 4808
+[19/Aug/2016 14:27:11] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 14:27:11] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:26:57
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:29:16
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:29:35
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:30:03
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:30:53
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:31:26
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:33:44
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 14:35:24] "GET /admin/main/apuesta/ HTTP/1.1" 200 5062
+[19/Aug/2016 14:35:24] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 14:35:26] "GET /admin/ HTTP/1.1" 200 9876
+[19/Aug/2016 14:35:27] "GET /admin/main/nota/ HTTP/1.1" 200 5479
+[19/Aug/2016 14:35:27] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:34:05
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:36:17
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Unhandled exception in thread started by <function check_errors.<locals>.wrapper at 0x7f74b1dbc1e0>
+Traceback (most recent call last):
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/core/management/commands/runserver.py", line 109, in inner_run
+    autoreload.raise_last_exception()
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/utils/autoreload.py", line 249, in raise_last_exception
+    six.reraise(*_exception)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/utils/six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/__init__.py", line 18, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/apps/registry.py", line 108, in populate
+    app_config.import_models(all_models)
+  File "/home/chk-server/.local/lib/python3.5/site-packages/django/apps/config.py", line 202, in import_models
+    self.models_module = import_module(models_module_name)
+  File "/usr/lib/python3.5/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 986, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
+  File "<frozen importlib._bootstrap>", line 222, in _call_with_frames_removed
+  File "/home/chk-server/Dropbox/dev/esc-go/escuela/main/models.py", line 65, in <module>
+    class Nota(models.Model):
+  File "/home/chk-server/Dropbox/dev/esc-go/escuela/main/models.py", line 70, in Nota
+    objects = models.Manager(self.reto)
+NameError: name 'self' is not defined
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:42:27
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:43:44
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:43:52
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:45:47
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 14:56:45] "GET /admin/main/nota/ HTTP/1.1" 200 5479
+[19/Aug/2016 14:56:45] "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[19/Aug/2016 14:56:45] "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:45] "GET /static/admin/js/core.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:45] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:45] "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 14:56:46] "GET /static/admin/css/fonts.css HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/js/vendor/xregexp/xregexp.min.js HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 304 0
+[19/Aug/2016 14:56:46] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:53:30
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 14:58:38
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:00:00
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:00:26
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:00:54
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:01:47
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 15:03:34] "GET /admin/main/nota/add/ HTTP/1.1" 200 7006
+[19/Aug/2016 15:03:34] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:03:38] "GET /admin/main/nota/ HTTP/1.1" 200 5479
+[19/Aug/2016 15:03:40] "GET /admin/main/nota/add/ HTTP/1.1" 200 7006
+[19/Aug/2016 15:03:51] "POST /admin/main/nota/add/ HTTP/1.1" 302 0
+[19/Aug/2016 15:03:51] "GET /admin/main/nota/add/ HTTP/1.1" 200 7236
+[19/Aug/2016 15:03:51] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:04:50] "GET /admin/main/nota/ HTTP/1.1" 200 5733
+[19/Aug/2016 15:04:50] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:05:47] "GET /admin/main/nota/7/change/ HTTP/1.1" 200 7236
+[19/Aug/2016 15:05:47] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:05:48] "GET /admin/main/nota/ HTTP/1.1" 200 5733
+[19/Aug/2016 15:05:49] "GET /admin/main/nota/2/change/ HTTP/1.1" 200 7240
+[19/Aug/2016 15:05:49] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:05:50] "GET /admin/main/nota/ HTTP/1.1" 200 5733
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:02:26
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:07:40
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:10:44
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[19/Aug/2016 15:12:06] "GET /admin/main/ HTTP/1.1" 200 5447
+[19/Aug/2016 15:12:08] "GET /admin/main/nota/ HTTP/1.1" 200 5733
+[19/Aug/2016 15:12:08] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:12:15] "GET /admin/main/nota/add/ HTTP/1.1" 200 7006
+[19/Aug/2016 15:12:15] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:12:24] "POST /admin/main/nota/add/ HTTP/1.1" 302 0
+[19/Aug/2016 15:12:24] "GET /admin/main/nota/ HTTP/1.1" 200 6174
+[19/Aug/2016 15:12:24] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:12:39] "GET /admin/main/nota/add/ HTTP/1.1" 200 7006
+[19/Aug/2016 15:12:39] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+[19/Aug/2016 15:12:47] "POST /admin/main/nota/add/ HTTP/1.1" 302 0
+[19/Aug/2016 15:12:47] "GET /admin/main/nota/ HTTP/1.1" 200 6430
+[19/Aug/2016 15:12:47] "GET /admin/jsi18n/ HTTP/1.1" 200 6696
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:10:49
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 19, 2016 - 15:14:51
+Django version 1.9.7, using settings 'escuela.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
