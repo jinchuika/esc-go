@@ -1,0 +1,134 @@
+[
+{
+   "model": "main.reto",
+   "pk": 1,
+   "fields": {
+      "materia": 1,
+      "fecha": "2016-07-04",
+      "pt_1": 5,
+      "pt_2": 3,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 2,
+   "fields": {
+      "materia": 2,
+      "fecha": "2016-07-11",
+      "pt_1": 5,
+      "pt_2": 3,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 3,
+   "fields": {
+      "materia": 3,
+      "fecha": "2016-07-18",
+      "pt_1": 6,
+      "pt_2": 3,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 4,
+   "fields": {
+      "materia": 4,
+      "fecha": "2016-07-25",
+      "pt_1": 5,
+      "pt_2": 2,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 5,
+   "fields": {
+      "materia": 1,
+      "fecha": "2016-08-01",
+      "pt_1": 6,
+      "pt_2": 4,
+      "pt_3": 2
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 6,
+   "fields": {
+      "materia": 2,
+      "fecha": "2016-08-08",
+      "pt_1": 6,
+      "pt_2": 2,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 7,
+   "fields": {
+      "materia": 3,
+      "fecha": "2016-08-15",
+      "pt_1": 4,
+      "pt_2": 3,
+      "pt_3": 2
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 8,
+   "fields": {
+      "materia": 4,
+      "fecha": "2016-08-22",
+      "pt_1": 5,
+      "pt_2": 3,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 9,
+   "fields": {
+      "materia": 1,
+      "fecha": "2016-08-29",
+      "pt_1": 7,
+      "pt_2": 3,
+      "pt_3": 2
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 10,
+   "fields": {
+      "materia": 2,
+      "fecha": "2016-09-05",
+      "pt_1": 6,
+      "pt_2": 3,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 11,
+   "fields": {
+      "materia": 3,
+      "fecha": "2016-09-12",
+      "pt_1": 6,
+      "pt_2": 4,
+      "pt_3": 1
+   }
+},
+{
+   "model": "main.reto",
+   "pk": 12,
+   "fields": {
+      "materia": 4,
+      "fecha": "2016-09-19",
+      "pt_1": 7,
+      "pt_2": 4,
+      "pt_3": 2
+   }
+}
+]

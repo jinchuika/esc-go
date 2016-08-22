@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">	
+	<div class="row">
+		<div class="col-md-9">
+			<legend><h1>Paquetes disponibles</h1></legend>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Paquete</th>
+						<th>Tokens</th>
+						<th>Precio</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for paquete in paquete_lista %}
+						<tr>
+							<td>{{ paquete.nombre }}</td>
+							<td>{{ paquete.tokens }}</td>
+							<td>{{ paquete.precio }}</td>
+							<td><a class="btn btn-primary" href="{% url "compra" id_paquete=paquete.id %}">Comprar</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-3">
+			Actualmente tienes:
+			<br>
+			{% if profile.tokens_activos %}
+			    {{ profile.tokens_activos }}
+			
+			{% endif %}
+			tokens válidos
+		</div>
+	</div>
+</div>
+{% endblock content %}

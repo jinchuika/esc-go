@@ -5,24 +5,46 @@
 		<div class="col-md-2 well"></div>
 		<div class="col-md-7 well">
 			<legend>Equipos</legend>
-			<ul>
-				{% for equipo in equipo_list %}
-					<li><a href="{% url "equipo_detail" id_equipo=equipo.id %}">{{ equipo }}</a></li>
+			<table class="table">
+				{% for equipo in equipo_list|dictsortreversed:"promedio" %}
+				<tr>
+					<td><a href="{% url "equipo_detail" id_equipo=equipo.id %}">{{ equipo }}</a></td>
+					<td>{{ equipo.promedio }}</td>
+				</tr>
 				{% endfor %}
-			</ul>
+			</table>
 		</div>
 		<div class="col-md-3 well">
 			<legend>Tabla de posiciones</legend>
-			<ul>
+			<table class="table">
 				{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
-					<li>{{ profile }} - {{ profile.puntos }}</li>
+				<tr>
+					<td><a href="{% url "profile_detail" id_profile=profile.user.id %}">{{ profile }}</a></td>
+					<td>{{ profile.puntos }}</td>
+				</tr>
 				{% endfor %}
-			</ul>
+			</table>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			Siguiente reto: <a href="{% url "reto_detail" id_reto=reto.id %}">{{ reto }}</a>
+	<div class="row well">
+		<div class="col-md-9">
+			{% if siguiente_reto %}
+			Siguiente reto: <a href="{% url "reto_detail" id_reto=siguiente_reto.id %}">{{ siguiente_reto }}</a>
+			{% endif %}
+		</div>
+		<div class="col-md-3">
+			<div class="dropdown">
+				<a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					Retos anteriores
+					<span class="caret"></span>
+				</a>
+
+				<ul class="dropdown-menu" aria-labelledby="dLabel">
+					{% for reto in reto_lista %}
+					<li><a href="{% url "reto_detail" id_reto=reto.id%}">{{ reto }}</a></li>	
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

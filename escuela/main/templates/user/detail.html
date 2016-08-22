@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-9 well">
+			<legend>{{ profile }}</legend>
+			Tokens activos: {{ profile.tokens_activos }}
+			<hr>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Tokens</th>
+						<th>Alumno</th>
+						<th>Reto</th>
+						<th>Resultado</th>
+						<th>p/Token</th>
+						<th>Puntos acumulados</th>
+					</tr>
+				</thead>
+				{% for apuesta in apuesta_list %}
+				<tr>
+					<td>{{ apuesta.tokens }}</td>
+					<td>{{ apuesta.nota.alumno }}</td>
+					<td>{{ apuesta.nota.reto.materia }}</td>
+					<td>{{ apuesta.nota.nota }}</td>
+					<td>{{ apuesta.nota.puntos_token }}</td>
+					<td>{{ apuesta.punteo }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+		<div class="col-md-3 well">
+		</div>
+	</div>
+</div>
+{% endblock content %}

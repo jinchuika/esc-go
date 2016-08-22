@@ -1,0 +1,1 @@
+[{"model": "main.materia", "pk": 1, "fields": {"nombre": "Matem\u00e1tica"}}, {"model": "main.materia", "pk": 2, "fields": {"nombre": "Lenguaje"}}, {"model": "main.materia", "pk": 3, "fields": {"nombre": "Ciencias Naturales"}}, {"model": "main.materia", "pk": 4, "fields": {"nombre": "Estudios Sociales"}}]

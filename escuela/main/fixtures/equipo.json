@@ -1,0 +1,44 @@
+[
+{
+   "model": "main.equipo",
+   "pk": 1,
+   "fields": {
+      "nombre": "Azul"
+   }
+},
+{
+   "model": "main.equipo",
+   "pk": 2,
+   "fields": {
+      "nombre": "Verde"
+   }
+},
+{
+   "model": "main.equipo",
+   "pk": 3,
+   "fields": {
+      "nombre": "Blanco"
+   }
+},
+{
+   "model": "main.equipo",
+   "pk": 4,
+   "fields": {
+      "nombre": "Rojo"
+   }
+},
+{
+   "model": "main.equipo",
+   "pk": 5,
+   "fields": {
+      "nombre": "Amarillo"
+   }
+},
+{
+   "model": "main.equipo",
+   "pk": 6,
+   "fields": {
+      "nombre": "Naranja"
+   }
+}
+]

@@ -1,0 +1,42 @@
+[
+{
+   "model": "main.paquete",
+   "pk": 1,
+   "fields": {
+      "nombre": "Single",
+      "precio": "2.99",
+      "tokens": 1,
+      "disponible": true
+   }
+},
+{
+   "model": "main.paquete",
+   "pk": 2,
+   "fields": {
+      "nombre": "Simple",
+      "precio": "9.99",
+      "tokens": 5,
+      "disponible": true
+   }
+},
+{
+   "model": "main.paquete",
+   "pk": 3,
+   "fields": {
+      "nombre": "Medium",
+      "precio": "19.99",
+      "tokens": 15,
+      "disponible": true
+   }
+},
+{
+   "model": "main.paquete",
+   "pk": 4,
+   "fields": {
+      "nombre": "Large",
+      "precio": "24.99",
+      "tokens": 25,
+      "disponible": true
+   }
+}
+]

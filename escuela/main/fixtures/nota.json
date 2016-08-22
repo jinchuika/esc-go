@@ -1,0 +1,650 @@
+[
+{
+   "model": "main.nota",
+   "pk": 1,
+   "fields": {
+      "alumno": 1,
+      "reto": 1,
+      "nota": 80
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 3,
+   "fields": {
+      "alumno": 3,
+      "reto": 1,
+      "nota": 88
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 4,
+   "fields": {
+      "alumno": 6,
+      "reto": 1,
+      "nota": 90
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 5,
+   "fields": {
+      "alumno": 10,
+      "reto": 1,
+      "nota": 73
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 6,
+   "fields": {
+      "alumno": 8,
+      "reto": 1,
+      "nota": 79
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 7,
+   "fields": {
+      "alumno": 18,
+      "reto": 1,
+      "nota": 72
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 8,
+   "fields": {
+      "alumno": 2,
+      "reto": 2,
+      "nota": 82
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 9,
+   "fields": {
+      "alumno": 4,
+      "reto": 2,
+      "nota": 70
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 10,
+   "fields": {
+      "alumno": 6,
+      "reto": 2,
+      "nota": 69
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 11,
+   "fields": {
+      "alumno": 8,
+      "reto": 2,
+      "nota": 79
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 12,
+   "fields": {
+      "alumno": 12,
+      "reto": 2,
+      "nota": 74
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 13,
+   "fields": {
+      "alumno": 10,
+      "reto": 2,
+      "nota": 63
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 14,
+   "fields": {
+      "alumno": 13,
+      "reto": 3,
+      "nota": 69
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 15,
+   "fields": {
+      "alumno": 14,
+      "reto": 3,
+      "nota": 81
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 16,
+   "fields": {
+      "alumno": 15,
+      "reto": 3,
+      "nota": 83
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 17,
+   "fields": {
+      "alumno": 16,
+      "reto": 3,
+      "nota": 77
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 18,
+   "fields": {
+      "alumno": 17,
+      "reto": 3,
+      "nota": 64
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 19,
+   "fields": {
+      "alumno": 11,
+      "reto": 3,
+      "nota": 74
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 20,
+   "fields": {
+      "alumno": 1,
+      "reto": 4,
+      "nota": 68
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 21,
+   "fields": {
+      "alumno": 3,
+      "reto": 4,
+      "nota": 67
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 22,
+   "fields": {
+      "alumno": 5,
+      "reto": 4,
+      "nota": 77
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 23,
+   "fields": {
+      "alumno": 7,
+      "reto": 4,
+      "nota": 70
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 24,
+   "fields": {
+      "alumno": 9,
+      "reto": 4,
+      "nota": 72
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 25,
+   "fields": {
+      "alumno": 11,
+      "reto": 4,
+      "nota": 64
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 26,
+   "fields": {
+      "alumno": 2,
+      "reto": 5,
+      "nota": 65
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 27,
+   "fields": {
+      "alumno": 4,
+      "reto": 5,
+      "nota": 69
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 28,
+   "fields": {
+      "alumno": 6,
+      "reto": 5,
+      "nota": 73
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 29,
+   "fields": {
+      "alumno": 10,
+      "reto": 5,
+      "nota": 74
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 30,
+   "fields": {
+      "alumno": 18,
+      "reto": 5,
+      "nota": 70
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 31,
+   "fields": {
+      "alumno": 16,
+      "reto": 5,
+      "nota": 84
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 32,
+   "fields": {
+      "alumno": 13,
+      "reto": 6,
+      "nota": 78
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 33,
+   "fields": {
+      "alumno": 5,
+      "reto": 6,
+      "nota": 84
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 34,
+   "fields": {
+      "alumno": 8,
+      "reto": 6,
+      "nota": 72
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 35,
+   "fields": {
+      "alumno": 10,
+      "reto": 6,
+      "nota": 60
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 36,
+   "fields": {
+      "alumno": 11,
+      "reto": 6,
+      "nota": 62
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 37,
+   "fields": {
+      "alumno": 4,
+      "reto": 6,
+      "nota": 64
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 38,
+   "fields": {
+      "alumno": 1,
+      "reto": 7,
+      "nota": 77
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 39,
+   "fields": {
+      "alumno": 3,
+      "reto": 7,
+      "nota": 73
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 40,
+   "fields": {
+      "alumno": 5,
+      "reto": 7,
+      "nota": 83
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 41,
+   "fields": {
+      "alumno": 7,
+      "reto": 7,
+      "nota": 93
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 42,
+   "fields": {
+      "alumno": 9,
+      "reto": 7,
+      "nota": 70
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 43,
+   "fields": {
+      "alumno": 11,
+      "reto": 7,
+      "nota": 60
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 44,
+   "fields": {
+      "alumno": 2,
+      "reto": 8,
+      "nota": 86
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 45,
+   "fields": {
+      "alumno": 4,
+      "reto": 8,
+      "nota": 73
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 46,
+   "fields": {
+      "alumno": 6,
+      "reto": 8,
+      "nota": 64
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 47,
+   "fields": {
+      "alumno": 8,
+      "reto": 8,
+      "nota": 74
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 48,
+   "fields": {
+      "alumno": 10,
+      "reto": 8,
+      "nota": 69
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 49,
+   "fields": {
+      "alumno": 12,
+      "reto": 8,
+      "nota": 71
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 50,
+   "fields": {
+      "alumno": 13,
+      "reto": 9,
+      "nota": 84
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 51,
+   "fields": {
+      "alumno": 14,
+      "reto": 9,
+      "nota": 68
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 52,
+   "fields": {
+      "alumno": 15,
+      "reto": 9,
+      "nota": 57
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 53,
+   "fields": {
+      "alumno": 16,
+      "reto": 9,
+      "nota": 92
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 54,
+   "fields": {
+      "alumno": 17,
+      "reto": 9,
+      "nota": 76
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 55,
+   "fields": {
+      "alumno": 18,
+      "reto": 9,
+      "nota": 80
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 56,
+   "fields": {
+      "alumno": 1,
+      "reto": 10,
+      "nota": 52
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 57,
+   "fields": {
+      "alumno": 3,
+      "reto": 10,
+      "nota": 89
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 58,
+   "fields": {
+      "alumno": 6,
+      "reto": 10,
+      "nota": 68
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 59,
+   "fields": {
+      "alumno": 8,
+      "reto": 10,
+      "nota": 77
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 60,
+   "fields": {
+      "alumno": 10,
+      "reto": 10,
+      "nota": 85
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 61,
+   "fields": {
+      "alumno": 12,
+      "reto": 10,
+      "nota": 90
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 62,
+   "fields": {
+      "alumno": 13,
+      "reto": 11,
+      "nota": 95
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 63,
+   "fields": {
+      "alumno": 14,
+      "reto": 11,
+      "nota": 62
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 64,
+   "fields": {
+      "alumno": 15,
+      "reto": 11,
+      "nota": 48
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 65,
+   "fields": {
+      "alumno": 16,
+      "reto": 11,
+      "nota": 89
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 66,
+   "fields": {
+      "alumno": 17,
+      "reto": 11,
+      "nota": 60
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 67,
+   "fields": {
+      "alumno": 18,
+      "reto": 11,
+      "nota": 59
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 68,
+   "fields": {
+      "alumno": 1,
+      "reto": 12,
+      "nota": 57
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 69,
+   "fields": {
+      "alumno": 3,
+      "reto": 12,
+      "nota": 90
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 70,
+   "fields": {
+      "alumno": 5,
+      "reto": 12,
+      "nota": 47
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 71,
+   "fields": {
+      "alumno": 7,
+      "reto": 12,
+      "nota": 49
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 72,
+   "fields": {
+      "alumno": 9,
+      "reto": 12,
+      "nota": 96
+   }
+},
+{
+   "model": "main.nota",
+   "pk": 73,
+   "fields": {
+      "alumno": 11,
+      "reto": 12,
+      "nota": 75
+   }
+}
+]

@@ -1,0 +1,164 @@
+[
+{
+   "model": "main.alumno",
+   "pk": 1,
+   "fields": {
+      "nombre": "Esdin",
+      "apellido": "Pacaj\u00e1",
+      "equipo": 1
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 2,
+   "fields": {
+      "nombre": "Mayra",
+      "apellido": "Hern\u00e1ndez",
+      "equipo": 1
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 3,
+   "fields": {
+      "nombre": "Karla",
+      "apellido": "del Valle",
+      "equipo": 2
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 4,
+   "fields": {
+      "nombre": "Valeria",
+      "apellido": "Fuentes",
+      "equipo": 2
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 5,
+   "fields": {
+      "nombre": "Kevin",
+      "apellido": "Quelex",
+      "equipo": 3
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 6,
+   "fields": {
+      "nombre": "Mar\u00eda",
+      "apellido": "Ordo\u00f1ez",
+      "equipo": 3
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 7,
+   "fields": {
+      "nombre": "Liza",
+      "apellido": "Marroqu\u00edn",
+      "equipo": 4
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 8,
+   "fields": {
+      "nombre": "Do\u00f1a",
+      "apellido": "Vilma",
+      "equipo": 4
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 9,
+   "fields": {
+      "nombre": "Melvin",
+      "apellido": "Sosa",
+      "equipo": 5
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 10,
+   "fields": {
+      "nombre": "Juan",
+      "apellido": "Roca",
+      "equipo": 5
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 11,
+   "fields": {
+      "nombre": "Luc\u00eda",
+      "apellido": "V\u00e1squez",
+      "equipo": 6
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 12,
+   "fields": {
+      "nombre": "Mary",
+      "apellido": "Flores",
+      "equipo": 6
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 13,
+   "fields": {
+      "nombre": "Erick",
+      "apellido": "Juarez",
+      "equipo": 1
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 14,
+   "fields": {
+      "nombre": "Ostin",
+      "apellido": "Qui\u00f1\u00f3nez",
+      "equipo": 2
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 15,
+   "fields": {
+      "nombre": "Jorge",
+      "apellido": "Salazar",
+      "equipo": 3
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 16,
+   "fields": {
+      "nombre": "Jos\u00e9",
+      "apellido": "Castro",
+      "equipo": 4
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 17,
+   "fields": {
+      "nombre": "Jos\u00e9",
+      "apellido": "Cruz",
+      "equipo": 5
+   }
+},
+{
+   "model": "main.alumno",
+   "pk": 18,
+   "fields": {
+      "nombre": "Aleyda",
+      "apellido": "Castillo",
+      "equipo": 6
+   }
+}
+]

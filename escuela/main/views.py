@@ -9,12 +9,14 @@ from django.views.generic import View
 def index(request):
 	equipo_list = Equipo.objects.all()
 	profile_list = Profile.objects.all()
-	reto = Reto.objects.filter(fecha__gt=date.today()).first()
+	reto_lista = Reto.objects.filter(fecha__lt=date.today()).order_by('fecha')
+	siguiente_reto = Reto.objects.filter(fecha__gt=date.today()).order_by('fecha').first()
 	sorted(profile_list, key=lambda p: p.puntos)
 	context = {
 		'equipo_list': equipo_list,
 		'profile_list': profile_list,
-		'reto': reto
+		'reto_lista': reto_lista,
+		'siguiente_reto': siguiente_reto,
 	}
 
 	return render(request, 'index.html', context)
@@ -32,10 +34,12 @@ def reto_detail(request, id_reto):
 	reto = get_object_or_404(Reto, id=id_reto)
 	nota_list = Nota.objects.filter(reto=reto)
 	apuesta_list = Apuesta.objects.filter(nota__in=nota_list)
+	form_apuesta = ApuestaForm()
 	context = {
 		'reto': reto,
 		'apuesta_list': apuesta_list,
-		'nota_list': nota_list
+		'nota_list': nota_list,
+		'form_apuesta': form_apuesta
 	}
 	return render(request, 'reto/detail.html', context)
 
@@ -51,6 +55,51 @@ def profile_add(request):
 		ProfileFormset = modelformset_factory(ProfileModelForm, fields=('username', 'password', 'first_name', 'last_name'))
 		profile_form = ProfileFormset(instance=user)
 	return render(request, 'user/add.html', {'profile_form': profile_form})
+
+def profile_detail(request, id_profile):
+	profile = get_object_or_404(Profile, id=id_profile)
+	apuesta_list = Apuesta.objects.filter(user=profile)
+	context = {
+		'profile': profile,
+		'apuesta_list': apuesta_list
+	}
+	return render(request, 'user/detail.html', context)
+
+def tienda(request):
+	user = User.objects.get(id=request.user.id)
+	profile = Profile.objects.get(user=user)
+	paquete_lista = Paquete.objects.filter(disponible=True)
+	context = {
+		'profile': profile,
+		'paquete_lista': paquete_lista
+	}
+	return render(request, 'store/index.html', context)
+
+def compra_add(request, id_paquete):
+	user = User.objects.get(id=request.user.id)
+	profile = Profile.objects.get(user=user)
+	paquete = Paquete.objects.get(id=id_paquete)
+	compra = Compra(paquete=paquete, profile=profile)
+	compra.save()
+	return redirect('profile_detail', id_profile=profile.id)
+
+class NotaFormView(View):
+	form_class = NotaForm
+	template_name = 'n/add.html'
+
+	#formulario en blanco
+	def get(self, request):
+		form = self.form_class(None)
+		return render(request, self.template_name, {'form': form})
+
+	def post(self, request):
+		form = self.form_class(request.POST)
+
+		if form.is_valid():
+			nota = form.save(commit=False)
+			nota.save()
+			return redirect('nota_add')
+		return render(request, self.template_name, {'form': form})
 
 class UserFormView(View):
 	form_class = UserForm

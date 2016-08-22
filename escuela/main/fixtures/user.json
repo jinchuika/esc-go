@@ -1,0 +1,92 @@
+[
+{
+   "model": "auth.user",
+   "pk": 1,
+   "fields": {
+      "password": "pbkdf2_sha256$24000$DP3mKlXR83Nt$GlKojn1t0IlE0bE+7JVuDLJoTsS978nZAUo7SoePAjc=",
+      "last_login": "2016-08-20T15:34:08Z",
+      "is_superuser": true,
+      "username": "chuik",
+      "first_name": "Luis",
+      "last_name": "Contreras",
+      "email": "jinchuika@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2016-08-20T14:13:02Z",
+      "groups": [],
+      "user_permissions": []
+   }
+},
+{
+   "model": "auth.user",
+   "pk": 2,
+   "fields": {
+      "password": "pbkdf2_sha256$24000$i2kGYvxOSMdX$zxv6O7Mrx7JipJqINti4TwY5tAhhdTqjsRGPsaNfkdM=",
+      "last_login": "2016-08-20T15:30:25Z",
+      "is_superuser": false,
+      "username": "dsalazar",
+      "first_name": "David",
+      "last_name": "Salazar",
+      "email": "dsalazar@funsepa.org",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2016-08-20T15:30:25Z",
+      "groups": [],
+      "user_permissions": []
+   }
+},
+{
+   "model": "auth.user",
+   "pk": 3,
+   "fields": {
+      "password": "pbkdf2_sha256$24000$RsVyujoaAL6p$vLpQnxkSqa72mZ3K4MxW0uhH4IH+1BWdkRQyurTOtxw=",
+      "last_login": "2016-08-20T15:30:55Z",
+      "is_superuser": false,
+      "username": "xgalvez",
+      "first_name": "Ximena",
+      "last_name": "G\u00e1lvez",
+      "email": "xgalvez@funsepa.org",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2016-08-20T15:30:55Z",
+      "groups": [],
+      "user_permissions": []
+   }
+},
+{
+   "model": "auth.user",
+   "pk": 4,
+   "fields": {
+      "password": "pbkdf2_sha256$24000$NMF0zu6hpSIa$3U06ObQ2UFpMRAxp3RO0dlpvgfMNVZfpJBKSaM1//lA=",
+      "last_login": "2016-08-20T15:31:50Z",
+      "is_superuser": false,
+      "username": "dmendez",
+      "first_name": "D\u00e9nica",
+      "last_name": "Mendez",
+      "email": "dmendez@funsepa.org",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2016-08-20T15:31:49Z",
+      "groups": [],
+      "user_permissions": []
+   }
+},
+{
+   "model": "auth.user",
+   "pk": 5,
+   "fields": {
+      "password": "pbkdf2_sha256$24000$ocAvwgoIwALf$nr+E96B7yx1SyvLp6UKXYqG0lLri52oN5UGRi5UcHRw=",
+      "last_login": "2016-08-20T15:35:26Z",
+      "is_superuser": false,
+      "username": "jhammer",
+      "first_name": "Jessica",
+      "last_name": "Hammer",
+      "email": "jhammer@funsepa.org",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2016-08-20T15:35:25Z",
+      "groups": [],
+      "user_permissions": []
+   }
+}
+]
