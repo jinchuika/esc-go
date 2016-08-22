@@ -4,8 +4,10 @@
 	<div class="row">
 		<div class="col-md-2 well"></div>
 		<div class="col-md-7 well">
-			<img src="{{ equipo.logo }}">
-			<legend>{{ equipo.nombre.url }}</legend>
+			{% if equipo.logo %}
+				<img src="{{ equipo.logo.url }}">
+			{% endif %}
+			<legend>{{ equipo.nombre }}</legend>
 			<ul>
 				{% for alumno in alumno_list %}
 					<li>{{ alumno.nombre }} {{ alumno.apellido }} {{ alumno.promedio }}</li>

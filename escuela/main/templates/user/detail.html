@@ -6,6 +6,26 @@
 			<legend>{{ profile }}</legend>
 			Tokens activos: {{ profile.tokens_activos }}
 			<hr>
+			<legend>Compras</legend>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>Paquete</th>
+						<th>Tokens</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for compra in compra_list %}
+						<tr>
+							<td>{{ compra.fecha }}</td>
+							<td>{{ compra.paquete }}</td>
+							<td>{{ compra.paquete.tokens }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<legend>Apuestas</legend>
 			<table class="table">
 				<thead>
 					<tr>

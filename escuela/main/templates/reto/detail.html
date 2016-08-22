@@ -33,27 +33,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for nota in nota_list|dictsortreversed:"nota" %}
+					{% for nota in nota_list|dictsortreversed:"get_nota" %}
 						<tr>
-							<td>{{ nota.lugar }}</td>
+							<td>{{ nota.get_lugar }}</td>
 							<td>{{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</td>
 							<td>{{ nota.alumno.equipo }}</td>
-							<td>{{ nota.nota }}</td>
+							<td>{{ nota.get_nota }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<div class="row">
-				<div class="col-md-12">
-					<form action="{{ action }}" method="post">
-						<table class="table table-striped">
-							{% csrf_token %}
-							{{ form_apuesta.as_table }}
-						</table>
-						<input type="submit" class="btn btn-info" value="Guardar">
-					</form>
+			{% if user.is_authenticated %}
+				<div class="row">
+					<div class="col-md-12">
+						<form action="{{ action }}" method="post">
+							<table class="table table-striped">
+								{% csrf_token %}
+								{{ form_apuesta.as_table }}
+							</table>
+							<input type="submit" class="btn btn-info" value="Guardar">
+						</form>
+					</div>
 				</div>
-			</div>
+			{% endif %}
 		</div>
 		<div class="col-md-3 well">
 			<legend>Apuestas de este reto</legend>
@@ -61,7 +63,7 @@
 				{% for apuesta in apuesta_list|dictsortreversed:"punteo" %}
 					<li>
 						{{ apuesta.user }} por equipo <b>{{ apuesta.nota.alumno.equipo }}</b><br>
-						{{ apuesta.tokens }} tokens - ({{ apuesta.punteo }} puntos)
+						{{ apuesta.tokens }} tokens - ({{ apuesta.get_punteo }} puntos)
 					</li>
 				{% endfor %}
 			</ul>
@@ -70,5 +72,11 @@
 </div>
 {% endblock content %}
 {% block javascript %}
-    
+{% if notificacion %}
+    <script>
+    	alert("Apuesta realizada")
+    </script>
+
+{% endif %}
+
 {% endblock javascript %}

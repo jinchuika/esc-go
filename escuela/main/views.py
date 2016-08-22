@@ -33,15 +33,35 @@ def equipo_detail(request, id_equipo):
 def reto_detail(request, id_reto):
 	reto = get_object_or_404(Reto, id=id_reto)
 	nota_list = Nota.objects.filter(reto=reto)
-	apuesta_list = Apuesta.objects.filter(nota__in=nota_list)
-	form_apuesta = ApuestaForm()
-	context = {
-		'reto': reto,
-		'apuesta_list': apuesta_list,
-		'nota_list': nota_list,
-		'form_apuesta': form_apuesta
-	}
-	return render(request, 'reto/detail.html', context)
+	tokens_activos = 0
+	#Al crear un nuevo registro
+	if request.method=='POST':
+		if request.user.is_authenticated():
+			profile = Profile.objects.filter(user=request.user)
+			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
+			form_apuesta = ApuestaForm(request.POST, nota_list=nota_list, tokens_activos=tokens_activos)
+			
+			apuesta = form_apuesta.save(commit=False)
+			if form_apuesta.is_valid():
+				apuesta = form_apuesta.save(commit=False)
+				if apuesta.tokens <= profile.first().tokens_activos():
+					apuesta.user = profile.first()
+					apuesta.save()
+		return redirect('reto_detail', id_reto=id_reto)
+	#al entrar a la vista
+	else:
+		if request.user.is_authenticated():
+			profile = Profile.objects.filter(user=request.user)
+			apuesta_list = Apuesta.objects.filter(nota__in=nota_list, user=profile)
+			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
+			form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
+		context = {
+			'reto': reto,
+			'apuesta_list': apuesta_list,
+			'nota_list': nota_list,
+			'form_apuesta': form_apuesta,
+		}
+		return render(request, 'reto/detail.html', context)
 
 def profile_add(request):
 	if request.method=='POST':
@@ -58,10 +78,12 @@ def profile_add(request):
 
 def profile_detail(request, id_profile):
 	profile = get_object_or_404(Profile, id=id_profile)
+	compra_list = Compra.objects.filter(profile=profile)
 	apuesta_list = Apuesta.objects.filter(user=profile)
 	context = {
 		'profile': profile,
-		'apuesta_list': apuesta_list
+		'compra_list': compra_list,
+		'apuesta_list': apuesta_list,
 	}
 	return render(request, 'user/detail.html', context)
 

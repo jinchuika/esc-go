@@ -125,3 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'index'
+MEDIA_ROOT = '/var/www/html/'
+MEDIA_URL = '/media/'

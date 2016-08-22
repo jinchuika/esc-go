@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -12,8 +13,12 @@ class Profile(models.Model):
 	def tokens_activos(self, fecha=date.today()):
 		tokens = 0
 		ultimo_reto = Reto.ultimo_reto()
-		compra_list = Compra.objects.filter(profile=self, fecha__range=(ultimo_reto.fecha, fecha))
-		apuesta_list = Apuesta.objects.filter(user=self, fecha__range=(ultimo_reto.fecha, fecha))
+		if ultimo_reto:
+			compra_list = Compra.objects.filter(profile=self, fecha__range=(ultimo_reto.fecha, fecha))
+			apuesta_list = Apuesta.objects.filter(user=self, fecha__range=(ultimo_reto.fecha, fecha))
+		else:
+			compra_list = Compra.objects.filter(profile=self, fecha__lte=fecha)
+			apuesta_list = Apuesta.objects.filter(user=self, fecha__lte=fecha)
 		for c in compra_list:
 			tokens = tokens + c.paquete.tokens
 		for a in apuesta_list:
@@ -24,7 +29,7 @@ class Profile(models.Model):
 		puntos = 0
 		apuestas = Apuesta.objects.filter(user=self)
 		for a in apuestas:
-			puntos = puntos + a.punteo()
+			puntos = puntos + a.get_punteo('int')
 		return puntos
 	puntos = property(puntos)
 
@@ -48,10 +53,13 @@ class Compra(models.Model):
 	def __str__(self):
 		return str(self.paquete) + " de " + str(self.profile)
 
+def get_image_path(instance, filename):
+	return os.path.join('photos', str(instance.id), filename)
+
 class Equipo(models.Model):
 	nombre = models.CharField(max_length=100)
 	logo = models.ImageField(
-		upload_to="main/images/equipo_logo",
+		upload_to="equipo_logo",
         null=True,
         blank=True,
         editable=True,
@@ -99,7 +107,11 @@ class Reto(models.Model):
 	pt_3 = models.IntegerField()
 
 	def ultimo_reto(fecha=date.today()):
-		return Reto.objects.filter(fecha__lt=fecha).order_by('fecha').reverse()[0]
+		ultimo_reto = Reto.objects.filter(fecha__lt=fecha).order_by('fecha').reverse()
+		if ultimo_reto.count() < 1:
+			return None
+		else:
+			return ultimo_reto[0]
 
 	def notas(self):
 		nota_list = Nota.objects.filter(reto=self)
@@ -126,6 +138,18 @@ class Nota(models.Model):
 				lugar = lugar + 1
 		return lugar
 
+	def get_nota(self):
+		if self.reto.fecha <= date.today():
+			return self.nota
+		else:
+			return '?'
+
+	def get_lugar(self):
+		if self.reto.fecha <= date.today():
+			return self.lugar()
+		else:
+			return '?'
+
 	def puntos_token(self):
 		if self.lugar() == 1:
 			return self.reto.pt_1
@@ -134,6 +158,9 @@ class Nota(models.Model):
 		if self.lugar() == 3:
 			return self.reto.pt_3
 		return 0
+
+	def __unicode__(self):
+		return u'{0}'.format(self.nota)
 
 	def __str__(self):
 		return str(self.alumno) + " " + str(self.nota) + " para " + str(self.reto)
@@ -147,6 +174,12 @@ class Apuesta(models.Model):
 	def punteo(self):
 		lugar = self.nota.lugar()
 		return self.tokens * self.nota.puntos_token()
+
+	def get_punteo(self, tipo='string'):
+		if self.nota.reto.fecha <= date.today():
+			return self.punteo()
+		else:
+			return '?' if tipo=='string' else 0
 
 	def __str__(self):
 		return str(self.user) + " para " + str(self.nota)

@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from . import views
+from escuela import settings
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -19,4 +20,6 @@ urlpatterns = [
 	
 	url('^login/$', auth_views.login, {'template_name': 'user/login.html', 'extra_context': {'next':'/'}}, name="login"),
     url('^logout/$', auth_views.logout, {'next_page': '/'}, name="logout"),
+
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT})
 ]
