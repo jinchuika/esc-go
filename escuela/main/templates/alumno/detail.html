@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<legend>{{ alumno.nombre }} {{ alumno.apellido }}</legend>
+			{% if alumno.foto %}
+			    <img src="{{ alumno.foto.url }}">
+			{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<a class="btn btn-primary" href="{% url "alumno_post_add" id_alumno=alumno.id %}">Publicar como este alumno</a>
+		</div>
+	</div>
+</div>
+{% endblock content %}

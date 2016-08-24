@@ -8,7 +8,14 @@ from django.utils import timezone
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	tokens = models.IntegerField(default=0)
+	public = models.BooleanField(default=False)
+	es_jugador = models.BooleanField(default=True)
+	foto = models.ImageField(
+		upload_to="perfil_usuario",
+        null=True,
+        blank=True,
+        editable=True,
+		)
 
 	def tokens_activos(self, fecha=date.today()):
 		tokens = 0
@@ -75,6 +82,11 @@ class Equipo(models.Model):
 		return total/alumno_lista.count() if alumno_lista.count() > 0 else 0
 	promedio = property(promedio)
 
+	def blog(self):
+		alumno_lista = Alumno.objects.filter(equipo=self)
+		post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+		return post_lista
+
 	def __str__(self):
 		return self.nombre
 
@@ -82,6 +94,12 @@ class Alumno(models.Model):
 	nombre = models.CharField(max_length=150, default='')
 	apellido = models.CharField(max_length=150, default='')
 	equipo = models.ForeignKey('Equipo')
+	foto = models.ImageField(
+		upload_to="perfil_alumno",
+        null=True,
+        blank=True,
+        editable=True,
+		)
 
 	def promedio(self):
 		nota_list = Nota.objects.filter(alumno=self)
@@ -184,3 +202,24 @@ class Apuesta(models.Model):
 	def __str__(self):
 		return str(self.user) + " para " + str(self.nota)
 
+class PostCategoria(models.Model):
+	nombre = models.CharField(max_length=250)
+
+	def __str__(self):
+		return self.nombre
+
+class Post(models.Model):
+	titulo = models.CharField(max_length=150)
+	fecha = models.DateField(default=timezone.now)
+	cuerpo = models.TextField()
+	escrito_por = models.ForeignKey('Profile')
+
+	def __str__(self):
+		return self.titulo
+
+class PostAlumno(Post):
+	alumno = models.ForeignKey('Alumno')
+	categoria = models.ForeignKey('PostCategoria', null=True, blank=True)
+
+class Mensaje(Post):
+	cobrado = models.BooleanField(default=True)

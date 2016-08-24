@@ -22,12 +22,6 @@ class UserForm(forms.ModelForm):
 		model = User
 		fields = ['username', 'password', 'email', 'first_name', 'last_name']
 
-class asd(forms.ModelForm):
-	password = forms.CharField(widget=forms.PasswordInput)
-	class Meta:
-		model = User
-		fields = ['username', 'password']
-
 class LoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         if not user.is_active:
@@ -76,3 +70,17 @@ class NotaForm(forms.ModelForm):
 			raise ValidationError('Ya hay alguien de este equipo que ha respondido')
 
 		return cleaned_data
+
+class PostForm(forms.ModelForm):
+	class Meta:
+		model = Post
+		fields = '__all__'
+
+class PostAlumnoForm(PostForm):
+	class Meta:
+		model = PostAlumno
+		fields = [
+			'titulo',
+			'cuerpo',
+			'categoria'
+		]

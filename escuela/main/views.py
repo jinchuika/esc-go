@@ -21,14 +21,49 @@ def index(request):
 
 	return render(request, 'index.html', context)
 
+def alumno_detail(request, id_alumno):
+	alumno = get_object_or_404(Alumno, id=id_alumno)
+	context = {
+		'alumno': alumno
+	}
+	return render(request, 'alumno/detail.html', context)
+
+def post_add(request, id_alumno):
+	alumno = get_object_or_404(Alumno, id=id_alumno)
+	form_post = PostAlumnoForm(request.POST or None)
+	if form_post.is_valid():
+		instance = form_post.save(commit=False)
+		instance.alumno = Alumno.objects.get(id=id_alumno)
+		instance.escrito_por = Profile.objects.get(user = request.user)
+		instance.save()
+		return redirect('equipo_blog', id_equipo=alumno.equipo.id)
+	context = {
+		'form_post': form_post,
+		'alumno': alumno,
+	}
+	return render(request, 'alumno/add_post.html', context)
+
 def equipo_detail(request, id_equipo):
 	equipo = get_object_or_404(Equipo, id=id_equipo)
 	alumno_list = Alumno.objects.filter(equipo=equipo)
+	blog = equipo.blog()
 	context = {
 		'equipo': equipo,
 		'alumno_list': alumno_list,
+		'blog': blog
 	}
 	return render(request, 'equipo/detail.html', context)
+
+def equipo_blog(request, id_equipo):
+	equipo = get_object_or_404(Equipo, id=id_equipo)
+	alumno_lista = Alumno.objects.filter(equipo=equipo)
+	post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+	context = {
+		'equipo': equipo,
+		'alumno_lista': alumno_lista,
+		'post_lista': post_lista,
+	}
+	return render(request, 'equipo/blog.html', context)
 
 def reto_detail(request, id_reto):
 	reto = get_object_or_404(Reto, id=id_reto)
@@ -40,8 +75,7 @@ def reto_detail(request, id_reto):
 			profile = Profile.objects.filter(user=request.user)
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
 			form_apuesta = ApuestaForm(request.POST, nota_list=nota_list, tokens_activos=tokens_activos)
-			
-			apuesta = form_apuesta.save(commit=False)
+
 			if form_apuesta.is_valid():
 				apuesta = form_apuesta.save(commit=False)
 				if apuesta.tokens <= profile.first().tokens_activos():
@@ -50,17 +84,16 @@ def reto_detail(request, id_reto):
 		return redirect('reto_detail', id_reto=id_reto)
 	#al entrar a la vista
 	else:
+		context = {}
 		if request.user.is_authenticated():
 			profile = Profile.objects.filter(user=request.user)
 			apuesta_list = Apuesta.objects.filter(nota__in=nota_list, user=profile)
+			context['apuesta_list'] = apuesta_list
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
 			form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
-		context = {
-			'reto': reto,
-			'apuesta_list': apuesta_list,
-			'nota_list': nota_list,
-			'form_apuesta': form_apuesta,
-		}
+			context['form_apuesta'] = form_apuesta
+		context['reto'] = reto
+		context['nota_list'] = nota_list
 		return render(request, 'reto/detail.html', context)
 
 def profile_add(request):
