@@ -22,9 +22,11 @@ urlpatterns = [
 
 	url(r'^p/add$', views.UserFormView.as_view(), name='profile_add'),
 	url(r'^p/(?P<id_profile>[0-9]+)/$', views.profile_detail, name='profile_detail'),
+	url(r'^p/(?P<pk>[0-9]+)/edit$', views.UserUpdate.as_view(), name='profile_edit'),
 
 	url(r'^tienda/$', views.tienda, name='tienda'),
 	url(r'^tienda/c/(?P<id_paquete>[0-9]+)/$', views.compra_add, name='compra'),
+	url(r'^tienda/comprar/$', views.crear_compra, name='crear_compra'),
 	
 	url('^login/$', auth_views.login, {'template_name': 'user/login.html', 'extra_context': {'next':'/'}}, name="login"),
     url('^logout/$', auth_views.logout, {'next_page': '/'}, name="logout"),

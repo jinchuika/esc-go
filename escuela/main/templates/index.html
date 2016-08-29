@@ -1,8 +1,8 @@
 {% extends "base/base.html" %}
 {% block content %}
 <div class="container">
-	<div class="row">
-		<div class="col-md-9 feature angled-bg">
+	<div class="row well">
+		<div class="col-md-9">
 			{% if siguiente_reto %}
 			<div class="lead"> Siguiente reto: <a href="{% url "reto_detail" id_reto=siguiente_reto.id %}">{{ siguiente_reto }}</a></div>
 			{% endif %}
@@ -23,14 +23,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 feature angled-bg">
+		<div class="col-md-2 well">
 			<legend>Reto</legend>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lectus odio, laoreet sit amet eleifend non, tempor quis nisl. </p>
 
 			<p>Integer massa dolor, iaculis vel commodo quis, aliquam ut leo. Nullam ut lacinia tortor.</p>
 		</div>
-		<div class="col-md-7 feature angled-bg">
-			<h3>Equipos</h3>
+		<div class="col-md-7 well">
+			<legend>Equipos</legend>
 			<table class="table">
 				{% for equipo in equipo_list|dictsortreversed:"promedio" %}
 				<tr>
@@ -40,7 +40,7 @@
 				{% endfor %}
 			</table>
 		</div>
-		<div class="col-md-3 feature angled-bg">
+		<div class="col-md-3 well">
 			<legend>Tabla de posiciones</legend>
 			<table class="table">
 				{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}

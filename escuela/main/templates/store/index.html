@@ -14,12 +14,15 @@
 				</thead>
 				<tbody>
 					{% for paquete in paquete_lista %}
+					<form action="/compra/" method="POST" data-tokens="{{paquete.paquete.tokens}}" data-precio="{{paquete.paquete.precio}}" class="form-compra">
+						{% csrf_token %}
 						<tr>
-							<td>{{ paquete.nombre }}</td>
-							<td>{{ paquete.tokens }}</td>
-							<td>{{ paquete.precio }}</td>
-							<td><a class="btn btn-primary" href="{% url "compra" id_paquete=paquete.id %}">Comprar</a></td>
+							<td>{{ paquete.paquete.nombre }}</td>
+							<td>{{ paquete.paquete.tokens }}</td>
+							<td>{{ paquete.paquete.precio }}</td>
+							<td>{{ paquete.form.paquete }}<input type="submit" value="Comprar" class="btn btn-primary" data-toggle="confirmation">{{ paquete.form.tokens }}</td>
 						</tr>
+					</form>
 					{% endfor %}
 				</tbody>
 			</table>
@@ -28,8 +31,7 @@
 			Actualmente tienes:
 			<br>
 			{% if profile.tokens_activos %}
-			    {{ profile.tokens_activos }}
-			
+				<div class="tokens-activos">{{ profile.tokens_activos }}</div>
 			{% endif %}
 			tokens válidos
 		</div>

@@ -1,15 +1,10 @@
 from django import forms
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, formset_factory, modelformset_factory
 from main.models import *
 import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
-
-class ProfileModelForm(ModelForm):
-	class Meta:
-		model = Profile
-		fields = '__all__'
 
 class UserModelForm(ModelForm):
 	class Meta:
@@ -20,7 +15,13 @@ class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 	class Meta:
 		model = User
-		fields = ['username', 'password', 'email', 'first_name', 'last_name']
+		fields = ('username', 'password', 'email', 'first_name', 'last_name')
+
+class ProfileModelForm(UserForm):
+	class Meta:
+		model = Profile
+		exclude = ('password',)
+		fields = ['foto']
 
 class LoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -92,3 +93,20 @@ class PostMensajeForm(PostForm):
 			'titulo',
 			'cuerpo',
 		]
+
+class CompraForm(forms.ModelForm):
+	tokens = ''
+	paquete_data = Paquete()
+
+	def __init__(self, *args, **kwargs):
+		super(CompraForm, self).__init__(*args, **kwargs)
+		self.paquete_data = self.fields['paquete'].initial
+
+	class Meta:
+		model = Compra
+		fields = ['paquete']
+		widgets = {
+			'paquete': forms.HiddenInput
+		}
+
+CompraFormSet = formset_factory(CompraForm)
