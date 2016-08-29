@@ -4,7 +4,9 @@ from datetime import timedelta, date, time
 from main.forms import *
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth import authenticate, login
-from django.views.generic import View
+from django.views.generic import View, UpdateView
+from django.http import HttpResponse
+import json
 
 def index(request):
 	equipo_list = Equipo.objects.all()
@@ -144,12 +146,34 @@ def profile_detail(request, id_profile):
 def tienda(request):
 	user = User.objects.get(id=request.user.id)
 	profile = Profile.objects.get(user=user)
-	paquete_lista = Paquete.objects.filter(disponible=True)
+	paquete_lista = []
+	for paquete in Paquete.objects.filter(disponible=True):
+		paquete_lista.append({
+			'paquete': paquete,
+			'form': CompraForm(initial={'paquete':paquete})
+			})
 	context = {
 		'profile': profile,
-		'paquete_lista': paquete_lista
+		'paquete_lista': paquete_lista,
 	}
 	return render(request, 'store/index.html', context)
+
+def crear_compra(request):
+	if request.method=='POST':
+		paquete = Paquete.objects.get(id=request.POST.get('paquete_id'))
+		user = User.objects.get(id=request.user.id)
+		profile = Profile.objects.get(user=user)
+		compra = Compra(paquete=paquete, profile=profile)
+		compra.save()
+		profile
+		print(compra)
+		return HttpResponse(
+			json.dumps({
+				'done': 1,
+				'tokens': profile.tokens_activos()
+				}),
+			content_type="application/json"
+			)
 
 def compra_add(request, id_paquete):
 	user = User.objects.get(id=request.user.id)
@@ -212,6 +236,23 @@ class UserFormView(View):
 					return redirect('index')
 
 		return render(request, self.template_name, {'form': form})
+
+class UserUpdate(UpdateView):
+	model = Profile
+	form_class = UserForm
+	template_name = 'user/update.html'
+	success_url = 'index'
+	context_object_name = 'profile'
+
+	def get_object(self, queryset=None):
+		return self.request.user
+
+	def form_valid(self, form):
+		clean = form.cleaned_data
+		context = {}
+		self.object = context.save(clean)
+		return super(UserUpdate, self).form_valid(form)
+		
 
 class UserLoginView(View):
 	form_class = LoginForm
