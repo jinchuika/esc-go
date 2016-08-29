@@ -1,4 +1,4 @@
-#!/home/chk-server/Dropbox/dev/esc-go/vesc/bin/python2
+#!/home/chk-server/Dropbox/dev/esc-go/vesc/bin/python3
 
 # -*- coding: utf-8 -*-
 import re

@@ -8,11 +8,19 @@
 			    <img src="{{ alumno.foto.url }}">
 			{% endif %}
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<a class="btn btn-primary" href="{% url "alumno_post_add" id_alumno=alumno.id %}">Publicar como este alumno</a>
+		<div class="col-md-3">
+			{% if user.is_authenticated %}
+				
+			{% endif %}
 		</div>
 	</div>
+
+	{% if user.is_staff %}
+		<div class="row">
+			<div class="col-md-2">
+				<a class="btn btn-primary" href="{% url "alumno_post_add" id_alumno=alumno.id %}">Publicar como este alumno</a>
+			</div>
+		</div>
+	{% endif %}
 </div>
 {% endblock content %}

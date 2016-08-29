@@ -43,6 +43,27 @@ def post_add(request, id_alumno):
 	}
 	return render(request, 'alumno/add_post.html', context)
 
+def mensaje_add(request, id_alumno):
+	alumno = get_object_or_404(Alumno, id=id_alumno)
+	form_mensaje = PostMensajeForm(request.POST or None)
+	if form_mensaje.is_valid():
+		instance = form_mensaje.save(commit=False)
+		instance.alumno = alumno
+		instance.escrito_por = Profile.objects.get(user = request.user)
+		if instance.validar_regalo():
+			compra = Compra(
+				profile=instance.escrito_por, 
+				paquete=Paquete.objects.filter(regalo=True,disponible=False).first()
+				)
+			compra.save()
+		instance.save()
+		return redirect('equipo_blog', id_equipo=alumno.equipo.id)
+	context = {
+		'form_mensaje': form_mensaje,
+		'alumno': alumno,
+	}
+	return render(request, 'alumno/add_mensaje.html', context)
+
 def equipo_detail(request, id_equipo):
 	equipo = get_object_or_404(Equipo, id=id_equipo)
 	alumno_list = Alumno.objects.filter(equipo=equipo)

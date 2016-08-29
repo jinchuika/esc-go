@@ -84,3 +84,11 @@ class PostAlumnoForm(PostForm):
 			'cuerpo',
 			'categoria'
 		]
+
+class PostMensajeForm(PostForm):
+	class Meta:
+		model = Mensaje
+		fields = [
+			'titulo',
+			'cuerpo',
+		]

@@ -14,6 +14,7 @@ urlpatterns = [
 	
 	url(r'^a/(?P<id_alumno>[0-9]+)/$', views.alumno_detail, name='alumno_detail'),
 	url(r'^a/(?P<id_alumno>[0-9]+)/post$', views.post_add, name='alumno_post_add'),
+	url(r'^a/(?P<id_alumno>[0-9]+)/mensaje/$', views.mensaje_add, name='mensaje_add'),
 
 	url(r'^r/(?P<id_reto>[0-9]+)/$', views.reto_detail, name='reto_detail'),
 

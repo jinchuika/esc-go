@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<legend>Enviar un mensaje a {{ alumno.nombre }} {{ alumno.apellido }}</legend>
+			<form action="{{ action }}" method="post">
+				{% csrf_token %}
+				<table class="table">
+				{{ form_mensaje.as_table }}
+				</table>
+				<input type="submit" value="Guardar" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}

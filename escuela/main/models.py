@@ -48,6 +48,7 @@ class Paquete(models.Model):
 	precio = models.DecimalField(max_digits=7, decimal_places=2)
 	tokens = models.IntegerField()
 	disponible = models.BooleanField(default=False)
+	regalo = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.nombre
@@ -130,6 +131,13 @@ class Reto(models.Model):
 			return None
 		else:
 			return ultimo_reto[0]
+
+	def proximo_reto(fecha=date.today()):
+		proximo_reto = Reto.objects.filter(fecha__gt=fecha).order_by('fecha')
+		if proximo_reto.count() < 1:
+			return None
+		else:
+			return proximo_reto[0]
 
 	def notas(self):
 		nota_list = Nota.objects.filter(reto=self)
@@ -223,3 +231,10 @@ class PostAlumno(Post):
 
 class Mensaje(Post):
 	cobrado = models.BooleanField(default=True)
+
+	def validar_regalo(self):
+		mensajes_actuales = Mensaje.objects.filter(escrito_por=self.escrito_por, fecha__range=(Reto.ultimo_reto().fecha, Reto.proximo_reto().fecha)) 
+		if mensajes_actuales.count() < 1:
+			return True
+		else:
+			return False
