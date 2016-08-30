@@ -23,6 +23,18 @@ class ProfileModelForm(UserForm):
 		exclude = ('password',)
 		fields = ['foto']
 
+class ProfileForm(forms.Form):
+	first_name = forms.CharField(required=True)
+	last_name = forms.CharField(required=True)
+	email = forms.EmailField()
+	foto = forms.ImageField(required=False)
+	public = forms.BooleanField(required=False)
+
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		
+
+
 class LoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         if not user.is_active:

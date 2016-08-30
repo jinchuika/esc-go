@@ -119,19 +119,6 @@ def reto_detail(request, id_reto):
 		context['nota_list'] = nota_list
 		return render(request, 'reto/detail.html', context)
 
-def profile_add(request):
-	if request.method=='POST':
-		profile_form = ProfileModelForm(request.POST)
-		if profile_form.is_valid():
-			profile = profile_form.save(commit=False)
-			profile.save()
-			return redirect('profile_detail', id_profile=profile.id)
-	else:
-		user = User()
-		ProfileFormset = modelformset_factory(ProfileModelForm, fields=('username', 'password', 'first_name', 'last_name'))
-		profile_form = ProfileFormset(instance=user)
-	return render(request, 'user/add.html', {'profile_form': profile_form})
-
 def profile_detail(request, id_profile):
 	profile = get_object_or_404(Profile, id=id_profile)
 	compra_list = Compra.objects.filter(profile=profile)
@@ -175,13 +162,6 @@ def crear_compra(request):
 			content_type="application/json"
 			)
 
-def compra_add(request, id_paquete):
-	user = User.objects.get(id=request.user.id)
-	profile = Profile.objects.get(user=user)
-	paquete = Paquete.objects.get(id=id_paquete)
-	compra = Compra(paquete=paquete, profile=profile)
-	compra.save()
-	return redirect('profile_detail', id_profile=profile.id)
 
 class NotaFormView(View):
 	form_class = NotaForm
@@ -252,6 +232,31 @@ class UserUpdate(UpdateView):
 		context = {}
 		self.object = context.save(clean)
 		return super(UserUpdate, self).form_valid(form)
+
+def profile_edit(request):
+	user_profile = request.user.profile
+	if request.method == 'POST':
+		form = ProfileForm(request.POST)
+		if form.is_valid():
+			user = request.user
+			user.first_name = form.cleaned_data['first_name']
+			user.last_name = form.cleaned_data['last_name']
+			user.email = form.cleaned_data['email']
+			user.profile.foto = form.cleaned_data['foto']
+			user.profile.public = form.cleaned_data['public']
+			user.save()
+			user.profile.save()
+		return redirect('profile_detail', id_profile=user_profile.id)
+	else:
+		initial = {
+			'first_name': request.user.first_name,
+			'last_name': request.user.last_name,
+			'email': request.user.email,
+			'foto': request.user.profile.foto,
+			'public': request.user.profile.public
+		}
+		form = ProfileForm(initial=initial)
+	return render(request, 'user/update.html', {'form': form})
 		
 
 class UserLoginView(View):

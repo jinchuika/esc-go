@@ -26,4 +26,21 @@ $(document).ready(function () {
 		});
 	});
 
+	$('.table-paginated').DataTable({
+		searching: false,
+		lengthChange: false,
+		"language": {
+			"lengthMenu": "Mostrar _MENU_ registros por página",
+			"zeroRecords": "No hay información",
+			"info": "Mostrando página _PAGE_ de _PAGES_",
+			"infoEmpty": "No se encontraron registros",
+			"infoFiltered": "(filtrado de _MAX_ registros en total)",
+			"paginate": {
+				"first":      "Primero",
+				"last":       "Último",
+				"next":       "Siguiente",
+				"previous":   "Anterior"
+			},
+		}
+	});
 });
