@@ -3,7 +3,7 @@ from django.forms import ModelForm, ModelChoiceField, formset_factory, modelform
 from main.models import *
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
 
 class UserModelForm(ModelForm):
@@ -24,11 +24,11 @@ class ProfileModelForm(UserForm):
 		fields = ['foto']
 
 class ProfileForm(forms.Form):
-	first_name = forms.CharField(required=True)
-	last_name = forms.CharField(required=True)
+	first_name = forms.CharField(required=True, label='Nombre')
+	last_name = forms.CharField(required=True, label='Apellido')
 	email = forms.EmailField()
-	foto = forms.ImageField(required=False, widget=forms.FileInput())
-	public = forms.BooleanField(required=False)
+	foto = forms.ImageField(required=False, widget=forms.FileInput(), label='Avatar')
+	public = forms.BooleanField(required=False, label='Perfil público')
 
 	def clean(self):
 		cleaned_data = self.cleaned_data
@@ -36,12 +36,13 @@ class ProfileForm(forms.Form):
 
 
 class LoginForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise forms.ValidationError(
-                _("La cuenta está inactiva."),
-                code='inactive',
-            )
+	def confirm_login_allowed(self, user):
+		if not user.is_active:
+			raise forms.ValidationError(
+				_("La cuenta está inactiva."),
+				code='inactive',
+			)
+
 
 class ApuestaChoiceField(ModelChoiceField):
 	def label_from_instance(self, obj):

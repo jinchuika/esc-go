@@ -8,7 +8,8 @@
 				<table class="table">
 				{{ form.as_table }}
 				</table>
-				<input type="submit" value="Update" />
+				<input type="submit" class="btn btn-primary" value="Guardar" />
+				<a href="{% url "password_change" %}" class="btn btn-info">Cambiar contraseña</a>
 			</form>
 		</div>
 	</div>

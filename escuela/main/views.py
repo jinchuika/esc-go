@@ -3,7 +3,7 @@ from main.models import *
 from datetime import timedelta, date, time
 from main.forms import *
 from django.forms import formset_factory, modelformset_factory
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, views as auth_views, update_session_auth_hash
 from django.views.generic import View, UpdateView
 from django.http import HttpResponse
 import json
@@ -288,3 +288,14 @@ class UserLoginView(View):
 					return redirect('index')
 
 		return render(request, self.template_name, {'form': form})
+
+def password_change(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(user=request.user, data=request.POST)
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)
+			return redirect('profile_detail', id_profile=request.user.profile.id)
+	else:
+		form = PasswordChangeForm(user=request.user)
+	return render(request, 'user/password_change.html', {'form': form})
