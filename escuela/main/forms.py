@@ -27,7 +27,7 @@ class ProfileForm(forms.Form):
 	first_name = forms.CharField(required=True)
 	last_name = forms.CharField(required=True)
 	email = forms.EmailField()
-	foto = forms.ImageField(required=False)
+	foto = forms.ImageField(required=False, widget=forms.FileInput())
 	public = forms.BooleanField(required=False)
 
 	def clean(self):

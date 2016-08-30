@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
+    'easy_thumbnails',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,3 +130,10 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'index'
 MEDIA_ROOT = '/var/www/html/'
 MEDIA_URL = '/media/'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (100, 100), 'crop': True},
+        'icon': {'size': (30, 30), 'crop': True},
+    },
+}

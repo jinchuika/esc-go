@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from datetime import timedelta, date, time
 from django.utils import timezone
+from easy_thumbnails.fields import ThumbnailerImageField
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	public = models.BooleanField(default=False)
 	es_jugador = models.BooleanField(default=True)
-	foto = models.ImageField(
+	foto = ThumbnailerImageField(
 		upload_to="perfil_usuario",
         null=True,
         blank=True,

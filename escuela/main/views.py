@@ -242,8 +242,12 @@ def profile_edit(request):
 			user.first_name = form.cleaned_data['first_name']
 			user.last_name = form.cleaned_data['last_name']
 			user.email = form.cleaned_data['email']
-			user.profile.foto = form.cleaned_data['foto']
 			user.profile.public = form.cleaned_data['public']
+
+			#guardar avatar
+			if 'foto' in request.FILES:
+				user.profile.foto = request.FILES['foto']
+
 			user.save()
 			user.profile.save()
 		return redirect('profile_detail', id_profile=user_profile.id)

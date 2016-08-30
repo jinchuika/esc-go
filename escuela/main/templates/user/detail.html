@@ -3,6 +3,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-9 well">
+			{% load thumbnail %}
+			<img src="{{ profile.foto|thumbnail_url:'avatar' }}" alt="" />
 			<legend>{{ profile }}</legend>
 			Tokens activos: {{ profile.tokens_activos }}
 			<hr>
