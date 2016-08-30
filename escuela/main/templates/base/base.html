@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Xumak</title>
 	<link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
-	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.css'%}">
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
+	<link rel="stylesheet" href="{% static 'css/youplay-light.min.css'%}">
 	<link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css'%}">
 	
 </head>
@@ -20,6 +20,17 @@
 	{% block content %}
 	{% endblock content %}
 
+	<footer class="youplay-footer-parallax">
+		<div class="wrapper" style="background-image: url('assets/images/footer-bg.jpg')">
+			<div class="copyright">
+				<div class="container">
+					<strong>Funsepa</strong> © 2016.
+				</div>
+			</div>
+
+
+		</div>
+	</footer>
 
 </body>
 <script src="{% static 'js/jquery.min.js' %}"></script>
@@ -27,7 +38,12 @@
 <script src="{% static 'js/bs-dialog.min.js' %}"></script>
 <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jarallax.min.js' %}"></script>
+<script src="{% static 'js/youplay.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script>
+	youplay.init();
+</script>
 {% block javascript %}
 {% endblock javascript %}
 </html>

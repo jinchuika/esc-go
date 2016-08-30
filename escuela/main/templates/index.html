@@ -1,13 +1,69 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
 {% block content %}
+{% load thumbnail %}
 <div class="container">
-	<div class="row well">
-		<div class="col-md-9">
-			{% if siguiente_reto %}
-			<div class="lead"> Siguiente reto: <a href="{% url "reto_detail" id_reto=siguiente_reto.id %}">{{ siguiente_reto }}</a></div>
-			{% endif %}
+	<div class="row">
+		<div class="col-xs-12 text-center">
+		<h1>Siguiente reto <a class="btn btn-lg" href="{% url "reto_detail" id_reto=siguiente_reto.id %}">{{ siguiente_reto.materia }}</a></h1>
+			<div class="h5 mnt-10 mb-40">{{ siguiente_reto.fecha }}</div>
 		</div>
-		<div class="col-md-3">
+	</div>
+	<div class="pt-40 pb-40">
+	<div class="row">
+		<div class="col-md-9">
+		<div class="image" style="background-image: url('{% static 'images/bg-1280x720.jpg' %}');">
+			<legend>Equipos</legend>
+				<div class="row">
+				{% for equipo in equipo_list|dictsortreversed:"promedio" %}
+					<div class="col-sm-5">
+						<div class="youplay-match-right">
+							<div class="youplay-match">
+								<a href="{% url "equipo_detail" id_equipo=equipo.id %}">
+								<div class="angled-img">
+									<div class="img">
+									<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="{{equipo}}">
+									</div>
+								</div>
+								<div class="youplay-match-data">
+									<h3>{{ equipo }}</h3>
+								</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					{% if forloop.counter|divisibleby:2 %}
+				</div>
+				<div class="row">
+					{% else %}
+					{% endif %}
+				{% endfor %}
+				</div>
+				</div>
+		</div>
+		<div class="col-md-3 side-block">
+			<h4 class="block-title">Tabla de posiciones</h4>
+			<div class="youplay-matches-list">
+			{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
+			<a class="youplay-single-match" title="{{ profile }}" href="{% url "profile_detail" id_profile=profile.id%}">
+				<div class="pull-left ml-5">
+					<div class="angled-img">
+						<div class="img">
+							{% if profile.foto %}
+								<img src="{{ profile.foto|thumbnail_url:'icon' }}" alt="{{ profile }}">
+							{% else %}
+							    <img src="default.jpg" alt="{{ profile }}">
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="label youplay-match-count">{{ profile.puntos }} pts.</div>
+				{{ profile }}
+				<div class="clearfix"></div>
+			</a>
+			{% endfor %}
+			</div>
+		</div>
 			<div class="dropdown">
 				<a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 					Retos anteriores
@@ -20,38 +76,7 @@
 					{% endfor %}
 				</ul>
 			</div>
-		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-2 well">
-			<legend>Reto</legend>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lectus odio, laoreet sit amet eleifend non, tempor quis nisl. </p>
-
-			<p>Integer massa dolor, iaculis vel commodo quis, aliquam ut leo. Nullam ut lacinia tortor.</p>
-		</div>
-		<div class="col-md-7 well">
-			<legend>Equipos</legend>
-			<table class="table">
-				{% for equipo in equipo_list|dictsortreversed:"promedio" %}
-				<tr>
-					<td><a href="{% url "equipo_detail" id_equipo=equipo.id %}">{{ equipo }}</a></td>
-					<td>{{ equipo.promedio }}</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-		<div class="col-md-3 well">
-			<legend>Tabla de posiciones</legend>
-			<table class="table">
-				{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
-				<tr>
-					<td><a href="{% url "profile_detail" id_profile=profile.user.id %}">{{ profile }}</a></td>
-					<td>{{ profile.puntos }}</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
 	</div>
-	
 </div>
 {% endblock content %}

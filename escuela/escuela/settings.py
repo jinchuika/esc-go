@@ -133,7 +133,7 @@ MEDIA_URL = '/media/'
 
 THUMBNAIL_ALIASES = {
     '': {
-        'avatar': {'size': (100, 100), 'crop': True},
-        'icon': {'size': (30, 30), 'crop': True},
+        'avatar': {'size': (200, 200), 'crop': True},
+        'icon': {'size': (40, 40), 'crop': True},
     },
 }

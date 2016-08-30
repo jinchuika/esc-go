@@ -67,7 +67,7 @@ def get_image_path(instance, filename):
 
 class Equipo(models.Model):
 	nombre = models.CharField(max_length=100)
-	logo = models.ImageField(
+	logo = ThumbnailerImageField(
 		upload_to="equipo_logo",
         null=True,
         blank=True,
@@ -96,7 +96,7 @@ class Alumno(models.Model):
 	nombre = models.CharField(max_length=150, default='')
 	apellido = models.CharField(max_length=150, default='')
 	equipo = models.ForeignKey('Equipo')
-	foto = models.ImageField(
+	foto = ThumbnailerImageField(
 		upload_to="perfil_alumno",
         null=True,
         blank=True,
