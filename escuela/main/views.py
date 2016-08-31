@@ -113,8 +113,9 @@ def reto_detail(request, id_reto):
 			apuesta_list = Apuesta.objects.filter(nota__in=nota_list, user=profile)
 			context['apuesta_list'] = apuesta_list
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
-			form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
-			context['form_apuesta'] = form_apuesta
+			if reto.fecha > date.today():
+				form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
+				context['form_apuesta'] = form_apuesta
 		context['reto'] = reto
 		context['nota_list'] = nota_list
 		return render(request, 'reto/detail.html', context)

@@ -1,16 +1,29 @@
 {% extends "base/base.html" %}
 {% block content %}
-<div class="container">	
+<div class="container align-center">	
 	<div class="row">
 		<div class="col-md-12">
-			<legend><h1>Login</h1></legend>
-			<form action="{{ action }}" method="post">
-				<table class="table table-striped">
-					{% csrf_token %}
-					{{ form.as_table }}
-				</table>
-				<input type="submit" class="btn btn-info" value="Guardar">
-			</form>
+			<legend><h1>Iniciar sesión</h1></legend>
+			<div class="youplay-form">
+				<form action="{{ action }}" method="post">
+					<table class="table table-striped">
+						{% csrf_token %}
+						{% for field in form %}
+						<tr>
+							<td>
+								{{ field.label }}
+							</td>
+							<td>
+								<div class="youplay-input">
+									{{ field }}
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+					<button class="btn btn-default">Iniciar sesión</button>
+				</form>
+			</div>
 			<hr>
 		</div>
 	</div>

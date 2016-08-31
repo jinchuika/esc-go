@@ -6,9 +6,20 @@
 			<form action="" method="post" enctype="multipart/form-data">
 				{% csrf_token %}
 				<table class="table">
-				{{ form.as_table }}
+				{% for field in form %}
+				<tr>
+					<td>
+						<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+					</td>
+					<td>
+						<div class="youplay-input">
+							{{ field }}
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
 				</table>
-				<input type="submit" class="btn btn-primary" value="Guardar" />
+				<button type="submit" class="btn btn-success" value="Guardar">Guardar</button>
 				<a href="{% url "password_change" %}" class="btn btn-info">Cambiar contraseña</a>
 			</form>
 		</div>

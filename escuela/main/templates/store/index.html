@@ -19,8 +19,8 @@
 						<tr>
 							<td>{{ paquete.paquete.nombre }}</td>
 							<td>{{ paquete.paquete.tokens }}</td>
-							<td>{{ paquete.paquete.precio }}</td>
-							<td>{{ paquete.form.paquete }}<input type="submit" value="Comprar" class="btn btn-primary" data-toggle="confirmation">{{ paquete.form.tokens }}</td>
+							<td>$ {{ paquete.paquete.precio }}</td>
+							<td>{{ paquete.form.paquete }}<button type="submit" value="Comprar" class="btn btn-primary" data-toggle="confirmation">Donar</button>{{ paquete.form.tokens }}</td>
 						</tr>
 					</form>
 					{% endfor %}

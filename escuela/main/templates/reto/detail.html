@@ -1,81 +1,143 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-3 well">
-			<legend>Puntuaciones</legend>
-			<table class="table">
-				<tr>
-					<td>Primer lugar</td>
-					<td>{{ reto.pt_1 }}</td>
-				</tr>
-				<tr>
-					<td>Segundo lugar</td>
-					<td>{{ reto.pt_2 }}</td>
-				</tr>
-				<tr>
-					<td>Tercer lugar</td>
-					<td>{{ reto.pt_3 }}</td>
-				</tr>
-			</table>
+<section class="content-wrap container">
+	<!-- Banner -->
+	<div class="youplay-banner banner-top youplay-banner-parallax small">
+		<div class="image">
+			<img src="{{ reto.materia.bg|thumbnail_url:'background' }}" alt="">
 		</div>
-		<div class="col-md-6 well">
-			<legend>{{ reto.materia }}</legend>
-			Este reto termina el {{ reto.fecha }}
-			<h4>Notas de este reto</h4>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Lugar</th>
-						<th>Alumno</th>
-						<th>Equipo</th>
-						<th>Nota</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for nota in nota_list|dictsortreversed:"get_nota" %}
-						<tr>
-							<td>{{ nota.get_lugar }}</td>
-							<td>{{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</td>
-							<td>{{ nota.alumno.equipo }}</td>
-							<td>{{ nota.get_nota }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% if user.is_authenticated %}
-				<div class="row">
-					<div class="col-md-12">
-						<form action="{{ action }}" method="post">
-							<table class="table table-striped">
-								{% csrf_token %}
-								{{ form_apuesta.as_table }}
-							</table>
-							<input type="submit" class="btn btn-info" value="Guardar">
-						</form>
+		<div class="info">
+			<div>
+				<div class="container youplay-user">
+					<a href="#" class="angled-img image-popup">
+						<div class="img">
+							<img src="{{ reto.materia.icon|thumbnail_url:'avatar' }}" alt="">
+						</div>
+						<i class="fa fa-search-plus icon"></i>
+					</a>
+
+					<div class="user-data">
+						<h2>{{ reto.materia }}</h2>
+						<div class="date"><i class="fa fa-calendar"></i>{{ reto.fecha }}</div>
+						<div class="activity">
+							<div>
+								<div class="num">{{ reto.pt_1 }}p</div>
+								<div class="title">1er lugar</div>
+							</div>
+							<div>
+								<div class="num">{{ reto.pt_2 }}p</div>
+								<div class="title">2do lugar</div>
+							</div>
+							<div>
+								<div class="num">{{ reto.pt_3 }}p</div>
+								<div class="title">3er lugar</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			{% endif %}
-		</div>
-		<div class="col-md-3 well">
-			<legend>Apoyos de este reto</legend>
-			<ul>
-				{% for apuesta in apuesta_list|dictsortreversed:"punteo" %}
-					<li>
-						{{ apuesta.user }} por equipo <b>{{ apuesta.nota.alumno.equipo }}</b><br>
-						{{ apuesta.tokens }} tokens - ({{ apuesta.get_punteo }} puntos)
-					</li>
-				{% endfor %}
-			</ul>
+			</div>
 		</div>
 	</div>
-</div>
+	<!-- /Banner -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 side-block">
+				<h3 class="block-title">Notas de este reto</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Lugar</th>
+							<th>Alumno</th>
+							<th>Equipo</th>
+							<th>Nota</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for nota in nota_list|dictsortreversed:"get_nota" %}
+						<tr>
+							<td>{{ nota.get_lugar }}</td>
+							<td>
+								<a href="{% url "alumno_detail" id_alumno=nota.alumno.id%}"><img src="{{ nota.alumno.foto|thumbnail_url:'icon' }}"> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</a>
+							</td>
+							<td>
+								<a href="{% url "equipo_detail" id_equipo=nota.alumno.equipo.id %}">{{ nota.alumno.equipo }}</a>
+							</td>
+							<td>{{ nota.get_nota }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if user.is_authenticated %}
+				<div class="row">
+					<div class="col-md-12">
+
+					</div>
+				</div>
+				{% endif %}
+			</div>
+			{% if form_apuesta %}
+			<div class="col-md-3 side-block">
+				<h3 class="block-title">Eliga a quién apoyar</h3>
+				<form action="{{ action }}" method="post" class="form-apuesta">
+					<span class="label">Tienes <span class="tokens-activos lead">{{ user.profile.tokens_activos }}</span> tokens disponibles</span>
+					<table class="table table-striped align-center">
+						{% csrf_token %}
+						<tr>
+							<td>
+								<div class="btn-group-vertical" data-toggle="buttons">
+									{% for opcion in form_apuesta.nota %}
+									<label class="btn btn-xs">
+										{{ opcion }}
+									</label>
+									{% endfor %}
+								</div>
+							</td>
+							<td class="">
+								<label for="{{ form_apuesta.tokens.id_for_label }}">{{ form_apuesta.tokens.label }}</label><br>
+								{{ form_apuesta.tokens }}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type="submit" class="btn btn-info" value="Guardar">¡Apoyar!</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			{% endif %}
+			<div class="col-md-3 side-block">
+				<h3 class="block-title">Apoyos anteriores</h3>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Fecha</th>
+							<th>Equipo</th>
+							<th>Tokens</th>
+							<th>Puntos</th>
+						</tr>
+					</thead>
+					{% for apuesta in apuesta_list|dictsort:"fecha" %}
+					<tr>
+						<td>{{ apuesta.fecha|date:"d/m/y" }}</td>
+						<td>{{ apuesta.nota.alumno.equipo }}</td>
+						<td>{{ apuesta.tokens }}</td>
+						<td>{{ apuesta.get_punteo }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock content %}
 {% block javascript %}
 {% if notificacion %}
-    <script>
-    	alert("Apuesta realizada")
-    </script>
+<script>
+	alert("Apuesta realizada")
+</script>
 
 {% endif %}
 

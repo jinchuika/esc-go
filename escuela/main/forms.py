@@ -28,7 +28,6 @@ class ProfileForm(forms.Form):
 	last_name = forms.CharField(required=True, label='Apellido')
 	email = forms.EmailField()
 	foto = forms.ImageField(required=False, widget=forms.FileInput(), label='Avatar')
-	public = forms.BooleanField(required=False, label='Perfil público')
 
 	def clean(self):
 		cleaned_data = self.cleaned_data
@@ -36,6 +35,13 @@ class ProfileForm(forms.Form):
 
 
 class LoginForm(AuthenticationForm):
+	def __init__(self, *args, **kwargs):
+		super(LoginForm, self).__init__(*args, **kwargs)
+		self.fields['username'].widget.attrs.update({
+		'placeholder': 'Name',
+		'class': 'input-calss_name'
+		})
+
 	def confirm_login_allowed(self, user):
 		if not user.is_active:
 			raise forms.ValidationError(
@@ -46,10 +52,10 @@ class LoginForm(AuthenticationForm):
 
 class ApuestaChoiceField(ModelChoiceField):
 	def label_from_instance(self, obj):
-		return str(obj.alumno)
+		return str(obj.alumno.equipo)
 
 class ApuestaForm(forms.ModelForm):
-	nota = ApuestaChoiceField(queryset=Nota.objects.none(), label='Nota', empty_label=None)
+	nota = ApuestaChoiceField(queryset=Nota.objects.none(), label='Nota', empty_label=None, widget=forms.RadioSelect())
 
 	class Meta:
 		model = Apuesta

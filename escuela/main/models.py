@@ -75,6 +75,14 @@ class Equipo(models.Model):
         help_text="Logo de equipo",
         verbose_name="Logo de equipo"
 		)
+	portada = ThumbnailerImageField(
+		upload_to="equipo_portada",
+        null=True,
+        blank=True,
+        editable=True,
+        help_text="Portada de equipo",
+        verbose_name="Portada de equipo"
+		)
 
 	def promedio(self):
 		total = 0
@@ -115,6 +123,18 @@ class Alumno(models.Model):
 
 class Materia(models.Model):
 	nombre = models.CharField(max_length=100)
+	bg = ThumbnailerImageField(
+		upload_to="materia_media",
+        null=True,
+        blank=True,
+        editable=True,
+		)
+	icon = ThumbnailerImageField(
+		upload_to="materia_media",
+        null=True,
+        blank=True,
+        editable=True,
+		)
 
 	def __str__(self):
 		return self.nombre

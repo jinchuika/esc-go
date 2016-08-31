@@ -1,26 +1,38 @@
 {% extends "base/base.html" %}
+{% load thumbnail%}
 {% block content %}
+<br><br><br><br><br><br>
 <div class="container">
 	<div class="row">
-		<div class="col-md-2 well"></div>
-		<div class="col-md-7 well">
-			{% if equipo.logo %}
-				<img src="{{ equipo.logo.url }}">
-			{% endif %}
-			<legend>{{ equipo.nombre }}</legend>
-			{% for post in post_lista %}
-			<div class="panel panel-primary">
-				<div class="panel-heading">{{ post.titulo }}</div>
-				<div class="panel-body">
-					{{ post.cuerpo }}
+		<div class="col-md-9">
+			<div class="youplay-timeline">
+				{% for post in post_lista %}
+				<div class="youplay-timeline-block">
+					<!-- icon -->
+					<div class="youplay-timeline-icon bg-warning">
+						<i class="fa fa-bell"></i>
+					</div>
+					<!-- /icon -->
+					<!-- content -->
+					<div class="youplay-timeline-content">
+
+						<h3 class="mb-0">{{ post.titulo }}</h3>
+						{{ post.cuerpo }}
+						<br><br>
+						<article>
+							<div class="comment-avatar pull-left">
+								<img src="{{ post.alumno.foto|thumbnail_url:'avatar-sm'}}">
+							</div> 
+							<div class="comment-cont clearfix">
+								<a class="comment-author h4" href="#!">{{ post.alumno.nombre }} {{ post.alumno.apellido }}</a> 
+								<div class="date"><i class="fa fa-calendar"></i>{{ post.fecha }}</div>
+							</div>
+						</article>
+					</div>
+					<!-- content -->
 				</div>
-				<div class="panel-footer">
-					<blockquote>
-						<footer>Publicado el {{ post.fecha }} por <strong>{{ post.alumno.nombre }} {{ post.alumno.apellido }}</strong></footer>
-					</blockquote>
-				</div>
+					{% endfor %}		
 			</div>
-			{% endfor %}
 		</div>
 		<div class="col-md-3 well">
 		</div>
