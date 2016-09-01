@@ -101,6 +101,13 @@ class Equipo(models.Model):
 	def __str__(self):
 		return self.nombre
 
+class Grado(models.Model):
+	numero = models.IntegerField()
+	seccion = models.CharField(max_length=2, null=True, blank=True)
+
+	def __str__(self):
+		return str(self.numero) + " " + self.seccion
+
 class Alumno(models.Model):
 	nombre = models.CharField(max_length=150, default='')
 	apellido = models.CharField(max_length=150, default='')
@@ -111,6 +118,11 @@ class Alumno(models.Model):
         blank=True,
         editable=True,
 		)
+	grado = models.ForeignKey('Grado', null=True, blank=True)
+	animal = models.CharField(max_length=50, null=True, blank=True)
+	color = models.CharField(max_length=50, null=True, blank=True)
+	sueno = models.CharField(max_length=70, null=True, blank=True)
+	juego = models.CharField(max_length=70, null=True, blank=True)
 
 	def promedio(self):
 		nota_list = Nota.objects.filter(alumno=self)
