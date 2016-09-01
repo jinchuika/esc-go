@@ -21,13 +21,13 @@
 						<h2>{{ profile }}</h2>
 						<div class="activity">
 							<div>
-									<div class="num">{{ profile.puntos }}</div>
-									<div class="title">Puntos</div>
-								</div>
-								<div>
-									<div class="num">{{ profile.tokens_activos }}</div>
-									<div class="title">Tokens</div>
-								</div>
+								<div class="num">{{ profile.puntos }}</div>
+								<div class="title">Puntos</div>
+							</div>
+							<div>
+								<div class="num">{{ profile.tokens_activos }}</div>
+								<div class="title">Tokens</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -37,63 +37,58 @@
 	<!-- /Banner -->
 	<div class="row">
 		<div class="col-md-9">
-			<div>
-				<ul class="nav nav-tabs" role="tablist">
+			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#apuestas" aria-controls="apuestas" role="tab" data-toggle="tab">Apoyos</a></li>
-					<li role="presentation"><a href="#compras" aria-controls="compras" role="tab" data-toggle="tab">Donaciones</a></li>
-				</ul>
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active table-responsive" id="apuestas">
-						<table class="table table-paginated table-bordered table-hover">
-							<thead>
-								<tr>
-									<th>Fecha</th>
-									<th>Tokens</th>
-									<th>Alumno</th>
-									<th>Reto</th>
-									<th>Resultado</th>
-									<th>p/Token</th>
-									<th>Puntos acumulados</th>
-								</tr>
-							</thead>
-							{% for apuesta in apuesta_list %}
+				<li role="presentation"><a href="#compras" aria-controls="compras" role="tab" data-toggle="tab">Donaciones</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active table-responsive" id="apuestas">
+					<table class="table table-paginated table-bordered table-hover">
+						<thead>
 							<tr>
-								<td>{{ apuesta.fecha|date:"d/m/Y" }}</td>
-								<td>{{ apuesta.tokens }}</td>
-								<td>{{ apuesta.nota.alumno }}</td>
-								<td>{{ apuesta.nota.reto.materia }}</td>
-								<td>{{ apuesta.nota.nota }}</td>
-								<td>{{ apuesta.nota.puntos_token }}</td>
-								<td>{{ apuesta.punteo }}</td>
+								<th>Fecha</th>
+								<th>Tokens</th>
+								<th>Alumno</th>
+								<th>Reto</th>
+								<th>Resultado</th>
+								<th>p/Token</th>
+								<th>Puntos acumulados</th>
+							</tr>
+						</thead>
+						{% for apuesta in apuesta_list %}
+						<tr>
+							<td>{{ apuesta.fecha|date:"d/m/Y" }}</td>
+							<td>{{ apuesta.tokens }}</td>
+							<td>{{ apuesta.nota.alumno }}</td>
+							<td>{{ apuesta.nota.reto.materia }}</td>
+							<td>{{ apuesta.nota.nota }}</td>
+							<td>{{ apuesta.nota.puntos_token }}</td>
+							<td>{{ apuesta.punteo }}</td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+				<div role="tabpanel" class="tab-pane table-responsive" id="compras">
+					<table class="table table-hover table-paginated table-bordered">
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Paquete</th>
+								<th>Tokens</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for compra in compra_list %}
+							<tr>
+								<td>{{ compra.fecha|date:"d/m/Y" }}</td>
+								<td>{{ compra.paquete }}</td>
+								<td>{{ compra.paquete.tokens }}</td>
 							</tr>
 							{% endfor %}
-						</table>
-					</div>
-					<div role="tabpanel" class="tab-pane table-responsive" id="compras">
-						<table class="table table-hover table-paginated table-bordered">
-							<thead>
-								<tr>
-									<th>Fecha</th>
-									<th>Paquete</th>
-									<th>Tokens</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for compra in compra_list %}
-								<tr>
-									<td>{{ compra.fecha|date:"d/m/Y" }}</td>
-									<td>{{ compra.paquete }}</td>
-									<td>{{ compra.paquete.tokens }}</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
+						</tbody>
+					</table>
 				</div>
-
 			</div>
-			<hr>
-			
 		</div>
 		<div class="col-md-3">
 		</div>

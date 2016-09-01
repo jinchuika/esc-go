@@ -24,10 +24,28 @@ def index(request):
 	return render(request, 'index.html', context)
 
 def alumno_detail(request, id_alumno):
+	context = {}
 	alumno = get_object_or_404(Alumno, id=id_alumno)
-	context = {
-		'alumno': alumno
-	}
+	if request.user.is_authenticated():
+		if request.method=='POST':
+			form_mensaje = PostMensajeForm(request.POST or None)
+			if form_mensaje.is_valid():
+				instance = form_mensaje.save(commit=False)
+				instance.alumno = alumno
+				instance.escrito_por = Profile.objects.get(user = request.user)
+				if instance.validar_regalo():
+					compra = Compra(
+						profile=instance.escrito_por, 
+						paquete=Paquete.objects.filter(regalo=True,disponible=False).first()
+						)
+					compra.save()
+				instance.save()
+				return redirect('alumno_detail', id_alumno=alumno.id)
+		else:
+			form_mensaje = PostMensajeForm()
+		context['form_mensaje'] = form_mensaje
+
+	context['alumno'] = alumno
 	return render(request, 'alumno/detail.html', context)
 
 def post_add(request, id_alumno):
@@ -59,7 +77,7 @@ def mensaje_add(request, id_alumno):
 				)
 			compra.save()
 		instance.save()
-		return redirect('equipo_blog', id_equipo=alumno.equipo.id)
+		return redirect('alumno_detail', id_equipo=alumno.equipo.id)
 	context = {
 		'form_mensaje': form_mensaje,
 		'alumno': alumno,
@@ -80,7 +98,8 @@ def equipo_detail(request, id_equipo):
 def equipo_blog(request, id_equipo):
 	equipo = get_object_or_404(Equipo, id=id_equipo)
 	alumno_lista = Alumno.objects.filter(equipo=equipo)
-	post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+	post_lista_all = PostAlumno.objects.filter(alumno__in=alumno_lista).order_by('fecha')[:10]
+	post_lista = reversed(post_lista_all)
 	context = {
 		'equipo': equipo,
 		'alumno_lista': alumno_lista,

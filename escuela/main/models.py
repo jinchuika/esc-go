@@ -94,7 +94,8 @@ class Equipo(models.Model):
 
 	def blog(self):
 		alumno_lista = Alumno.objects.filter(equipo=self)
-		post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+		post_lista_all = PostAlumno.objects.filter(alumno__in=alumno_lista).order_by('fecha')[:10]
+		post_lista = reversed(post_lista_all)
 		return post_lista
 
 	def __str__(self):
@@ -117,6 +118,12 @@ class Alumno(models.Model):
 		for n in nota_list:
 			total = total + n.nota
 		return total/nota_list.count() if nota_list.count() > 0 else 0
+
+	def blog(self):
+		post_lista_all = PostAlumno.objects.filter(alumno=self).order_by('fecha')[:10]
+		post_lista = reversed(post_lista_all)
+		return post_lista
+
 
 	def __str__(self):
 		return (self.nombre) + " " + self.apellido + " (" +str(self.equipo)+ ")"
@@ -147,7 +154,7 @@ class Reto(models.Model):
 	pt_3 = models.IntegerField()
 
 	def ultimo_reto(fecha=date.today()):
-		ultimo_reto = Reto.objects.filter(fecha__lt=fecha).order_by('fecha').reverse()
+		ultimo_reto = Reto.objects.filter(fecha__lte=fecha).order_by('fecha').reverse()
 		if ultimo_reto.count() < 1:
 			return None
 		else:
@@ -159,6 +166,20 @@ class Reto(models.Model):
 			return None
 		else:
 			return proximo_reto[0]
+
+	def anterior(self):
+		anterior = Reto.objects.filter(fecha__lte=self.fecha).order_by('fecha')
+		if anterior.count() < 1:
+			return None
+		else:
+			return anterior[0]
+	
+	def siguiente(self):
+		siguiente = Reto.objects.filter(fecha__gt=self.fecha).order_by('fecha')
+		if siguiente.count() < 1:
+			return None
+		else:
+			return siguiente[0]
 
 	def notas(self):
 		nota_list = Nota.objects.filter(reto=self)
