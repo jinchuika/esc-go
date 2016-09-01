@@ -8,6 +8,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+escuela/escuela/settings.py
 .Python
 env/
 build/
@@ -82,7 +83,6 @@ celerybeat-schedule
 # virtualenv
 .venv/
 venv/
-vesc/
 ENV/
 
 # Spyder project settings
