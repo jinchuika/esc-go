@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
+    'easy_thumbnails',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_PROFILE_MODULE = 'main.Profile'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -127,3 +130,13 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'index'
 MEDIA_ROOT = '/var/www/html/'
 MEDIA_URL = '/media/'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'background': {'size': (1350, 650), 'crop': True},
+        'avatar': {'size': (180, 180), 'crop': True},
+        'avatar-sm': {'size': (90, 90), 'crop': True},
+        'icon': {'size': (40, 40), 'crop': True},
+        'icon-xs': {'size': (15, 15), 'crop': True},
+    },
+}

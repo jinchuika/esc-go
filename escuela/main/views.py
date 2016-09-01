@@ -3,7 +3,7 @@ from main.models import *
 from datetime import timedelta, date, time
 from main.forms import *
 from django.forms import formset_factory, modelformset_factory
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, views as auth_views, update_session_auth_hash
 from django.views.generic import View, UpdateView
 from django.http import HttpResponse
 import json
@@ -24,10 +24,28 @@ def index(request):
 	return render(request, 'index.html', context)
 
 def alumno_detail(request, id_alumno):
+	context = {}
 	alumno = get_object_or_404(Alumno, id=id_alumno)
-	context = {
-		'alumno': alumno
-	}
+	if request.user.is_authenticated():
+		if request.method=='POST':
+			form_mensaje = PostMensajeForm(request.POST or None)
+			if form_mensaje.is_valid():
+				instance = form_mensaje.save(commit=False)
+				instance.alumno = alumno
+				instance.escrito_por = Profile.objects.get(user = request.user)
+				if instance.validar_regalo():
+					compra = Compra(
+						profile=instance.escrito_por, 
+						paquete=Paquete.objects.filter(regalo=True,disponible=False).first()
+						)
+					compra.save()
+				instance.save()
+				return redirect('alumno_detail', id_alumno=alumno.id)
+		else:
+			form_mensaje = PostMensajeForm()
+		context['form_mensaje'] = form_mensaje
+
+	context['alumno'] = alumno
 	return render(request, 'alumno/detail.html', context)
 
 def post_add(request, id_alumno):
@@ -59,7 +77,7 @@ def mensaje_add(request, id_alumno):
 				)
 			compra.save()
 		instance.save()
-		return redirect('equipo_blog', id_equipo=alumno.equipo.id)
+		return redirect('alumno_detail', id_equipo=alumno.equipo.id)
 	context = {
 		'form_mensaje': form_mensaje,
 		'alumno': alumno,
@@ -80,7 +98,8 @@ def equipo_detail(request, id_equipo):
 def equipo_blog(request, id_equipo):
 	equipo = get_object_or_404(Equipo, id=id_equipo)
 	alumno_lista = Alumno.objects.filter(equipo=equipo)
-	post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+	post_lista_all = PostAlumno.objects.filter(alumno__in=alumno_lista).order_by('fecha')[:10]
+	post_lista = reversed(post_lista_all)
 	context = {
 		'equipo': equipo,
 		'alumno_lista': alumno_lista,
@@ -113,24 +132,12 @@ def reto_detail(request, id_reto):
 			apuesta_list = Apuesta.objects.filter(nota__in=nota_list, user=profile)
 			context['apuesta_list'] = apuesta_list
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
-			form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
-			context['form_apuesta'] = form_apuesta
+			if reto.fecha > date.today():
+				form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
+				context['form_apuesta'] = form_apuesta
 		context['reto'] = reto
 		context['nota_list'] = nota_list
 		return render(request, 'reto/detail.html', context)
-
-def profile_add(request):
-	if request.method=='POST':
-		profile_form = ProfileModelForm(request.POST)
-		if profile_form.is_valid():
-			profile = profile_form.save(commit=False)
-			profile.save()
-			return redirect('profile_detail', id_profile=profile.id)
-	else:
-		user = User()
-		ProfileFormset = modelformset_factory(ProfileModelForm, fields=('username', 'password', 'first_name', 'last_name'))
-		profile_form = ProfileFormset(instance=user)
-	return render(request, 'user/add.html', {'profile_form': profile_form})
 
 def profile_detail(request, id_profile):
 	profile = get_object_or_404(Profile, id=id_profile)
@@ -175,13 +182,6 @@ def crear_compra(request):
 			content_type="application/json"
 			)
 
-def compra_add(request, id_paquete):
-	user = User.objects.get(id=request.user.id)
-	profile = Profile.objects.get(user=user)
-	paquete = Paquete.objects.get(id=id_paquete)
-	compra = Compra(paquete=paquete, profile=profile)
-	compra.save()
-	return redirect('profile_detail', id_profile=profile.id)
 
 class NotaFormView(View):
 	form_class = NotaForm
@@ -252,6 +252,35 @@ class UserUpdate(UpdateView):
 		context = {}
 		self.object = context.save(clean)
 		return super(UserUpdate, self).form_valid(form)
+
+def profile_edit(request):
+	user_profile = request.user.profile
+	if request.method == 'POST':
+		form = ProfileForm(request.POST)
+		if form.is_valid():
+			user = request.user
+			user.first_name = form.cleaned_data['first_name']
+			user.last_name = form.cleaned_data['last_name']
+			user.email = form.cleaned_data['email']
+			user.profile.public = form.cleaned_data['public']
+
+			#guardar avatar
+			if 'foto' in request.FILES:
+				user.profile.foto = request.FILES['foto']
+
+			user.save()
+			user.profile.save()
+		return redirect('profile_detail', id_profile=user_profile.id)
+	else:
+		initial = {
+			'first_name': request.user.first_name,
+			'last_name': request.user.last_name,
+			'email': request.user.email,
+			'foto': request.user.profile.foto,
+			'public': request.user.profile.public
+		}
+		form = ProfileForm(initial=initial)
+	return render(request, 'user/update.html', {'form': form})
 		
 
 class UserLoginView(View):
@@ -279,3 +308,14 @@ class UserLoginView(View):
 					return redirect('index')
 
 		return render(request, self.template_name, {'form': form})
+
+def password_change(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(user=request.user, data=request.POST)
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)
+			return redirect('profile_detail', id_profile=request.user.profile.id)
+	else:
+		form = PasswordChangeForm(user=request.user)
+	return render(request, 'user/password_change.html', {'form': form})

@@ -1,26 +1,105 @@
 {% extends "base/base.html" %}
+{% load thumbnail %}
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-9">
-			<legend>{{ alumno.nombre }} {{ alumno.apellido }}</legend>
-			{% if alumno.foto %}
-			    <img src="{{ alumno.foto.url }}">
-			{% endif %}
+<section class="content-wrap container">
+	<!-- Banner -->
+	<div class="youplay-banner banner-top youplay-banner-parallax small">
+		<div class="image">
+			<img src="{{ alumno.equipo.portada|thumbnail_url:'background' }}" alt="Portada de equipo">
 		</div>
-		<div class="col-md-3">
-			{% if user.is_authenticated %}
-				
-			{% endif %}
-		</div>
-	</div>
+		<div class="info">
+			<div>
+				<div class="container youplay-user">
+					<a href="#" class="angled-img image-popup">
+						<div class="img">
+							<img src="{{ alumno.foto|thumbnail_url:'avatar' }}" alt="">
+						</div>
+					</a>
 
-	{% if user.is_staff %}
-		<div class="row">
-			<div class="col-md-2">
-				<a class="btn btn-primary" href="{% url "alumno_post_add" id_alumno=alumno.id %}">Publicar como este alumno</a>
+					<div class="user-data">
+						<h2>{{ alumno.nombre }} {{ alumno.apellido }}</h2>
+						<div class="activity">
+							<div>
+								<div class="num">{{ alumno.equipo }}</div>
+								<div class="title">equipo</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	{% endif %}
-</div>
+	</div>
+	<!-- /Banner -->
+	<div class="row">
+		<div class="col-md-9">
+			<div class="row">
+				<div class="col-sm-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información</a></li>
+						<li role="presentation"><a href="#blog" aria-controls="blog" role="tab" data-toggle="tab">Blog</a></li>
+						{% if user.is_authenticated %}
+						<li role="presentation"><a href="#mensaje" aria-controls="mensaje" role="tab" data-toggle="tab">Enviar mensaje</a></li>
+						{% endif %}
+					</ul>
+					<div class="tab-content">
+						<!-- Info alumno -->
+						<div role="tabpanel" class="tab-pane active" id="info">
+							
+						</div>
+						<!-- /Info alumno -->
+						<!-- Blog -->
+						<div role="tabpanel" class="tab-pane" id="blog">
+							<div class="youplay-timeline">
+								{% for post in alumno.blog %}
+								<div class="youplay-timeline-block">
+									<!-- icon -->
+									<div class="youplay-timeline-icon bg-warning">
+										<i class="fa fa-bell"></i>
+									</div>
+									<!-- /icon -->
+									<!-- content -->
+									<div class="youplay-timeline-content">
+
+										<h3 class="mb-0">{{ post.titulo }}</h3>
+										{{ post.cuerpo }}
+										<br><br>
+										<article>
+											<div class="comment-avatar pull-left">
+												<img src="{{ post.alumno.foto|thumbnail_url:'avatar-sm'}}">
+											</div> 
+											<div class="comment-cont clearfix">
+												<a class="comment-author h4" href="{% url "alumno_detail" id_alumno=post.alumno.id %}">{{ post.alumno.nombre }} {{ post.alumno.apellido }}</a> 
+												<div class="date"><i class="fa fa-calendar"></i>{{ post.fecha }}</div>
+											</div>
+										</article>
+									</div>
+									<!-- content -->
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<!-- /Blog -->
+						{% if user.is_authenticated %}
+						<!-- Mensaje alumno -->
+						<div role="tabpanel" class="tab-pane" id="mensaje">
+							<legend>Enviar un mensaje a {{ alumno.nombre }} {{ alumno.apellido }}</legend>
+							<form action="{{ action }}" method="post">
+								{% csrf_token %}
+								<table class="table">
+									{{ form_mensaje.as_table }}
+								</table>
+								<button class="btn btn-primary">Enviar</button>
+							</form>
+						</div>
+						<!-- /Mensaje alumno -->
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			
+		</div>
+	</div>
+</section>
 {% endblock content %}

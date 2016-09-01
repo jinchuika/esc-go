@@ -3,7 +3,7 @@ from django.forms import ModelForm, ModelChoiceField, formset_factory, modelform
 from main.models import *
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
 
 class UserModelForm(ModelForm):
@@ -23,20 +23,39 @@ class ProfileModelForm(UserForm):
 		exclude = ('password',)
 		fields = ['foto']
 
+class ProfileForm(forms.Form):
+	first_name = forms.CharField(required=True, label='Nombre')
+	last_name = forms.CharField(required=True, label='Apellido')
+	email = forms.EmailField()
+	foto = forms.ImageField(required=False, widget=forms.FileInput(), label='Avatar')
+
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		
+
+
 class LoginForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        if not user.is_active:
-            raise forms.ValidationError(
-                _("La cuenta está inactiva."),
-                code='inactive',
-            )
+	def __init__(self, *args, **kwargs):
+		super(LoginForm, self).__init__(*args, **kwargs)
+		self.fields['username'].widget.attrs.update({
+		'placeholder': 'Name',
+		'class': 'input-calss_name'
+		})
+
+	def confirm_login_allowed(self, user):
+		if not user.is_active:
+			raise forms.ValidationError(
+				_("La cuenta está inactiva."),
+				code='inactive',
+			)
+
 
 class ApuestaChoiceField(ModelChoiceField):
 	def label_from_instance(self, obj):
-		return str(obj.alumno)
+		return str(obj.alumno.equipo)
 
 class ApuestaForm(forms.ModelForm):
-	nota = ApuestaChoiceField(queryset=Nota.objects.none(), label='Nota', empty_label=None)
+	nota = ApuestaChoiceField(queryset=Nota.objects.none(), label='Nota', empty_label=None, widget=forms.RadioSelect())
 
 	class Meta:
 		model = Apuesta

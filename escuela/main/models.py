@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from datetime import timedelta, date, time
 from django.utils import timezone
+from easy_thumbnails.fields import ThumbnailerImageField
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	public = models.BooleanField(default=False)
 	es_jugador = models.BooleanField(default=True)
-	foto = models.ImageField(
+	foto = ThumbnailerImageField(
 		upload_to="perfil_usuario",
         null=True,
         blank=True,
@@ -66,13 +67,21 @@ def get_image_path(instance, filename):
 
 class Equipo(models.Model):
 	nombre = models.CharField(max_length=100)
-	logo = models.ImageField(
+	logo = ThumbnailerImageField(
 		upload_to="equipo_logo",
         null=True,
         blank=True,
         editable=True,
         help_text="Logo de equipo",
         verbose_name="Logo de equipo"
+		)
+	portada = ThumbnailerImageField(
+		upload_to="equipo_portada",
+        null=True,
+        blank=True,
+        editable=True,
+        help_text="Portada de equipo",
+        verbose_name="Portada de equipo"
 		)
 
 	def promedio(self):
@@ -85,7 +94,8 @@ class Equipo(models.Model):
 
 	def blog(self):
 		alumno_lista = Alumno.objects.filter(equipo=self)
-		post_lista = PostAlumno.objects.filter(alumno__in=alumno_lista)
+		post_lista_all = PostAlumno.objects.filter(alumno__in=alumno_lista).order_by('fecha')[:10]
+		post_lista = reversed(post_lista_all)
 		return post_lista
 
 	def __str__(self):
@@ -95,7 +105,7 @@ class Alumno(models.Model):
 	nombre = models.CharField(max_length=150, default='')
 	apellido = models.CharField(max_length=150, default='')
 	equipo = models.ForeignKey('Equipo')
-	foto = models.ImageField(
+	foto = ThumbnailerImageField(
 		upload_to="perfil_alumno",
         null=True,
         blank=True,
@@ -109,11 +119,29 @@ class Alumno(models.Model):
 			total = total + n.nota
 		return total/nota_list.count() if nota_list.count() > 0 else 0
 
+	def blog(self):
+		post_lista_all = PostAlumno.objects.filter(alumno=self).order_by('fecha')[:10]
+		post_lista = reversed(post_lista_all)
+		return post_lista
+
+
 	def __str__(self):
 		return (self.nombre) + " " + self.apellido + " (" +str(self.equipo)+ ")"
 
 class Materia(models.Model):
 	nombre = models.CharField(max_length=100)
+	bg = ThumbnailerImageField(
+		upload_to="materia_media",
+        null=True,
+        blank=True,
+        editable=True,
+		)
+	icon = ThumbnailerImageField(
+		upload_to="materia_media",
+        null=True,
+        blank=True,
+        editable=True,
+		)
 
 	def __str__(self):
 		return self.nombre
@@ -126,7 +154,7 @@ class Reto(models.Model):
 	pt_3 = models.IntegerField()
 
 	def ultimo_reto(fecha=date.today()):
-		ultimo_reto = Reto.objects.filter(fecha__lt=fecha).order_by('fecha').reverse()
+		ultimo_reto = Reto.objects.filter(fecha__lte=fecha).order_by('fecha').reverse()
 		if ultimo_reto.count() < 1:
 			return None
 		else:
@@ -138,6 +166,20 @@ class Reto(models.Model):
 			return None
 		else:
 			return proximo_reto[0]
+
+	def anterior(self):
+		anterior = Reto.objects.filter(fecha__lte=self.fecha).order_by('fecha')
+		if anterior.count() < 1:
+			return None
+		else:
+			return anterior[0]
+	
+	def siguiente(self):
+		siguiente = Reto.objects.filter(fecha__gt=self.fecha).order_by('fecha')
+		if siguiente.count() < 1:
+			return None
+		else:
+			return siguiente[0]
 
 	def notas(self):
 		nota_list = Nota.objects.filter(reto=self)

@@ -1,33 +1,106 @@
 {% extends "base/base.html" %}
+{% load thumbnail %}
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-2 well"></div>
-		<div class="col-md-7 well">
-			{% if equipo.logo %}
-				<img src="{{ equipo.logo.url }}">
-			{% endif %}
-			<legend>{{ equipo.nombre }}</legend>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Alumno</th>
-						<th>Promedio</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for alumno in alumno_list|dictsortreversed:"promedio" %}
-						<tr>
-							<td><a href="{% url "alumno_detail" id_alumno=alumno.id%}">{{ alumno.nombre }} {{ alumno.apellido }}</a></td>
-							<td>{{ alumno.promedio }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+<section class="content-wrap container">
+	<!-- Banner -->
+	<div class="youplay-banner banner-top youplay-banner-parallax small">
+		<div class="image">
+			<img src="{{ equipo.portada|thumbnail_url:'background' }}" alt="Portada de equipo">
 		</div>
-		<div class="col-md-3 well">
-			<a class="btn btn-primary" href="{% url "equipo_blog" id_equipo=equipo.id%}">Blog</a>
+		<div class="info">
+			<div>
+				<div class="container youplay-user">
+					<a href="#" class="angled-img image-popup">
+						<div class="img">
+							<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="">
+						</div>
+					</a>
+
+					<div class="user-data">
+						<h2>{{ equipo }}</h2>
+						<div class="activity">
+							<div>
+								<div class="num">p</div>
+								<div class="title">dato</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+	<!-- /Banner -->
+	<div class="row">
+		<div class="col-md-9">
+			<div class="row">
+				<div class="col-sm-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#alumnos" aria-controls="alumnos" role="tab" data-toggle="tab">Alumnos</a></li>
+						<li role="presentation"><a href="#blog" aria-controls="blog" role="tab" data-toggle="tab">Blog</a></li>
+					</ul>
+					<div class="tab-content">
+						<!-- Lista alumno -->
+						<div role="tabpanel" class="tab-pane active" id="alumnos">
+							{% for alumno in alumno_list|dictsortreversed:"promedio" %}
+							<div class="youplay-matches-list">
+								<a class="youplay-single-match" href="{% url "alumno_detail" id_alumno=alumno.id%}">
+									<div class="pull-left">
+										<div class="angled-img">
+											<div class="img">
+												<img src="{{alumno.foto|thumbnail_url:'avatar'}}" alt="{{ alumno }}">
+											</div>
+										</div>
+									</div>
+									<div class="pull-left ml-30">
+										<h3 class="youplay-match-title">{{ alumno.nombre }} {{ alumno.apellido }}</h3>
+										<div class="date">Grado</div>
+									</div>
+									<div class="label youplay-match-count">{{ alumno.promedio|floatformat:2 }}</div>
+									<div class="clearfix"></div>
+								</a>
+							</div>
+							{% endfor %}
+						</div>
+						<!-- /Lista alumno -->
+						<!-- Blog -->
+						<div role="tabpanel" class="tab-pane" id="blog">
+							<div class="youplay-timeline">
+								{% for post in equipo.blog %}
+								<div class="youplay-timeline-block">
+									<!-- icon -->
+									<div class="youplay-timeline-icon bg-warning">
+										<i class="fa fa-bell"></i>
+									</div>
+									<!-- /icon -->
+									<!-- content -->
+									<div class="youplay-timeline-content">
+
+										<h3 class="mb-0">{{ post.titulo }}</h3>
+										{{ post.cuerpo }}
+										<br><br>
+										<article>
+											<div class="comment-avatar pull-left">
+												<img src="{{ post.alumno.foto|thumbnail_url:'avatar-sm'}}">
+											</div> 
+											<div class="comment-cont clearfix">
+												<a class="comment-author h4" href="{% url "alumno_detail" id_alumno=post.alumno.id %}">{{ post.alumno.nombre }} {{ post.alumno.apellido }}</a> 
+												<div class="date"><i class="fa fa-calendar"></i>{{ post.fecha }}</div>
+											</div>
+										</article>
+									</div>
+									<!-- content -->
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<!-- /Blog -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			
+		</div>
+	</div>
+</section>
 {% endblock content %}
