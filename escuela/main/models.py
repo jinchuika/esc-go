@@ -17,6 +17,14 @@ class Profile(models.Model):
         blank=True,
         editable=True,
 		)
+	portada = ThumbnailerImageField(
+		upload_to="portada_usuario",
+        null=True,
+        blank=True,
+        editable=True,
+        help_text="Portada de usuario",
+        verbose_name="Portada de usuario"
+		)
 
 	def tokens_activos(self, fecha=date.today()):
 		tokens = 0
@@ -83,6 +91,7 @@ class Equipo(models.Model):
         help_text="Portada de equipo",
         verbose_name="Portada de equipo"
 		)
+	descripcion = models.TextField(null=True)
 
 	def promedio(self):
 		total = 0

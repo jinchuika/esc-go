@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load index %}
+{% block content %}
+<section class="content-wrap container">
+
+	<!-- Lista materias -->
+	<h2 class="container h1">Materias</h2>
+	<section class="youplay-news container">
+		<div class="row">
+			<div class="col-md-12">
+				{% for materia in materia_list %}
+				<!-- Bloque materia -->
+				<div class="news-one">
+					<div class="row vertical-gutter">
+						<div class="col-md-4">
+							<a href="{% url "materia_detail" id_materia=materia.materia.id %}" class="angled-img">
+								<div class="img">
+									<img src="{{ materia.ganador.foto|thumbnail_url:'avatar-lg'}}" alt="{{ materia.ganador }}">
+								</div>
+							</a>
+						</div>
+						<div class="col-md-8">
+							<div class="clearfix">
+								<div class="img">
+									<img src="{{ materia.materia.materia.icon|thumbnail_url:'icon'}}" alt="{{ materia.materia.materia }}">
+								</div>
+								<h3 class="h2 pull-left m-0"><a href="{% url "materia_detail" id_materia=materia.materia.id%}">{{ materia.materia.materia }}</a></h3>
+								<span class="date pull-right"><i class="fa fa-calendar"></i> {{ materia.materia.fecha }} </span>
+							</div>
+
+							<div class="description">
+								<!-- Datos materia -->
+								<div class="youplay-review-rating">
+									<div class="row">
+										<div class="col-md-8">
+											<h3 class="mt-0">Notas de este materia</h3>
+											<ul>
+												{% for nota in materia.nota_list|dictsortreversed:"get_nota" %}
+												<li><i class="fa fa-plus-circle"></i> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }} {{ nota.get_nota }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+										<div class="col-md-4">
+											<a href="{% url "materia_detail" id_materia=materia.materia.id %}" class="btn read-more pull-left">Ver materia</a>
+										</div>
+									</div>
+								</div>
+								<!-- /Datos materia -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- /Bloque materia -->
+				{% endfor %}
+
+			</section>
+			<!-- /Lista materias -->
+
+		</div>
+	</div>
+</section>
+{% endblock content %}
+

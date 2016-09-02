@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load index %}
+{% block content %}
+<section class="content-wrap container">
+
+	<!-- Lista retos -->
+	<h2 class="container h1">Retos</h2>
+	<section class="youplay-news container">
+		<div class="row">
+			<div class="col-md-12">
+				{% for reto in reto_list %}
+				<!-- Bloque reto -->
+				<div class="news-one">
+					<div class="row vertical-gutter">
+						<div class="col-md-4">
+							<a href="{% url "reto_detail" id_reto=reto.reto.id %}" class="angled-img">
+								<div class="img">
+									<img src="{{ reto.ganador.foto|thumbnail_url:'avatar-lg'}}" alt="{{ reto.ganador }}">
+								</div>
+							</a>
+						</div>
+						<div class="col-md-8">
+							<div class="clearfix">
+								<div class="img">
+									<img src="{{ reto.reto.materia.icon|thumbnail_url:'icon'}}" alt="{{ reto.reto.materia }}">
+								</div>
+								<h3 class="h2 pull-left m-0"><a href="{% url "reto_detail" id_reto=reto.reto.id%}">{{ reto.reto.materia }}</a></h3>
+								<span class="date pull-right"><i class="fa fa-calendar"></i> {{ reto.reto.fecha }} </span>
+							</div>
+
+							<div class="description">
+								<!-- Datos reto -->
+								<div class="youplay-review-rating">
+									<div class="row">
+										<div class="col-md-8">
+											<h3 class="mt-0">Notas de este reto</h3>
+											<ul>
+												{% for nota in reto.nota_list|dictsortreversed:"get_nota" %}
+												<li><i class="fa fa-plus-circle"></i> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }} {{ nota.get_nota }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+										<div class="col-md-4">
+											<a href="{% url "reto_detail" id_reto=reto.reto.id %}" class="btn read-more pull-left">Ver reto</a>
+										</div>
+									</div>
+								</div>
+								<!-- /Datos reto -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- /Bloque reto -->
+				{% endfor %}
+
+			</section>
+			<!-- /Lista retos -->
+
+		</div>
+	</div>
+</section>
+{% endblock content %}
+

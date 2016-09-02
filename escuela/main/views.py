@@ -107,6 +107,22 @@ def equipo_blog(request, id_equipo):
 	}
 	return render(request, 'equipo/blog.html', context)
 
+def reto_all(request):
+	reto_list = []
+	for reto in Reto.objects.all():
+		nota_list_all = Nota.objects.filter(reto=reto).order_by('nota')
+		nota_list = nota_list_all
+		ganador = nota_list_all.last().alumno if reto.fecha <= date.today() else None
+		pasado = True if reto.fecha <= date.today() else False
+		reto_list.append({
+			'reto': reto,
+			'nota_list': nota_list,
+			'ganador': ganador,
+			'pasado': pasado
+			})
+	context = {'reto_list': reto_list}
+	return render(request, 'reto/all.html', context)
+
 def reto_detail(request, id_reto):
 	reto = get_object_or_404(Reto, id=id_reto)
 	nota_list = Nota.objects.filter(reto=reto)
@@ -137,7 +153,7 @@ def reto_detail(request, id_reto):
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
 			
 			#formulario para postar si el reto sigue vigente
-			if reto.fecha > date.today():
+			if reto.fecha > date.today() and reto == Reto.proximo_reto():
 				form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
 				context['form_apuesta'] = form_apuesta
 		
@@ -273,6 +289,9 @@ def profile_edit(request):
 			if 'foto' in request.FILES:
 				user.profile.foto = request.FILES['foto']
 
+			#guardar portada
+			if 'portada' in request.FILES:
+				user.profile.portada = request.FILES['portada']
 			user.save()
 			user.profile.save()
 		return redirect('profile_detail', id_profile=user_profile.id)
