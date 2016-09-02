@@ -9,6 +9,9 @@ function comprar_paquete(form) {
 			paquete_id: form_data[1].value
 		},
 		success: function (json) {
+			if (json['done']==1) {
+				BootstrapDialog.alert('¡Apoyaste con éxito!');
+			}
 			$('.tokens-activos').html(json.tokens)
 		}
 	})
@@ -31,7 +34,6 @@ $(document).ready(function () {
 		e.preventDefault();
 		BootstrapDialog.confirm('Confirma que deseas apoyar con '+$('#id_tokens').val()+' token(s)', function(result){
 			if(result) {
-				BootstrapDialog.alert('¡Apoyaste con éxito!')
 				$(formulario).off('submit').trigger('submit');
 			}
 		});

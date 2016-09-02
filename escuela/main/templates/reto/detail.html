@@ -1,6 +1,26 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% load thumbnail %}
+{% block navbar_extra %}
+<ul class="nav navbar-nav">
+	{% if user.is_authenticated %}
+	<li class="dropdown dropdown-hover ">
+		<a href="#!" class="dropdown-toggle" role="button" aria-expanded="false">
+			Retos anteriores <span class="caret"></span>
+		</a>
+		<div class="dropdown-menu">
+			<ul role="menu">
+				{% for reto_v in retos_anteriores|dictsortreversed:"fecha" %}
+				<li><a href="{% url "reto_detail" id_reto=reto_v.id %}">{{ reto_v }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</li>
+	{% else %}
+	<li><a href="{% url "login" %}">Iniciar sesión</a></li>
+	{% endif %}
+</ul>
+{% endblock navbar_extra %}
 {% block content %}
 <section class="content-wrap container">
 	<!-- Banner -->
@@ -87,6 +107,7 @@
 						<tr>
 							<td>
 								<div class="btn-group-vertical" data-toggle="buttons">
+									<label class="btn hide"></label>
 									{% for opcion in form_apuesta.nota %}
 									<label class="btn btn-xs">
 										{{ opcion }}
@@ -123,10 +144,15 @@
 					<tr>
 						<td>{{ apuesta.fecha|date:"d/m/y" }}</td>
 						<td>{{ apuesta.nota.alumno.equipo }}</td>
-						<td>{{ apuesta.tokens }}</td>
-						<td>{{ apuesta.get_punteo }}</td>
+						<td class="td-tokens">{{ apuesta.tokens }}</td>
+						<td class="td-puntos">{{ apuesta.get_punteo }}</td>
 					</tr>
 					{% endfor %}
+					<tr>
+						<td colspan="2"><b>Total</b></td>
+						<td id="total-tokens"></td>
+						<td id="total-puntos"></td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -136,9 +162,20 @@
 {% block javascript %}
 {% if notificacion %}
 <script>
-	alert("Apuesta realizada")
+	BootstrapDialog.alert('¡Apoyaste con éxito!');
 </script>
-
 {% endif %}
-
+<script>
+	$(document).ready(function () {
+		var total_tokens = 0, total_puntos = 0;
+		$.each($('.td-tokens'), function (index, td) {
+			total_tokens += isNaN(parseInt($(td).html())) ? 0 : parseInt($(td).html());
+		});
+		$.each($('.td-puntos'), function (index, td) {
+			total_puntos += isNaN(parseInt($(td).html())) ? 0 : parseInt($(td).html());
+		});
+		$('#total-tokens').html(total_tokens);
+		$('#total-puntos').html(total_puntos);
+	})
+</script>
 {% endblock javascript %}
