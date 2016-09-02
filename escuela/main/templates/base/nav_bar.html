@@ -15,7 +15,8 @@
 			</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
-			
+			{% block navbar_extra %}
+			{% endblock navbar_extra %}
 			<ul class="nav navbar-nav navbar-right">
 				{% if user.is_authenticated %}
 				<li><a href="{% url "tienda" %}"><i class="fa fa-shopping-cart"></i> Tienda</a></li>

@@ -123,6 +123,7 @@ class Alumno(models.Model):
 	color = models.CharField(max_length=50, null=True, blank=True)
 	sueno = models.CharField(max_length=70, null=True, blank=True)
 	juego = models.CharField(max_length=70, null=True, blank=True)
+	edad = models.IntegerField(null=True, blank=True)
 
 	def promedio(self):
 		nota_list = Nota.objects.filter(alumno=self)
@@ -196,6 +197,15 @@ class Reto(models.Model):
 	def notas(self):
 		nota_list = Nota.objects.filter(reto=self)
 		return nota_list
+
+	def puntos_profile(self, user):
+		puntos = 0
+		nota_list = Nota.objects.filter(reto=self)
+		for apuesta in Apuesta.objects.filter(user=user, nota__in=nota_list):
+		 	if id_number(apuesta.get_punteo()):
+		 		puntos = puntos + apuesta.get_punteo()
+		return puntos
+
 
 	def __str__(self):
 		return str(self.materia) + " en " + str(self.fecha)

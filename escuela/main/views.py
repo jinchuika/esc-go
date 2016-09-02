@@ -114,27 +114,33 @@ def reto_detail(request, id_reto):
 	#Al crear un nuevo registro
 	if request.method=='POST':
 		if request.user.is_authenticated():
-			profile = Profile.objects.filter(user=request.user)
-			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
+			profile = request.user.profile
+			tokens_activos = profile.tokens_activos()
 			form_apuesta = ApuestaForm(request.POST, nota_list=nota_list, tokens_activos=tokens_activos)
 
 			if form_apuesta.is_valid():
 				apuesta = form_apuesta.save(commit=False)
-				if apuesta.tokens <= profile.first().tokens_activos():
-					apuesta.user = profile.first()
+				if apuesta.tokens <= profile.tokens_activos():
+					apuesta.user = profile
 					apuesta.save()
 		return redirect('reto_detail', id_reto=id_reto)
 	#al entrar a la vista
 	else:
 		context = {}
+		context['retos_anteriores'] = Reto.objects.filter(fecha__lte=date.today())
+
 		if request.user.is_authenticated():
 			profile = Profile.objects.filter(user=request.user)
 			apuesta_list = Apuesta.objects.filter(nota__in=nota_list, user=profile)
 			context['apuesta_list'] = apuesta_list
+			
 			tokens_activos = 0 if profile.count() == 0 else profile.first().tokens_activos()
+			
+			#formulario para postar si el reto sigue vigente
 			if reto.fecha > date.today():
 				form_apuesta = ApuestaForm(nota_list=nota_list, tokens_activos=tokens_activos)
 				context['form_apuesta'] = form_apuesta
+		
 		context['reto'] = reto
 		context['nota_list'] = nota_list
 		return render(request, 'reto/detail.html', context)
@@ -262,7 +268,6 @@ def profile_edit(request):
 			user.first_name = form.cleaned_data['first_name']
 			user.last_name = form.cleaned_data['last_name']
 			user.email = form.cleaned_data['email']
-			user.profile.public = form.cleaned_data['public']
 
 			#guardar avatar
 			if 'foto' in request.FILES:

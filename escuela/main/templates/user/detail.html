@@ -55,13 +55,13 @@
 								<th>Puntos acumulados</th>
 							</tr>
 						</thead>
-						{% for apuesta in apuesta_list %}
+						{% for apuesta in apuesta_list|dictsortreversed:"fecha" %}
 						<tr>
-							<td>{{ apuesta.fecha|date:"d/m/Y" }}</td>
+							<td>{{ apuesta.fecha|date:"Y/m/d" }}</td>
 							<td>{{ apuesta.tokens }}</td>
 							<td>{{ apuesta.nota.alumno }}</td>
 							<td>{{ apuesta.nota.reto.materia }}</td>
-							<td>{{ apuesta.nota.nota }}</td>
+							<td>{{ apuesta.nota.get_nota }}</td>
 							<td>{{ apuesta.nota.puntos_token }}</td>
 							<td>{{ apuesta.punteo }}</td>
 						</tr>
