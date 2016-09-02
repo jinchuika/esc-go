@@ -118,7 +118,7 @@ def reto_detail(request, id_reto):
 			tokens_activos = profile.tokens_activos()
 			form_apuesta = ApuestaForm(request.POST, nota_list=nota_list, tokens_activos=tokens_activos)
 
-			if form_apuesta.is_valid():
+			if form_apuesta.is_valid() and form_apuesta.cleaned_data['tokens']>0:
 				apuesta = form_apuesta.save(commit=False)
 				if apuesta.tokens <= profile.tokens_activos():
 					apuesta.user = profile
