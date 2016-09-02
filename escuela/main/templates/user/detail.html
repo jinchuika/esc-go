@@ -1,20 +1,20 @@
 {% extends "base/base.html" %}
 {% load thumbnail %}
 {% block content %}
+<section class="content-wrap container">
 <div class="container">
 	<!-- Banner -->
 	<div class="youplay-banner banner-top youplay-banner-parallax small">
 		<div class="image">
-			<img src="" alt="">
+			<img src="{{ profile.portada|thumbnail_url:'background' }}" alt="">
 		</div>
 		<div class="info">
 			<div>
 				<div class="container youplay-user">
-					<a href="{{ profile.foto|thumbnail_url:'avatar' }}" class="angled-img image-popup">
+					<a href="#!" class="angled-img image-popup">
 						<div class="img">
 							<img src="{{ profile.foto|thumbnail_url:'avatar' }}" alt="">
 						</div>
-						<i class="fa fa-search-plus icon"></i>
 					</a>
 
 					<div class="user-data">
@@ -94,4 +94,5 @@
 		</div>
 	</div>
 </div>
+</section>
 {% endblock content %}

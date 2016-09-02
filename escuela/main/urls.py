@@ -17,6 +17,7 @@ urlpatterns = [
 	url(r'^a/(?P<id_alumno>[0-9]+)/mensaje/$', views.mensaje_add, name='mensaje_add'),
 
 	url(r'^r/(?P<id_reto>[0-9]+)/$', views.reto_detail, name='reto_detail'),
+	url(r'^r/$', views.reto_all, name='reto_all'),
 
 	url(r'^n/add/$', views.NotaFormView.as_view(), name='nota_add'),
 

@@ -3,6 +3,7 @@
 {% block content %}
 {% load thumbnail %}
 <section class="content-wrap container">
+<div class="container">
 	<section class="youplay-banner banner-top youplay-banner-parallax">
 		<div class="image" style="background-image: url('{% static 'images/back-1400_2.jpg' %}')">
 		</div>
@@ -37,10 +38,10 @@
 										<div class="img">
 											<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="{{equipo}}">
 										</div>
-											<div class="youplay-hexagon-rating youplay-hexagon-rating-small" data-max="10" data-back-color="rgba(60,7,50,0.1)" data-front-color="#3C0732" data-size="50" title="6.8 out of 10"><span>{{ equipo.promedio|floatformat:2 }}</span></div>
+											<div class="" data-max="10" data-back-color="rgba(60,7,50,0.1)" data-front-color="#3C0732" data-size="50"><span>{{ equipo.promedio|floatformat:2 }} promedio</span></div>
 									</div>
 									<div class="youplay-match-data">
-										<h3>{{ equipo }}</h3>
+										<h3 style="white-space: normal;">{{ equipo }}</h3>
 										
 									</div>
 								</div>
@@ -95,6 +96,6 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </section>
 {% endblock content %}

@@ -52,7 +52,7 @@
 												<div class="img">
 													<img src="{{alumno.foto|thumbnail_url:'avatar-lg'}}" alt="{{ alumno }}" alt="">
 												</div>
-												<div class="youplay-hexagon-rating youplay-hexagon-rating-small" data-max="10" data-size="50" title="9.1 out of 10"><span>{{ alumno.promedio|floatformat:2 }}</span>
+												<div class="" data-max="10" data-size="50" title="9.1 out of 10"><span>{{ alumno.promedio|floatformat:2 }}</span>
 												</div>
 											</a>
 										</div>
@@ -66,20 +66,10 @@
 												<div class="youplay-review-rating">
 													<div class="row">
 														<div class="col-md-4">
-														<div class="youplay-hexagon-rating" data-max="100"><span>{{ alumno.promedio|floatformat:2 }}</span>
+														<div class="" data-max="100"><span>{{ alumno.promedio|floatformat:2 }}</span>
 															</div>
 														</div>
-														<div class="col-md-4">
-															<h3 class="mt-0">Datos</h3>
-															<ul>
-																<li><i class="fa fa-plus-circle"></i> <b>Grado:</b> {{ alumno.grado }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Animal favorito:</b> {{ alumno.animal }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Color favorito: </b>{{ alumno.color }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Sueño:</b> {{ alumno.sueno }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Juego favorito:</b> {{ alumno.juego }}</li>
-															</ul>
-														</div>
-														<div class="col-md-4">
+														<div class="col-md-8">
 															<a href="{% url "alumno_detail" id_alumno=alumno.id %}" class="btn read-more pull-left">Ver perfil</a>
 														</div>
 													</div>
