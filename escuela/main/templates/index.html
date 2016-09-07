@@ -3,99 +3,87 @@
 {% block content %}
 {% load thumbnail %}
 <section class="content-wrap container">
-<div class="container">
-	<section class="youplay-banner banner-top youplay-banner-parallax">
-		<div class="image" style="background-image: url('{% static 'images/back-1400_2.jpg' %}')">
-		</div>
+	<div class="container">
+		<section class="youplay-banner banner-top youplay-banner-parallax">
+			<div class="image" style="background-image: url('{% static 'images/back-1400_2.jpg' %}')">
+			</div>
 
-		<div class="info">
-			<div>
-				<div class="container">
-				<h1>Bienvenido</h1>
-					<em>Gracias por apoyar a las escuelas públicas de Guatemala</em>
-					<a class="btn btn-lg" href="{% url "reto_detail" id_reto=siguiente_reto.id %}">Ir al siguiente reto</a>
-					<br>
-					<br>
-					<br>
-					<em>El siguiente reto es {{ siguiente_reto.materia }} el {{ siguiente_reto.fecha }}</em>
-				</div>
-			</div>
-		</div>
-	</section>
-	<div class="pt-40 pb-40">
-		<div class="row">
-			<div class="col-md-9">
-				<div class="image" style="background-image: url('{% static 'images/bg-1280x720.jpg' %}');">
-				</div>
-				<h3 class="block-title">Equipos</h3>
-				<div class="row-fluid">
-					{% for equipo in equipo_list|dictsortreversed:"promedio" %}
-					<div class="col-sm-5">
-						<div class="youplay-match-right">
-							<a href="{% url "equipo_detail" id_equipo=equipo.id %}">
-								<div class="youplay-match">
-									<div class="angled-img">
-										<div class="img">
-											<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="{{equipo}}">
-										</div>
-											<div class="" data-max="10" data-back-color="rgba(60,7,50,0.1)" data-front-color="#3C0732" data-size="50"><span>{{ equipo.promedio|floatformat:2 }} promedio</span></div>
-									</div>
-									<div class="youplay-match-data">
-										<h3 style="white-space: normal;">{{ equipo }}</h3>
-										
-									</div>
-								</div>
-							</a>
-						</div>
+			<div class="info">
+				<div>
+					<div class="container">
+						<h1>Bienvenido</h1>
+						<em>Gracias por apoyar a las escuelas públicas de Guatemala</em>
+						<a class="btn btn-lg" href="{% url "reto_detail" id_reto=siguiente_reto.id %}">Ir al siguiente reto</a>
+						<br>
+						<br>
+						<br>
+						<em>El siguiente reto es {{ siguiente_reto.materia }} el {{ siguiente_reto.fecha }}</em>
 					</div>
-					{% if forloop.counter|divisibleby:2 %}
 				</div>
-				<div class="row-fluid">
-					{% else %}
-					{% endif %}
-					{% endfor %}
-				</div>
-				
 			</div>
-			<div class="col-md-3 side-block">
-				<h4 class="block-title">Tabla de posiciones</h4>
-				<div class="youplay-matches-list">
-					{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
-					<a class="youplay-single-match" title="{{ profile }}" href="{% url "profile_detail" id_profile=profile.id%}">
-						<div class="pull-left ml-5">
-							<div class="angled-img">
-								<div class="img">
-									{% if profile.foto %}
-									<img src="{{ profile.foto|thumbnail_url:'icon' }}" alt="{{ profile }}">
-									{% else %}
-									<img src="default.jpg" alt="{{ profile }}">
-									{% endif %}
-								</div>
+		</section>
+		<div class="pt-40 pb-40">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="image" style="background-image: url('{% static 'images/bg-1280x720.jpg' %}');">
+					</div>
+					<h3 class="block-title">Equipos</h3>
+					<div class="row-fluid">
+						{% for equipo in equipo_list|dictsortreversed:"promedio" %}
+						<div class="col-sm-5">
+							<div class="youplay-match-right">
+								<a href="{% url "equipo_detail" id_equipo=equipo.id %}">
+									<div class="youplay-match">
+										<div class="angled-img">
+											<div class="img">
+												<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="{{equipo}}">
+											</div>
+											<div class="" data-max="10" data-back-color="rgba(60,7,50,0.1)" data-front-color="#3C0732" data-size="50">
+												<span>{{ equipo.promedio|floatformat:2 }} promedio</span>
+											</div>
+										</div>
+										<div class="youplay-match-data">
+											<h3 style="white-space: normal;">{{ equipo }}</h3>
+											
+										</div>
+									</div>
+								</a>
 							</div>
 						</div>
-						<div class="label youplay-match-count">{{ profile.puntos }} pts.</div>
-						{{ profile }}
-						<div class="clearfix"></div>
-					</a>
-					{% endfor %}
+						{% if forloop.counter|divisibleby:2 %}
+					</div>
+					<div class="row-fluid">
+						{% else %}
+						{% endif %}
+						{% endfor %}
+					</div>
+					
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="dropdown pull-right">
-				<a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-					Retos anteriores
-					<span class="caret"></span>
-				</a>
-
-				<ul class="dropdown-menu" aria-labelledby="dLabel">
-					{% for reto in reto_lista %}
-					<li><a href="{% url "reto_detail" id_reto=reto.id%}">{{ reto }}</a></li>	
-					{% endfor %}
-				</ul>
+				<div class="col-md-3 side-block">
+					<h4 class="block-title">Tabla de posiciones</h4>
+					<div class="youplay-matches-list">
+						{% for profile in profile_list|dictsortreversed:"puntos"|slice:"10" %}
+						<a class="youplay-single-match" title="{{ profile }}" href="{% url "profile_detail" id_profile=profile.id%}">
+							<div class="pull-left ml-5">
+								<div class="angled-img">
+									<div class="img">
+										{% if profile.foto %}
+										<img src="{{ profile.foto|thumbnail_url:'icon' }}" alt="{{ profile }}">
+										{% else %}
+										<img src="default.jpg" alt="{{ profile }}">
+										{% endif %}
+									</div>
+								</div>
+							</div>
+							<div class="label youplay-match-count">{{ profile.puntos }} pts.</div>
+							{{ profile }}
+							<div class="clearfix"></div>
+						</a>
+						{% endfor %}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </section>
 {% endblock content %}

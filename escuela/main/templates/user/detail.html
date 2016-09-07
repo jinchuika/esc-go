@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load thumbnail %}
+{% load staticfiles %}
 {% block content %}
 <section class="content-wrap container">
 <div class="container">
@@ -28,6 +29,10 @@
 								<div class="num">{{ profile.tokens_activos }}</div>
 								<div class="title">Tokens</div>
 							</div>
+							<div>
+								<div class="num">{{ profile.get_lugar }}</div>
+								<div class="title">lugar</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -40,6 +45,7 @@
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#apuestas" aria-controls="apuestas" role="tab" data-toggle="tab">Apoyos</a></li>
 				<li role="presentation"><a href="#compras" aria-controls="compras" role="tab" data-toggle="tab">Donaciones</a></li>
+				<li role="presentation"><a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">Historial</a></li>
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active table-responsive" id="apuestas">
@@ -88,11 +94,25 @@
 						</tbody>
 					</table>
 				</div>
+				<div role="tabpanel" class="tab-pane table-responsive" id="chart">
+					<form id="form-profile-chart" action="{% url "profile_detail_chart" id_profile=profile.id %}">
+						{% csrf_token %}
+						<input type="hidden" name="profile_id" id="profile_id" value="{{ profile.id }}">
+					</form>
+					<canvas id="chart-canvas" width="500" height="400"></canvas>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-3">
 		</div>
 	</div>
 </div>
 </section>
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/chart.min.js' %}"></script>
+<script>
+$(document).ready(function () {
+	$('#form-profile-chart').trigger('submit');
+});
+</script>
+{% endblock javascript %}

@@ -11,7 +11,9 @@
 	<link rel="stylesheet" href="{% static 'css/youplay-shooter.min.css'%}">
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
 	<link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css'%}">
-	
+	{% block extra_css %}
+	    
+	{% endblock extra_css %}
 </head>
 <body style="padding-top: 70px;">
 	<nav class="navbar-youplay navbar navbar-default navbar-fixed-top navbar-small">

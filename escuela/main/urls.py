@@ -23,6 +23,7 @@ urlpatterns = [
 
 	url(r'^p/add$', views.UserFormView.as_view(), name='profile_add'),
 	url(r'^p/(?P<id_profile>[0-9]+)/$', views.profile_detail, name='profile_detail'),
+	url(r'^p/(?P<id_profile>[0-9]+)/chart/$', views.profile_detail_chart, name='profile_detail_chart'),
 	url(r'^p/edit$', views.profile_edit, name='profile_edit'),
 
 	url(r'^tienda/$', views.tienda, name='tienda'),
