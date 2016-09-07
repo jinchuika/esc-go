@@ -41,13 +41,22 @@ class Profile(models.Model):
 			tokens = tokens - a.tokens
 		return tokens
 
-	def puntos(self):
+	def get_puntos(self, fecha=date.today()):
 		puntos = 0
-		apuestas = Apuesta.objects.filter(user=self)
+		apuestas = Apuesta.objects.filter(user=self, fecha__lt=fecha)
 		for a in apuestas:
 			puntos = puntos + a.get_punteo('int')
 		return puntos
-	puntos = property(puntos)
+	puntos = property(get_puntos)
+
+
+	def get_lugar(self, fecha=date.today()):
+		profile_list = Profile.objects.all()
+		lugar = profile_list.count() + 1
+		for p in profile_list:
+			if self.get_puntos(fecha) >= p.get_puntos(fecha):
+				lugar = lugar - 1
+		return lugar
 
 	def __str__(self):
 		return self.user.first_name + " " + self.user.last_name
@@ -70,9 +79,6 @@ class Compra(models.Model):
 	def __str__(self):
 		return str(self.paquete) + " de " + str(self.profile)
 
-def get_image_path(instance, filename):
-	return os.path.join('photos', str(instance.id), filename)
-
 class Equipo(models.Model):
 	nombre = models.CharField(max_length=100)
 	logo = ThumbnailerImageField(
@@ -93,13 +99,13 @@ class Equipo(models.Model):
 		)
 	descripcion = models.TextField(null=True)
 
-	def promedio(self):
+	def get_promedio(self, fecha=date.today()):
 		total = 0
 		alumno_lista = Alumno.objects.filter(equipo=self)
 		for a in alumno_lista:
-			total = total + a.promedio()
+			total = total + a.promedio(fecha)
 		return total/alumno_lista.count() if alumno_lista.count() > 0 else 0
-	promedio = property(promedio)
+	promedio = property(get_promedio)
 
 	def blog(self):
 		alumno_lista = Alumno.objects.filter(equipo=self)
@@ -134,8 +140,9 @@ class Alumno(models.Model):
 	juego = models.CharField(max_length=70, null=True, blank=True)
 	edad = models.IntegerField(null=True, blank=True)
 
-	def promedio(self):
-		nota_list = Nota.objects.filter(alumno=self)
+	def promedio(self, fecha=None):
+		reto_list = Reto.objects.filter(fecha__lte=fecha)
+		nota_list = Nota.objects.filter(alumno=self, reto__in=reto_list)
 		total = 0
 		for n in nota_list:
 			total = total + n.nota

@@ -109,7 +109,7 @@ def equipo_blog(request, id_equipo):
 
 def reto_all(request):
 	reto_list = []
-	for reto in Reto.objects.all():
+	for reto in Reto.objects.all().order_by('fecha'):
 		nota_list_all = Nota.objects.filter(reto=reto).order_by('nota')
 		nota_list = nota_list_all
 		ganador = nota_list_all.last().alumno if reto.fecha <= date.today() else None
@@ -171,6 +171,24 @@ def profile_detail(request, id_profile):
 		'apuesta_list': apuesta_list,
 	}
 	return render(request, 'user/detail.html', context)
+
+def profile_detail_chart(request, id_profile):
+	reto_list = {}
+	reto_list['materia'] = []
+	reto_list['fecha'] = []
+	reto_list['lugar'] = []
+	reto_list['puntos'] = []
+	profile = Profile.objects.get(id=id_profile)
+	for reto in Reto.objects.filter(fecha__lte=date.today()).order_by('fecha'):
+		reto_list['materia'].append(str(reto.materia))
+		reto_list['fecha'].append(str(reto.fecha))
+		reto_list['lugar'].append(profile.get_lugar(reto.fecha))
+		reto_list['puntos'].append(profile.get_puntos(reto.fecha))
+	return HttpResponse(
+		json.dumps(reto_list),
+		content_type="application/json"
+		)
+		
 
 def tienda(request):
 	user = User.objects.get(id=request.user.id)

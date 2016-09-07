@@ -3,7 +3,6 @@
 {% load thumbnail %}
 {% block navbar_extra %}
 <ul class="nav navbar-nav">
-	{% if user.is_authenticated %}
 	<li class="dropdown dropdown-hover ">
 		<a href="#!" class="dropdown-toggle" role="button" aria-expanded="false">
 			Retos anteriores <span class="caret"></span>
@@ -16,9 +15,6 @@
 			</ul>
 		</div>
 	</li>
-	{% else %}
-	<li><a href="{% url "login" %}">Iniciar sesión</a></li>
-	{% endif %}
 </ul>
 {% endblock navbar_extra %}
 {% block content %}
@@ -129,8 +125,8 @@
 				</form>
 			</div>
 			{% endif %}
-			<div class="col-md-3 side-block">
-				<h3 class="block-title">Apoyos anteriores</h3>
+			<div class="col-md-3 side-block table-responsive">
+				<h3 class="block-title">Tus apoyos</h3>
 				<table class="table table-bordered">
 					<thead>
 						<tr>

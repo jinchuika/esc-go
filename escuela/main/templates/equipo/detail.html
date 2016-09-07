@@ -48,13 +48,12 @@
 								<div class="news-one">
 									<div class="row vertical-gutter">
 										<div class="col-md-4">
-											<a href="{% url "alumno_detail" id_alumno=alumno.id%}" class="angled-img">
+											<a href="{% url "alumno_detail" id_alumno=alumno.id%}" class="angled-img image-popup">
 												<div class="img">
-													<img src="{{alumno.foto|thumbnail_url:'avatar-lg'}}" alt="{{ alumno }}" alt="">
-												</div>
-												<div class="" data-max="10" data-size="50" title="9.1 out of 10"><span>{{ alumno.promedio|floatformat:2 }}</span>
+													<img src="{{alumno.foto|thumbnail_url:'avatar-lg'}}" alt="">
 												</div>
 											</a>
+											
 										</div>
 										<div class="col-md-8">
 											<div class="clearfix">
@@ -66,7 +65,7 @@
 												<div class="youplay-review-rating">
 													<div class="row">
 														<div class="col-md-4">
-														<div class="" data-max="100"><span>{{ alumno.promedio|floatformat:2 }}</span>
+														<div data-max="100"><h3>{{ alumno.promedio|floatformat:2 }}</h3>
 															</div>
 														</div>
 														<div class="col-md-8">

@@ -17,6 +17,90 @@ function comprar_paquete(form) {
 	})
 }
 
+function profile_detail_chart(form) {
+	var form_data = $(form).serializeArray();
+	$.ajax({
+		url: 'chart/',
+		type: 'POST',
+		data: {
+			csrfmiddlewaretoken: form_data[0].value,
+			id_profile: form_data[1].value
+		},
+		success: function (respuesta) {
+			var ctx = document.getElementById("chart-canvas").getContext("2d");
+			var data = {
+				labels: respuesta.materia,
+				datasets: [
+				{
+					label: "Lugar",
+					type: "line",
+					fill: false,
+					lineTension: 0.1,
+					borderColor: "rgba(75,192,192,1)",
+					pointBackgroundColor: "#fff",
+					pointHoverRadius: 10,
+					pointHoverBackgroundColor: "rgba(75,192,192,1)",
+					pointRadius: 5,
+					pointHitRadius: 10,
+					data: respuesta.lugar,
+					spanGaps: false,
+					yAxisID: 'y-axis-1'
+				},
+				{
+					label: "Puntos",
+					type: "line",
+					fill: false,
+					lineTension: 0.1,
+					borderColor: "rgba(113, 179, 124,1)",
+					pointBackgroundColor: "#fff",
+					pointHoverRadius: 10,
+					pointHoverBackgroundColor: "rgba(113, 179, 124,1)",
+					pointRadius: 5,
+					pointHitRadius: 10,
+					data: respuesta.puntos,
+					spanGaps: false,
+					yAxisID: 'y-axis-2'
+				}
+				]
+			};
+			var myLineChart = new Chart(ctx, {
+				type: 'bar',
+				data: data,
+
+				options: {
+					tooltips: {
+                  mode: 'x-axis'
+              },
+					scales: {
+						xAxes: [{
+							display: true
+						}],
+						yAxes: [
+						{
+							reverse: true,
+							id: "y-axis-1",
+							ticks: {
+								stepSize: 2,
+								fixedStepSize: 1,
+								reverse: true
+							}
+						},
+						{
+							id: "y-axis-2",
+							display: false,
+							ticks: {
+								stepSize: 2,
+								fixedStepSize: 1,
+							}
+						}
+						]
+					}
+				}
+			});
+		}
+	})
+}
+
 $(document).ready(function () {
 	$('.form-compra').on('submit', function (e) {
 		var formulario = $(this);
@@ -55,5 +139,10 @@ $(document).ready(function () {
 				"previous":   "Anterior"
 			},
 		}
+	});
+
+	$('#form-profile-chart').on('submit', function (e) {
+		e.preventDefault();
+		profile_detail_chart($(this));
 	});
 });
