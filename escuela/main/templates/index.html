@@ -10,11 +10,11 @@
 
 			<div class="info">
 				<div>
-					<div class="container">
+					<div class="container align-center">
 						<h1>Bienvenido</h1>
 						<em>Gracias por apoyar a las escuelas públicas de Guatemala</em>
+						<br><br>
 						<a class="btn btn-lg" href="{% url "reto_detail" id_reto=siguiente_reto.id %}">Ir al siguiente reto</a>
-						<br>
 						<br>
 						<br>
 						<em>El siguiente reto es {{ siguiente_reto.materia }} el {{ siguiente_reto.fecha }}</em>
@@ -25,35 +25,21 @@
 		<div class="pt-40 pb-40">
 			<div class="row">
 				<div class="col-md-9">
-					<div class="image" style="background-image: url('{% static 'images/bg-1280x720.jpg' %}');">
-					</div>
 					<h3 class="block-title">Equipos</h3>
 					<div class="row-fluid">
 						{% for equipo in equipo_list|dictsortreversed:"promedio" %}
-						<div class="col-sm-5">
-							<div class="youplay-match-right">
-								<a href="{% url "equipo_detail" id_equipo=equipo.id %}">
-									<div class="youplay-match">
-										<div class="angled-img">
-											<div class="img">
-												<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="{{equipo}}">
-											</div>
-											<div class="" data-max="10" data-back-color="rgba(60,7,50,0.1)" data-front-color="#3C0732" data-size="50">
-												<span>{{ equipo.promedio|floatformat:2 }} promedio</span>
-											</div>
-										</div>
-										<div class="youplay-match-data">
-											<h3 style="white-space: normal;">{{ equipo }}</h3>
-											
-										</div>
-									</div>
-								</a>
-							</div>
-						</div>
-						{% if forloop.counter|divisibleby:2 %}
+						<a class="angled-img col-xs-6 col-sm-4" href="{% url "equipo_detail" id_equipo=equipo.id %}">
+				          <div class="img">
+				            <img src="{{ equipo.logo|thumbnail_url:'avatar-lg' }}" alt="{{equipo}}">
+				          </div>
+				          <div class="bottom-info">
+				            <h4>{{ equipo }}</h4>
+				            <div>{{ equipo.promedio|floatformat:2 }} promedio</div>
+				          </div>
+				        </a>
+						{% if forloop.counter|divisibleby:3 %}
 					</div>
 					<div class="row-fluid">
-						{% else %}
 						{% endif %}
 						{% endfor %}
 					</div>

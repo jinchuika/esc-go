@@ -140,7 +140,7 @@ class Alumno(models.Model):
 	juego = models.CharField(max_length=70, null=True, blank=True)
 	edad = models.IntegerField(null=True, blank=True)
 
-	def promedio(self, fecha=None):
+	def promedio(self, fecha=date.today()):
 		reto_list = Reto.objects.filter(fecha__lte=fecha)
 		nota_list = Nota.objects.filter(alumno=self, reto__in=reto_list)
 		total = 0

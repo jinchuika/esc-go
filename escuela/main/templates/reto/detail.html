@@ -75,10 +75,10 @@
 						<tr>
 							<td>{{ nota.get_lugar }}</td>
 							<td>
-								<a href="{% url "alumno_detail" id_alumno=nota.alumno.id%}"><img src="{{ nota.alumno.foto|thumbnail_url:'icon' }}"> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</a>
+								<a href="{% url "alumno_detail" id_alumno=nota.alumno.id%}" class="angled-img"><h4><img src="{{ nota.alumno.foto|thumbnail_url:'icon' }}"> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</h4></a>
 							</td>
 							<td>
-								<a href="{% url "equipo_detail" id_equipo=nota.alumno.equipo.id %}">{{ nota.alumno.equipo }}</a>
+								<a href="{% url "equipo_detail" id_equipo=nota.alumno.equipo.id %}" class="angled-img"><h4>{{ nota.alumno.equipo }}</h4></a>
 							</td>
 							<td>{{ nota.get_nota }}</td>
 						</tr>
