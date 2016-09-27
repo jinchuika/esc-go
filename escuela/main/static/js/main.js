@@ -49,9 +49,11 @@ function profile_detail_chart(form) {
 				{
 					label: "Puntos",
 					type: "line",
-					fill: false,
+					fill: true,
 					lineTension: 0.1,
 					borderColor: "rgba(113, 179, 124,1)",
+					fillColor: "rgba(113, 179, 124,1)",
+					strokeColor: "rgba(113, 179, 124,1)",
 					pointBackgroundColor: "#fff",
 					pointHoverRadius: 10,
 					pointHoverBackgroundColor: "rgba(113, 179, 124,1)",
@@ -60,17 +62,15 @@ function profile_detail_chart(form) {
 					data: respuesta.puntos,
 					spanGaps: false,
 					yAxisID: 'y-axis-2'
-				}
-				]
+				}]
 			};
 			var myLineChart = new Chart(ctx, {
-				type: 'bar',
+				type: 'line',
 				data: data,
-
 				options: {
 					tooltips: {
-                  mode: 'x-axis'
-              },
+						mode: 'x-axis'
+					},
 					scales: {
 						xAxes: [{
 							display: true
