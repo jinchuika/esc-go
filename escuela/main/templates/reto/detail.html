@@ -31,7 +31,6 @@
 						<div class="img">
 							<img src="{{ reto.materia.icon|thumbnail_url:'avatar' }}" alt="">
 						</div>
-						<i class="fa fa-search-plus icon"></i>
 					</a>
 
 					<div class="user-data">
@@ -93,63 +92,82 @@
 				</div>
 				{% endif %}
 			</div>
-			{% if form_apuesta %}
-			<div class="col-md-3 side-block">
-				<h3 class="block-title">Elige a quién apoyar</h3>
-				<form action="{{ action }}" method="post" class="form-apuesta">
-					<span class="label">Tienes <span class="tokens-activos lead">{{ user.profile.tokens_activos }}</span> tokens disponibles</span>
-					<table class="table table-striped align-center">
-						{% csrf_token %}
-						<tr>
-							<td>
-								<div class="btn-group-vertical" data-toggle="buttons">
-									<label class="btn hide"></label>
-									{% for opcion in form_apuesta.nota %}
-									<label class="btn btn-xs">
-										{{ opcion }}
-									</label>
-									{% endfor %}
-								</div>
-							</td>
-							<td class="">
-								<label for="{{ form_apuesta.tokens.id_for_label }}">{{ form_apuesta.tokens.label }}</label><br>
-								{{ form_apuesta.tokens }}
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<button type="submit" class="btn btn-info" value="Guardar">¡Apoyar!</button>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-			{% endif %}
-			<div class="col-md-3 side-block table-responsive">
-				<h3 class="block-title">Tus apoyos</h3>
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Equipo</th>
-							<th>Tokens</th>
-							<th>Puntos</th>
-						</tr>
-					</thead>
-					{% for apuesta in apuesta_list|dictsort:"fecha" %}
-					<tr>
-						<td>{{ apuesta.fecha|date:"d/m/y" }}</td>
-						<td>{{ apuesta.nota.alumno.equipo }}</td>
-						<td class="td-tokens">{{ apuesta.tokens }}</td>
-						<td class="td-puntos">{{ apuesta.get_punteo }}</td>
-					</tr>
-					{% endfor %}
-					<tr>
-						<td colspan="2"><b>Total</b></td>
-						<td id="total-tokens"></td>
-						<td id="total-puntos"></td>
-					</tr>
-				</table>
+			<!-- Tabs -->
+			<div class="col-md-6" role="tabpanel">
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					{% if form_apuesta %}
+					<li role="presentation" class="active success"><a href="#apoyar" class="btn btn-success" aria-controls="apoyar" role="tab" data-toggle="tab">¡Apoyar!</a>
+					</li>
+					<li role="presentation"><a href="#anteriores" class="btn btn-info" aria-controls="anteriores" role="tab" data-toggle="tab">Anteriores</a>
+					</li>
+					{% endif %}
+				</ul>
+
+				<div class="tab-content">
+					{% if form_apuesta %}
+					<div role="tabpanel" class="tab-pane active" id="apoyar">
+						<h3 class="block-title">Elige a quién apoyar</h3>
+						<form action="{{ action }}" method="post" class="form-apuesta">
+							<span class="alert alert-success">Tienes <span class="tokens-activos lead">{{ user.profile.tokens_activos }}</span> tokens disponibles</span>
+							<table class="table table-striped align-center">
+								{% csrf_token %}
+								<tr>
+									<td>
+										<div class="btn-group-vertical" data-toggle="buttons">
+											<label class="btn hide"></label>
+											{% for opcion in form_apuesta.nota %}
+											<label class="btn btn-sm">
+												{{ opcion }}
+											</label>
+											{% endfor %}
+										</div>
+									</td>
+									<td class="">
+										<label for="{{ form_apuesta.tokens.id_for_label }}">{{ form_apuesta.tokens.label }}</label><br>
+										{{ form_apuesta.tokens }}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button type="submit" class="btn btn-info" value="Guardar">¡Apoyar!</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					{% endif %}
+					{% if form_apuesta %}
+					<div role="tabpanel" class="tab-pane" id="anteriores">
+					{% else %}
+					<div role="tabpanel" class="tab-pane active" id="anteriores">
+					{% endif %}
+						<h3 class="block-title">Tus apoyos</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Equipo</th>
+									<th>Tokens</th>
+									<th>Puntos</th>
+								</tr>
+							</thead>
+							{% for apuesta in apuesta_list|dictsort:"fecha" %}
+							<tr>
+								<td>{{ apuesta.nota.alumno.equipo }}</td>
+								<td class="td-tokens">{{ apuesta.tokens }}</td>
+								<td class="td-puntos">{{ apuesta.get_punteo }}</td>
+							</tr>
+							{% endfor %}
+							<tr>
+								<td><b>Total</b></td>
+								<td id="total-tokens"></td>
+								<td id="total-puntos"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

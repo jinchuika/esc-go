@@ -1,31 +1,36 @@
 {% extends "base/base.html" %}
+{% load thumbnail %}
 {% block content %}
 <div class="container">	
 	<div class="row">
 		<div class="col-md-9">
-			<legend><h1>Paquetes disponibles</h1></legend>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Paquete</th>
-						<th>Tokens</th>
-						<th>Precio</th>
-					</tr>
-				</thead>
-				<tbody>
+			<!-- Pricing Tables -->
+			<h2 class="h1">Paquetes disponibles</h2>
+				<div class="row vertical-gutter">
 					{% for paquete in paquete_lista %}
 					<form action="/compra/" method="POST" data-tokens="{{paquete.paquete.tokens}}" data-precio="{{paquete.paquete.precio}}" class="form-compra">
-						{% csrf_token %}
-						<tr>
-							<td>{{ paquete.paquete.nombre }}</td>
-							<td>{{ paquete.paquete.tokens }}</td>
-							<td>$ {{ paquete.paquete.precio }}</td>
-							<td>{{ paquete.form.paquete }}<button type="submit" value="Comprar" class="btn btn-primary" data-toggle="confirmation">Donar</button>{{ paquete.form.tokens }}</td>
-						</tr>
+						<div class="angled-img col-md-3">
+							<div class="img img-offset">
+								<img src="{{ paquete.paquete.imagen|thumbnail_url:'avatar-lg' }}" alt="">
+							</div>
+							<ul class="pricing-table">
+								<li class="plan-name">
+									{{ paquete.paquete.nombre }}
+								</li>
+								<li class="plan-price">
+									{{ paquete.paquete.tokens }} tokens
+								</li>
+								<li>$ {{ paquete.paquete.precio }}</li>
+								<li class="plan-action">
+									{% csrf_token %}
+									{{ paquete.form.paquete }} <button type="submit" value="Comprar" class="btn btn-primary" data-toggle="confirmation">Donar</button>
+								</li>
+							</ul>
+						</div>
 					</form>
 					{% endfor %}
-				</tbody>
-			</table>
+				</div>
+			<!-- /Pricing Tables -->
 		</div>
 		<div class="col-md-3">
 			Actualmente tienes:

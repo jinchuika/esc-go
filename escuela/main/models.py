@@ -67,6 +67,14 @@ class Paquete(models.Model):
 	tokens = models.IntegerField()
 	disponible = models.BooleanField(default=False)
 	regalo = models.BooleanField(default=False)
+	imagen = ThumbnailerImageField(
+		upload_to="imagen_paquete",
+        null=True,
+        blank=True,
+        editable=True,
+        help_text="Imagen de paquete",
+        verbose_name="Imagen de paquete"
+		)
 
 	def __str__(self):
 		return self.nombre
@@ -318,3 +326,20 @@ class Mensaje(Post):
 			return True
 		else:
 			return False
+
+class Meta(models.Model):
+	cantidad = models.DecimalField(max_digits=8, decimal_places=2)
+	fecha = models.DateField()
+	descripcion = models.CharField(max_length=60)
+
+	def __str__(self):
+		return self.descripcion
+
+	def get_progreso(self):
+		compra_list = Compra.objects.filter(fecha__lte=self.fecha)
+		total = 0
+		for c in compra_list:
+			total += c.paquete.precio
+		porcentaje = total / self.cantidad * 100
+		return {'total': total, 'porcentaje' : porcentaje}
+	progreso = property(get_progreso)
