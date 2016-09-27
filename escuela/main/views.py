@@ -14,11 +14,13 @@ def index(request):
 	reto_lista = Reto.objects.filter(fecha__lt=date.today()).order_by('fecha')
 	siguiente_reto = Reto.objects.filter(fecha__gt=date.today()).order_by('fecha').first()
 	sorted(profile_list, key=lambda p: p.puntos)
+	siguiente_meta = Meta.objects.filter(fecha__gte=date.today()).first()
 	context = {
 		'equipo_list': equipo_list,
 		'profile_list': profile_list,
 		'reto_lista': reto_lista,
 		'siguiente_reto': siguiente_reto,
+		'siguiente_meta': siguiente_meta,
 	}
 
 	return render(request, 'index.html', context)
