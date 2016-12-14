@@ -214,8 +214,6 @@ def crear_compra(request):
 		profile = Profile.objects.get(user=user)
 		compra = Compra(paquete=paquete, profile=profile)
 		compra.save()
-		profile
-		print(compra)
 		return HttpResponse(
 			json.dumps({
 				'done': 1,
