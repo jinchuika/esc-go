@@ -1,6 +1,5 @@
 function comprar_paquete(form) {
 	var form_data = $(form).serializeArray();
-	console.log($(form));
 	$.ajax({
 		url: 'comprar/',
 		type: 'POST',
@@ -12,7 +11,7 @@ function comprar_paquete(form) {
 			if (json['done']==1) {
 				BootstrapDialog.alert('¡Apoyaste con éxito!');
 			}
-			$('.tokens-activos').html(json.tokens)
+			$('.tokens-activos').html(json.tokens+ " tokens activos")
 		}
 	})
 }
