@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load staticfiles %}
+
+{% block content %}
+<section class="content-wrap no-banner">
+
+	<h1 class="container">{{ postalumno.titulo }}</h1>
+	<div class="container youplay-news youplay-post">
+		<div class="row">
+			<div class="col-md-2">
+				<a href="{% url 'inbox' %}" class="btn btn-primary">Regresar</a>
+			</div>
+			<div class="col-md-10">
+				<article class="news-one">
+					<div class="description">
+						{{ postalumno.cuerpo|linebreaks }}
+
+						<div class="align-center">
+							<a href="{{ postalumno.imagen }}" class="angled-img image-popup">
+								<div class="img">
+									<img src="{{ postalumno.imagen|thumbnail_url:'avatar-md' }}" alt="">
+								</div>
+								<i class="fa fa-search-plus icon"></i>
+							</a>
+						</div>
+					</div>
+
+					<div class="youplay-review-rating">
+						<div class="row">
+							<div class="col-md-4">
+								<a href="{{ postalumno.alumno.get_absolute_url }}" class="angled-img">
+									<div class="img">
+										<img src="{{ postalumno.alumno.foto|thumbnail_url:'avatar-lg' }}" width="80" height="80" alt="">
+									</div>
+								</a>
+
+								<a href="{{ postalumno.alumno.get_absolute_url }}" class="message-from-name" title="Kiki Cuyler">{{ postalumno.alumno.nombre }} {{ postalumno.alumno.apellido }}</a>
+								<br>
+								<span class="date">{{ postalumno.fecha }}</span>
+							</div>
+						</div>
+					</div>
+
+				</article>
+
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock content %}
