@@ -14,7 +14,9 @@
 						<h1>Bienvenido</h1>
 						<em>Gracias por apoyar a las escuelas públicas de Guatemala</em>
 						<br><br>
-						<a class="btn btn-lg" href="{% url "reto_detail" id_reto=siguiente_reto.id %}">Ir al siguiente reto</a>
+						{% if siguiente_reto.id %}
+							<a class="btn btn-lg" href="{{ siguiente_reto.get_absolute_url }}">Ir al siguiente reto</a>
+						{% endif %}
 						<br>
 						<br>
 						<em>El siguiente reto es {{ siguiente_reto.materia }} el {{ siguiente_reto.fecha }}</em>

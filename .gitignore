@@ -92,3 +92,4 @@ ENV/
 .ropeproject
 
 escuela/nohup.out
+*.sqlite3

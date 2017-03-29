@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load staticfiles %}
+
+{% block content %}
+<section class="content-wrap container">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<table class="youplay-messages table table-hover">
+					<tbody>
+						{% for mensaje in postalumno_list %}
+							<tr {% if mensaje.visto is not True %}class="message-unread"{% endif %}>
+								<td class="message-from">
+									<a href="#" class="angled-img">
+										<div class="img">
+											<img src="{{ mensaje.alumno.foto|thumbnail_url:'avatar-lg' }}" width="80" height="80" alt="">
+										</div>
+									</a>
+
+									<a href="#" class="message-from-name" title="Kiki Cuyler">{{ mensaje.alumno.nombre }} {{ mensaje.alumno.apellido }}</a>
+									<br>
+									<span class="date">{{ mensaje.fecha }}</span>
+								</td>
+								<td class="message-description">
+									<a href="{{ mensaje.get_absolute_url }}" class="message-description-name" title="View Message">{{ mensaje.titulo }}</a>
+									<br>
+									<div class="message-excerpt">{{ mensaje.resumen }}</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock content %}
