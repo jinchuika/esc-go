@@ -1,90 +1,64 @@
 {% extends "base/base.html" %}
 {% load thumbnail %}
-{% block content %}
-<section class="content-wrap container">
-	<!-- Banner -->
-	<div class="youplay-banner banner-top youplay-banner-parallax small">
-		<div class="image">
-			<img src="{{ alumno.equipo.portada|thumbnail_url:'background' }}" alt="Portada de equipo">
-		</div>
-		<div class="info">
-			<div>
-				<div class="container youplay-user">
-					<a href="#" class="angled-img image-popup">
-						<div class="img">
-							<img src="{{ alumno.foto|thumbnail_url:'avatar' }}" alt="">
-						</div>
-					</a>
 
-					<div class="user-data">
-						<h2>{{ alumno.nombre }} {{ alumno.apellido }}</h2>
-						<div class="activity">
-							<div>
-								<div class="num">{{ alumno.equipo }}</div>
-								<div class="title">equipo</div>
-							</div>
-							<div>
-								<div class="num">{{ alumno.edad }}</div>
-								<div class="title">años</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+{% block content %}
+<div class="container">
+
+	<!-- Portfolio Item Heading -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">{{ alumno.nombre }} {{ alumno.apellido }}
+				<small>Promedio: {{ alumno.promedio|floatformat:2 }}</small>
+			</h1>
 		</div>
 	</div>
-	<!-- /Banner -->
+	<!-- /.row -->
+
+	<!-- Portfolio Item Row -->
 	<div class="row">
-		<div class="col-md-9">
+
+		<div class="col-md-8">
+			<img class="img-circle img-responsive img-center" src="{{ alumno.foto|thumbnail_url:"avatar-circle" }}" width="300" height="300" alt="">
+		</div>
+		<div class="col-md-4">
+			<h3>Datos</h3>
+			<ul>
+				<li>
+					<p class="h7">Grado:</p> {{ alumno.grado }} Primaria
+				</li>
+				<li>
+					<p class="h7">Edad:</p> {{ alumno.edad }}
+				</li>
+				<li>
+					<p class="h7">Animal Favorito:</p> {{ alumno.animal }}
+				</li>
+				<li>
+					<p class="h7">Color Favorito:</p> {{ alumno.color }}
+				</li>
+				<li>
+					<p class="h7">Sueño:</p> {{ alumno.sueno }}
+				</li>
+				<li>
+					<p class="h7">Juego Favorito:</p> {{ alumno.juego }}
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.row -->
+
+	<!-- Related Projects Row -->
+	<div class="row">
+		<div class="container">
 			<div class="row">
-				<div class="col-sm-12">
-					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información</a></li>
-						{% if user.is_authenticated %}
-						<li role="presentation"><a href="#mensaje" aria-controls="mensaje" role="tab" data-toggle="tab">Enviar mensaje</a></li>
-						{% endif %}
-					</ul>
-					<div class="tab-content">
-						<!-- Info alumno -->
-						<div role="tabpanel" class="tab-pane active" id="info">
-							<!-- Bloque alumno -->
-								<div class="news-one">
-									<div class="row vertical-gutter">
-										<div class="col-md-12">
-											<div class="description">
-												<!-- Datos alumno -->
-												<div class="youplay-review-rating">
-													<div class="row">
-														<div class="col-md-4">
-														<div class="" data-max="100"><span>{{ alumno.promedio|floatformat:2 }}</span>
-															</div>
-														</div>
-														<div class="col-md-4">
-															<h3 class="mt-0">Datos</h3>
-															<ul>
-																<li><i class="fa fa-plus-circle"></i> <b>Grado:</b> {{ alumno.grado }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Animal favorito:</b> {{ alumno.animal }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Color favorito: </b>{{ alumno.color }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Sueño:</b> {{ alumno.sueno }}</li>
-																<li><i class="fa fa-plus-circle"></i> <b>Juego favorito:</b> {{ alumno.juego }}</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-												<!-- /Datos alumno -->
-											</div>
+				<div class="col-lg-12">
+					<h1  align="center">Enviar Mensaje</h1>
+				</div>
+			</div>
 
-										</div>
-									</div>
-								</div>
-								<!-- /Bloque alumno -->
-						</div>
-						<!-- /Info alumno -->
-
-						{% if user.is_authenticated %}
-						<!-- Mensaje alumno -->
-						<div role="tabpanel" class="tab-pane" id="mensaje">
-							<legend>Enviar un mensaje a {{ alumno.nombre }} {{ alumno.apellido }}</legend>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="well well-sm">
 							<form action="{% url 'mensaje_add_' pk=alumno.id %}" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
 								<table class="table">
@@ -93,15 +67,11 @@
 								<button class="btn btn-primary">Enviar</button>
 							</form>
 						</div>
-						<!-- /Mensaje alumno -->
-						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-			
-		</div>
 	</div>
-</section>
+</div>
+
 {% endblock content %}

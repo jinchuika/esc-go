@@ -1,0 +1,140 @@
+{% extends "base/base.html" %}
+
+{% load thumbnail %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+	<h1  class="colorV" align="right">Tokens Disponibles: {{ user.perfil.tokens_activos }}</h1>
+		<div class="col-md-12">
+			<div class="row">
+			{% for paquete in paquete_list %}
+				<div class="col-sm-4 col-lg-4 col-md-4">
+					<div class="thumbnail">
+						<img src="{{ paquete.imagen|thumbnail_url:"paquete-store" }}" alt="">
+						<div class="caption">
+							<h4 class="pull-right">${{ paquete.precio }}</h4>
+							<h4><a href="#">{{ paquete.tokens }} Tokens Pack</a>
+							</h4>
+							<p>Apoya a los niños con {{ paquete.tokens }} Tokens</p>
+
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Compra" data-whatever="{{ paquete.precio }}" data-paquete="{{ paquete.id }}">Comprar</button>
+						</div>
+						<div class="ratings">
+							<p class="pull-right">{{ paquete.compras_anteriores.count }} compras por todos</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.container -->
+
+<div class="modal fade" id="Compra" tabindex="-1" role="dialog" aria-labelledby="CompraLabel">
+	<form action="{% url 'compra_create' %}" method="post">
+		{% csrf_token %}
+		{{ pago_form.paquete }}
+		<div class="modal-dialog" role="document">
+			<div class="modal-content credit-card-div">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="CompraLabel">Compra de Paquete</h4>
+				</div>
+
+				<div class="modal-body1">
+					<div class="credit-card-div">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<h5 class="text-muted"> Número de Tarjeta de Crédito</h5>
+									</div>
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										{{ pago_form.number.errors }}
+										{{ pago_form.number }}
+									</div>
+								</div>
+								<div class="row ">
+									<div class="col-md-3 col-sm-3 col-xs-3">
+										<span class="help-block text-muted small-font"> Expira - Mes</span>
+										{{ pago_form.expire_month.errors }}
+										{{ pago_form.expire_month }}
+									</div>
+									<div class="col-md-3 col-sm-3 col-xs-3">
+										<span class="help-block text-muted small-font">  Expira - Año</span>
+										{{ pago_form.expire_year.errors }}
+										{{ pago_form.expire_year }}
+									</div>
+									<div class="col-md-3 col-sm-3 col-xs-3">
+										<span class="help-block text-muted small-font">  CCV</span>
+										{{ pago_form.cvv2.errors }}
+										{{ pago_form.cvv2 }}
+									</div>
+									<div class="col-md-3 col-sm-3 col-xs-3">
+										<span class="help-block text-muted small-font">  Tipo de tarjeta</span>
+										{{ pago_form.card_type.errors }}
+										{{ pago_form.card_type }}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-6">
+										<span class="help-block text-muted small-font">Nombre en tarjeta</span>
+										{{ pago_form.first_name.errors }}
+										{{ pago_form.first_name }}
+									</div>
+									<div class="col-md-6 col-sm-6 col-xs-6">
+										<span class="help-block text-muted small-font">Apellido en tarjeta</span>
+										{{ pago_form.last_name.errors }}
+										{{ pago_form.last_name }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- CREDIT CARD DIV END -->
+
+				</div>
+
+				<div class="modal-body2">
+					{{ pago_form.non_field_errors }}
+					<div class="row credit-card-div">
+						<div class="col-md-12 pad-adjust">
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<div class="row ">
+						<div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+							<input type="submit" class="btn btn-danger "data-dismiss="modal" value="Cancelar" />
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+							<input type="submit" class="btn btn-success btn-block" value="Pagar Ahora" />
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript">
+	{% if pago_form.non_field_errors %}	
+	$('#Compra').modal('show');
+	{% endif %}
+
+	$('#Compra').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var recipient = button.data('whatever')
+		var modal = $(this)
+		modal.find('.modal-title').text('Compra de Paquete por: ' + recipient);
+		$('#id_paquete').val(button.data('paquete'));
+	});
+</script>
+{% endblock extra_js %}

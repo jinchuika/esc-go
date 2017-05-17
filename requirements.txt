@@ -1,3 +1,7 @@
+appdirs==1.4.0
+asn1crypto==0.22.0
+cffi==1.10.0
+cryptography==1.8.1
 Django==1.10
 django-appconf==1.0.2
 django-avatar==3.0.0
@@ -5,6 +9,15 @@ django-awesome-avatar==1.1.3
 django-classy-tags==0.8.0
 django-easy-avatar==0.1
 django-front==0.5.3
+django-widget-tweaks==1.4.1
 easy-thumbnails==2.3
+idna==2.5
+packaging==16.8
+paypalrestsdk==1.12.0
 Pillow==3.3.1
+pycparser==2.17
+pyOpenSSL==17.0.0
+pyparsing==2.1.10
+requests==2.14.2
+simplejson==3.10.0
 six==1.10.0

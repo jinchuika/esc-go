@@ -1,89 +1,75 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
-{% block content %}
 {% load thumbnail %}
-<section class="content-wrap container">
-	<div class="container">
-		<section class="youplay-banner banner-top youplay-banner-parallax">
-			<div class="image" style="background-image: url('{% static 'images/portada.jpg' %}')">
-			</div>
 
-			<div class="info">
-				<div>
-					<div class="container align-center">
-						<h1>Bienvenido</h1>
-						<em>Gracias por apoyar a las escuelas públicas de Guatemala</em>
-						<br><br>
-						{% if siguiente_reto.id %}
-							<a class="btn btn-lg" href="{{ siguiente_reto.get_absolute_url }}">Ir al siguiente reto</a>
-						{% endif %}
-						<br>
-						<br>
-						<em>El siguiente reto es {{ siguiente_reto.materia }} el {{ siguiente_reto.fecha }}</em>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section>
+{% block content %}
+<header class="meta-header" style="background-image: url({% static "img/compu.png" %});">
+		<div class="container">
 			<div class="row">
-				<h1>Nuestra meta</h1>
-				<p>Necesitamos recaudar ${{ siguiente_meta.cantidad }} antes del {{ siguiente_meta.fecha }}. ¡Apóyanos!</p>
-				<div class="progress">
-					<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{ siguiente_meta.progreso.porcentaje|floatformat:0 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ siguiente_meta.progreso.porcentaje|floatformat:0 }}%">
-						<div style="color: black; line-height: 1.0;" class="lead">${{ siguiente_meta.progreso.total }} recaudado</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<div class="pt-40 pb-40">
-			<div class="row">
-				<div class="col-md-9">
-					<h3 class="block-title">Equipos</h3>
-					<div class="row-fluid">
-						{% for equipo in equipo_list|dictsortreversed:"promedio" %}
-						<a class="angled-img col-xs-4 col-sm-4" href="{% url "equipo_detail" id_equipo=equipo.id %}">
-							<div class="img">
-								<img src="{{ equipo.logo|thumbnail_url:'avatar-lg' }}" alt="{{equipo}}">
-							</div>
-							<div class="bottom-info">
-								<h4>{{ equipo }}</h4>
-								<div>{{ equipo.promedio|floatformat:2 }} promedio</div>
-							</div>
-						</a>
-						{% if forloop.counter|divisibleby:3 %}
-					</div>
-					<div class="clearfix"></div>
-					<div class="row-fluid">
-						{% endif %}
-						{% endfor %}
-					</div>
-				</div>
-				<div class="col-md-3 side-block">
-					<h4 class="block-title">Tabla de posiciones</h4>
-					<div class="block-content p-0">
-						{% for profile in profile_list|dictsortreversed:"puntos"|slice:"7" %}
-						<div class="row youplay-side-news">
-							<div class="col-xs-3 col-md-4">
-								<a href="{% url 'profile_detail' id_profile=profile.id%}" class="angled-img">
-									<div class="img">
-										{% if profile.foto %}
-										<img src="{{ profile.foto|thumbnail_url:'icon' }}" alt="{{ profile }}">
-										{% else %}
-										<img src="default.jpg" alt="{{ profile }}">
-										{% endif %}
-									</div>
-								</a>
-							</div>
-							<div class="col-xs-9 col-md-8">
-								<h4 class="ellipsis"><a href="{% url 'profile_detail' id_profile=profile.id%}" title="{{ profile }}">{{ profile }}</a></h4>
-								<span class="price">{{ profile.puntos }} pts.</span>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
+				<div class="col-lg-12">
+					<h1 align="center">NUESTRA META</h1>
 				</div>
 			</div>
 		</div>
+	</header>
+
+	<div class="container">
+
+
+		<div class="row">
+			<div class="col-sm-4">
+				<a href="{{ request.user.perfil.get_absolute_url }}">
+					<img class="img-circle img-responsive img-center" src="{{ request.user.perfil.foto|thumbnail_url:"avatar-circle" }}" width="200" height="200" alt="">
+					<h2 align="center" >Tu Perfil</h2>
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<a href="{% url 'equipo_list' %}">
+					<img class="img-circle img-responsive img-center" src="{% static "img/corazon200.jpg" %}" width="200" height="200" alt="">
+					<h2 align="center">Equipos</h2>
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<a href="{% url 'reto_list' %}">
+					<img class="img-circle img-responsive img-center" src="{% static "img/retos.jpg" %}" width="200" height="200" alt="">
+					<h2 align="center">Retos</h2>
+				</a>
+			</div>
+		</div>
+
+		<div class="dividir">
+
+		</div>
+
+
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1  align="center">Tabla de Posiciones</h1>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<table id="example" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Posición</th>
+						<th>Nombre</th>
+						<th>Puntos Acumulados</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for jugador in jugador_list|dictsortreversed:"puntos" %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ jugador.user.get_full_name }}</td>
+						<td>{{ jugador.get_puntos }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
-</section>
 {% endblock content %}
