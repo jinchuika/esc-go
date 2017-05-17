@@ -1,45 +1,65 @@
-{% block base_navbar %}  
-{% load thumbnail %}
-{% load staticfiles %}
-<nav class="navbar-youplay navbar navbar-default navbar-fixed-top navbar-small">
-	<div class="container youplay-content">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="off-canvas" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Cambiar navegación</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="{% url "index" %}">
-				<img src="{% static 'images/logo-negro.png' %}" alt="">
-			</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			{% block navbar_extra %}
-			{% endblock navbar_extra %}
-			<ul class="nav navbar-nav navbar-right">
-				{% if user.is_authenticated %}
-				<li><a href="{% url "tienda" %}"><i class="fa fa-shopping-cart"></i> Tienda</a></li>
-				<li class="dropdown dropdown-hover ">
-					<a href="#!" class="dropdown-toggle" role="button" aria-expanded="false">
-						{{ user.first_name }} <span class="caret"></span>
-					</a>
-					<div class="dropdown-menu">
-						<ul role="menu">
-							<li><a href="{% url "profile_detail" id_profile=user.id %}">Perfil</a></li>
-							<li><a href="{% url "inbox" %}">Bandeja de entrada</a></li>
-							<li><a href="{% url "profile_edit" %}">Editar</a></li>
-							<li class="divider"></li>
-							<li><a href="{% url "logout" %}">Salir</a></li>
-						</ul>
-					</div>
-				</li>
-				{% else %}
-				<li><a href="{% url "login" %}">Iniciar sesión</a></li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
-</nav>
+{% load thumbnail staticfiles %}
 
-{% endblock base_navbar %}
+{% if user.is_authenticated %}
+<div class="container example2">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+					<span class="sr-only">Cambiar navegación</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static "img/mini-logo.png" %}" alt="EscuelApp">
+				</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span> Nuestra Meta</a></li>
+					<li><a href="{% url 'equipo_list' %}"><img src="{% static "img/corazon.png" %}" width="20" /> Equipos</a></li>
+					<li><a href="{% url 'reto_list' %}"><span class="glyphicon glyphicon-heart-empty"></span> Retos</a></li>
+					<li><a href="{% url 'store' %}"><span class="glyphicon glyphicon-shopping-cart"></span> Tienda</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ request.user.perfil.foto|thumbnail_url:"icon" }}" width="15" height="15" class="img-circle"> {{ user.get_full_name }} <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="{% url 'perfil_detail' pk=request.user.perfil.id %}"><span class="glyphicon glyphicon-heart"></span> Ver mi Perfil</a></li>
+							<li><a href="perfil.html"><span class="glyphicon glyphicon-pencil"></span> Editar mi Perfil</a></li>
+							<li class="divider"></li>
+							<li><a href=""><span class="glyphicon glyphicon glyphicon-remove-sign"></span> Cerrar Sesión</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+
+{% else %}
+
+<div class="container example2">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+					<span class="sr-only">Cambiar navegación</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static "img/mini-logo.png" %}" alt="EscuelApp">
+				</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<p class="navbar-text navbar-right">
+					<a href="{% url 'login' %}" class="navbar-link"><img src="{% static "img/corazon.png" %}" width="20" /> Iniciar Sesión</a>
+				</p>
+
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+		<!--/.container-fluid -->
+	</nav>
+</div>
+
+{% endif %}

@@ -2,117 +2,112 @@
 {% load thumbnail %}
 {% load staticfiles %}
 {% block content %}
-<section class="content-wrap container">
+<div class="row">
+	<div class="col-sm-4">
+		<img class="img-circle img-responsive img-center" src="{{ profile.foto|thumbnail_url:"avatar-circle" }}" width="200" height="200" alt="">
+		<h4 align="center">{{ profile.user }}</h4>
+		<p align="center">{{ profile.user.get_full_name }}</p>
+	</div>
+	<div class="col-sm-4">
+		<img class="img-circle img-responsive img-center" src="{% static "img/corazon200.jpg" %}" width="200" height="200" alt="">
+	</div>
+	<div class="col-sm-4">
+		<a href="#">
+			<img class="img-circle img-responsive img-center" src="img/ninos/a.jpg" width="200" height="200" alt="">
+		</a>
+		<a href="perfil_nene.html"><h4 align="center">Pepita Juarez</h4></a>
+		<p align="center">Último Apoyo realizado: N Tokens</p>
+	</div>
+</div>
+<div class="dividir">
+	<a name="apoyo"></a>
+</div>
 <div class="container">
-	<!-- Banner -->
-	<div class="youplay-banner banner-top youplay-banner-parallax small">
-		<div class="image">
-			<img src="{{ profile.portada|thumbnail_url:'background' }}" alt="">
-		</div>
-		<div class="info">
-			<div>
-				<div class="container youplay-user">
-					<a href="#!" class="angled-img image-popup">
-						<div class="img">
-							<img src="{{ profile.foto|thumbnail_url:'avatar' }}" alt="">
-						</div>
-					</a>
-
-					<div class="user-data">
-						<h2>{{ profile }}</h2>
-						<div class="activity">
-							<div>
-								<div class="num">{{ profile.puntos }}</div>
-								<div class="title">Puntos</div>
-							</div>
-							<div>
-								<div class="num">{{ profile.tokens_activos }}</div>
-								<div class="title">Tokens</div>
-							</div>
-							<div>
-								<div class="num">{{ profile.get_lugar }}</div>
-								<div class="title">lugar</div>
-							</div>
-						</div>
+	<ul class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab" href="#home">Apoyos Realizados</a></li>
+		<li><a data-toggle="tab" href="#menu1">Historial de Compras</a></li>
+	</ul>
+	<div class="tab-content">
+		<div id="home" class="tab-pane fade in active">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1  align="center">Apoyos Realizados</h1>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- /Banner -->
-	<div class="row">
-		<div class="col-md-9">
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#apuestas" aria-controls="apuestas" role="tab" data-toggle="tab">Apoyos</a></li>
-				<li role="presentation"><a href="#compras" aria-controls="compras" role="tab" data-toggle="tab">Donaciones</a></li>
-				<li role="presentation"><a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">Historial</a></li>
-			</ul>
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active table-responsive" id="apuestas">
-					<table class="table table-paginated table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Fecha</th>
-								<th>Tokens</th>
-								<th>Alumno</th>
-								<th>Reto</th>
-								<th>Resultado</th>
-								<th>p/Token</th>
-								<th>Puntos acumulados</th>
-							</tr>
-						</thead>
-						{% for apuesta in apuesta_list|dictsortreversed:"fecha" %}
+			<div>
+				<table id="tabla1" class="display" cellspacing="0" width="100%">
+					<thead>
 						<tr>
-							<td>{{ apuesta.fecha|date:"Y/m/d" }}</td>
+							<th>Fecha</th>
+							<th>Tokens Asignados</th>
+							<th>Foto</th>
+							<th>Alumno</th>
+							<th>Reto</th>
+							<th>Resultado</th>
+							<th>p/Token</th>
+							<th>Puntos Acumulados</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for apuesta in profile.apuestas.all %}
+						<tr>
+							<td>{{ apuesta.fecha|date:"Y-m-d" }}</td>
 							<td>{{ apuesta.tokens }}</td>
-							<td>{{ apuesta.nota.alumno }}</td>
+							<td><img class="img-circle img-responsive" src="{{ apuesta.nota.alumno.foto|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt=""></td>
+							<td>{{ apuesta.nota.alumno.nombre }} {{ apuesta.nota.alumno.apellido }}</td>
 							<td>{{ apuesta.nota.reto.materia }}</td>
 							<td>{{ apuesta.nota.get_nota }}</td>
-							<td>{{ apuesta.nota.puntos_token }}</td>
-							<td>{{ apuesta.punteo }}</td>
+							<td>{{ apuesta.nota.get_puntos_token }}</td>
+							<td>{{ apuesta.get_punteo }}</td>
 						</tr>
 						{% endfor %}
-					</table>
-				</div>
-				<div role="tabpanel" class="tab-pane table-responsive" id="compras">
-					<table class="table table-hover table-paginated table-bordered">
-						<thead>
-							<tr>
-								<th>Fecha</th>
-								<th>Paquete</th>
-								<th>Tokens</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for compra in compra_list %}
-							<tr>
-								<td>{{ compra.fecha|date:"d/m/Y" }}</td>
-								<td>{{ compra.paquete }}</td>
-								<td>{{ compra.paquete.tokens }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-				<div role="tabpanel" class="tab-pane table-responsive" id="chart">
-					<form id="form-profile-chart" action="{% url "profile_detail_chart" id_profile=profile.id %}">
-						{% csrf_token %}
-						<input type="hidden" name="profile_id" id="profile_id" value="{{ profile.id }}">
-					</form>
-					<canvas id="chart-canvas" width="500" height="400"></canvas>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="menu1" class="tab-pane fade">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1  align="center">Historial de Compras</h1>
+					</div>
 				</div>
 			</div>
+			<div>
+				<table id="tabla2" class="display" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Fecha</th>
+							<th>Paquete</th>
+							<th>Tokens</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for compra in profile.compras.all %}
+						<tr>
+							<td>{{ compra.fecha|date:"Y-m-d" }}</td>
+							<td>{{ compra.paquete }}</td>
+							<td>{{ compra.paquete.tokens }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
 		</div>
 	</div>
 </div>
-</section>
 {% endblock content %}
 
-{% block javascript %}
+{% block extra_js %}
 <script src="{% static 'js/chart.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script>
 $(document).ready(function () {
-	$('#form-profile-chart').trigger('submit');
-});
+	$('#tabla1').DataTable();
+	$('#tabla2').DataTable();
+} );
 </script>
-{% endblock javascript %}
+{% endblock extra_js %}

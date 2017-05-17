@@ -25,25 +25,14 @@ class Profile(models.Model):
 
     def tokens_activos(self, fecha=date.today()):
         tokens = 0
-        ultimo_reto = Reto.ultimo_reto()
-        if ultimo_reto:
-            compra_list = Compra.objects.filter(profile=self, fecha__range=(ultimo_reto.fecha, fecha))
-            apuesta_list = Apuesta.objects.filter(user=self, fecha__range=(ultimo_reto.fecha, fecha))
-        else:
-            compra_list = Compra.objects.filter(profile=self, fecha__lte=fecha)
-            apuesta_list = Apuesta.objects.filter(user=self, fecha__lte=fecha)
-        for c in compra_list:
-            tokens = tokens + c.paquete.tokens
-        for a in apuesta_list:
-            tokens = tokens - a.tokens
-        return tokens
+        tokens_compra = sum(c.paquete.tokens for c in self.compras.all())
+        tokens_apuesta = sum(a.tokens for a in self.apuestas.all())
+        return tokens + tokens_compra - tokens_apuesta
 
     def get_puntos(self, fecha=date.today()):
         puntos = 0
-        apuestas = Apuesta.objects.filter(user=self, fecha__lt=fecha)
-        for a in apuestas:
-            puntos = puntos + a.get_punteo('int')
-        return puntos
+        apuestas = self.apuestas.filter(nota__reto__fecha__lt=fecha)
+        return sum(a.get_punteo('int') for a in apuestas)
     puntos = property(get_puntos)
 
     def get_lugar(self, fecha=date.today()):
@@ -60,6 +49,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
+
+    def get_absolute_url(self):
+        return reverse('perfil_detail', kwargs={'pk': self.id})
 
 
 class Paquete(models.Model):
@@ -80,10 +72,20 @@ class Paquete(models.Model):
         return self.nombre
 
 
+class TipoTarjeta(models.Model):
+    tipo_tarjeta = models.SlugField(max_length=25)
+    alias = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.alias
+
+
 class Compra(models.Model):
-    profile = models.ForeignKey('Profile')
-    paquete = models.ForeignKey('Paquete')
-    fecha = models.DateField(default=timezone.now)
+    profile = models.ForeignKey('Profile', related_name='compras')
+    paquete = models.ForeignKey('Paquete', related_name='compras_anteriores')
+    fecha = models.DateTimeField(default=timezone.now)
+    tipo_tarjeta = models.ForeignKey(TipoTarjeta, on_delete=models.PROTECT, null=True, blank=True)
+    payment_ref = models.CharField(max_length=225, null=True, blank=True)
 
     def __str__(self):
         return str(self.paquete) + " de " + str(self.profile)
@@ -115,14 +117,11 @@ class Equipo(models.Model):
         return total / alumno_lista.count() if alumno_lista.count() > 0 else 0
     promedio = property(get_promedio)
 
-    def blog(self):
-        alumno_lista = Alumno.objects.filter(equipo=self)
-        post_lista_all = PostAlumno.objects.filter(alumno__in=alumno_lista).order_by('fecha')[:10]
-        post_lista = reversed(post_lista_all)
-        return post_lista
-
     def __str__(self):
         return self.nombre
+
+    def get_absolute_url(self):
+        return reverse('equipo_detail', kwargs={'pk': self.id})
 
 
 class Grado(models.Model):
@@ -136,7 +135,7 @@ class Grado(models.Model):
 class Alumno(models.Model):
     nombre = models.CharField(max_length=150, default='')
     apellido = models.CharField(max_length=150, default='')
-    equipo = models.ForeignKey('Equipo')
+    equipo = models.ForeignKey('Equipo', related_name='alumnos')
     foto = ThumbnailerImageField(
         upload_to="perfil_alumno",
         null=True,
@@ -163,7 +162,7 @@ class Alumno(models.Model):
         return post_lista
 
     def __str__(self):
-        return (self.nombre) + " " + self.apellido + " (" + str(self.equipo) + ")"
+        return (self.nombre) + " " + self.apellido
 
     def get_absolute_url(self):
         return reverse('alumno_detail_', kwargs={'pk': self.id})
@@ -193,43 +192,11 @@ class Reto(models.Model):
     pt_2 = models.IntegerField()
     pt_3 = models.IntegerField()
 
-    def ultimo_reto(fecha=date.today()):
-        ultimo_reto = Reto.objects.filter(fecha__lte=fecha).order_by('fecha').reverse()
-        if ultimo_reto.count() < 1:
-            return None
-        else:
-            return ultimo_reto[0]
-
-    def proximo_reto(fecha=date.today()):
-        proximo_reto = Reto.objects.filter(fecha__gt=fecha).order_by('fecha')
-        if proximo_reto.count() < 1:
-            return None
-        else:
-            return proximo_reto[0]
-
-    def anterior(self):
-        anterior = Reto.objects.filter(fecha__lte=self.fecha).order_by('fecha')
-        if anterior.count() < 1:
-            return None
-        else:
-            return anterior[0]
-
-    def siguiente(self):
-        siguiente = Reto.objects.filter(fecha__gt=self.fecha).order_by('fecha')
-        if siguiente.count() < 1:
-            return None
-        else:
-            return siguiente[0]
-
-    def notas(self):
-        nota_list = Nota.objects.filter(reto=self)
-        return nota_list
-
     def puntos_profile(self, user):
         puntos = 0
         nota_list = Nota.objects.filter(reto=self)
         for apuesta in Apuesta.objects.filter(user=user, nota__in=nota_list):
-            if id_number(apuesta.get_punteo()):
+            if is_number(apuesta.get_punteo()):
                 puntos = puntos + apuesta.get_punteo()
         return puntos
 
@@ -237,12 +204,18 @@ class Reto(models.Model):
         return str(self.materia) + " en " + str(self.fecha)
 
     def get_absolute_url(self):
-        return reverse('reto_detail', kwargs={'id_reto': self.id})
+        return reverse('reto_detail', kwargs={'pk': self.id})
+
+    def jugado(self):
+        return self.fecha < date.today()
+
+    def ganador(self):
+        return self.notas.all().order_by('nota')[0]
 
 
 class Nota(models.Model):
     alumno = models.ForeignKey('Alumno')
-    reto = models.ForeignKey('Reto')
+    reto = models.ForeignKey('Reto', related_name='notas')
     nota = models.IntegerField()
 
     objects = models.Manager()
@@ -279,6 +252,12 @@ class Nota(models.Model):
             return self.reto.pt_3
         return 0
 
+    def get_puntos_token(self):
+        if self.reto.fecha <= date.today():
+            return self.puntos_token()
+        else:
+            return '?'
+
     def __unicode__(self):
         return u'{0}'.format(self.nota)
 
@@ -287,7 +266,7 @@ class Nota(models.Model):
 
 
 class Apuesta(models.Model):
-    user = models.ForeignKey('Profile')
+    user = models.ForeignKey('Profile', related_name='apuestas')
     nota = models.ForeignKey('Nota')
     tokens = models.IntegerField()
     fecha = models.DateField(default=timezone.now)
@@ -296,7 +275,7 @@ class Apuesta(models.Model):
         return self.tokens * self.nota.puntos_token()
 
     def get_punteo(self, tipo='string'):
-        if self.nota.reto.fecha <= date.today():
+        if self.nota.reto.fecha < date.today():
             return self.punteo()
         else:
             return '?' if tipo == 'string' else 0

@@ -1,29 +1,37 @@
 {% extends "base/base.html" %}
+
+{% load staticfiles widget_tweaks %}
+
 {% block content %}
 <div class="container align-center">	
 	<div class="row">
 		<div class="col-md-12">
 			<legend><h1>Iniciar sesión</h1></legend>
-			<div class="youplay-form">
-				<form action="{{ action }}" method="post">
-					<table class="table table-striped">
-						{% csrf_token %}
-						{% for field in form %}
-						<tr>
-							<td>
-								{{ field.label }}
-							</td>
-							<td>
-								<div class="youplay-input">
-									{{ field }}
-								</div>
-							</td>
-						</tr>
-						{% endfor %}
-					</table>
-					<button class="btn btn-default">Iniciar sesión</button>
-				</form>
-			</div>
+			<form role="form" id="login-form" method="post" action="{{ action }}">
+				{{ form.non_field_errors }}
+				{% csrf_token %}
+				<fieldset>
+					<div class="form-group input-group">
+						<span class="input-group-addon">
+							<i class="glyphicon glyphicon-user">
+							</i>
+						</span>
+						{{ form.username|add_class:"form-control"|attr:"placeholder:Usuario"  }}
+					</div>
+					<div class="form-group input-group">
+						<span class="input-group-addon">
+							<i class="glyphicon glyphicon-lock">
+							</i>
+						</span>
+						{{ form.password|add_class:"form-control"|attr:"placeholder:Password"  }}
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default  btn-lg centrado">
+							<img src="{% static "img/corazon.png" %}" width="20" /> Ingresar
+						</button>
+					</div>
+				</fieldset>
+			</form>
 			<hr>
 		</div>
 	</div>

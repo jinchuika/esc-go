@@ -1,178 +1,182 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% load thumbnail %}
-{% block navbar_extra %}
-<ul class="nav navbar-nav">
-	<li class="dropdown dropdown-hover ">
-		<a href="#!" class="dropdown-toggle" role="button" aria-expanded="false">
-			Retos anteriores <span class="caret"></span>
-		</a>
-		<div class="dropdown-menu">
-			<ul role="menu">
-				{% for reto_v in retos_anteriores|dictsortreversed:"fecha" %}
-				<li><a href="{% url "reto_detail" id_reto=reto_v.id %}">{{ reto_v }}</a></li>
-				{% endfor %}
-			</ul>
-		</div>
-	</li>
-</ul>
-{% endblock navbar_extra %}
-{% block content %}
-<section class="content-wrap container">
-	<!-- Banner -->
-	<div class="youplay-banner banner-top youplay-banner-parallax small">
-		<div class="image">
-			<img src="{{ reto.materia.bg|thumbnail_url:'background' }}" alt="">
-		</div>
-		<div class="info">
-			<div>
-				<div class="container youplay-user">
-					<a href="#" class="angled-img image-popup">
-						<div class="img">
-							<img src="{{ reto.materia.icon|thumbnail_url:'avatar' }}" alt="">
-						</div>
-					</a>
 
-					<div class="user-data">
-						<h2>{{ reto.materia }}</h2>
-						<div class="date"><i class="fa fa-calendar"></i>{{ reto.fecha }}</div>
-						<div class="activity">
-							<div>
-								<div class="num">{{ reto.pt_1 }}p</div>
-								<div class="title">1er lugar</div>
-							</div>
-							<div>
-								<div class="num">{{ reto.pt_2 }}p</div>
-								<div class="title">2do lugar</div>
-							</div>
-							<div>
-								<div class="num">{{ reto.pt_3 }}p</div>
-								<div class="title">3er lugar</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+
+
+	<div class="row">
+		<div class="col-sm-3">
+
+			<img class="img-circle img-responsive img-center" src="{% static "img/calendar.jpg" %}" width="50" height="50" alt="">
+			<h4 align="center" >{{ reto.fecha }}</h4>
+
+		</div>
+		<div class="col-sm-3">
+
+			<img class="img-circle img-responsive img-center" src="{% static "img/1.jpg" %}" width="50" height="50" alt="">
+			<h4 align="center" >{{ reto.pt_1 }} puntos</h4>
+
+		</div>
+		<div class="col-sm-3">
+
+			<img class="img-circle img-responsive img-center" src="{% static "img/2.jpg" %}" width="50" height="50" alt="">
+			<h4 align="center" >{{ reto.pt_2 }} puntos</h4>
+
+		</div>
+		<div class="col-sm-3">
+
+			<img class="img-circle img-responsive img-center" src="{% static "img/3.jpg" %}" width="50" height="50" alt="">
+			<h4 align="center" >{{ reto.pt_3 }} puntos</h4>
+
 		</div>
 	</div>
-	<!-- /Banner -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 side-block">
-				<h3 class="block-title">Notas de este reto</h3>
-				<table class="table">
+	<!-- /.row -->
+
+	<div class="dividir">
+
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-8">
+			<h1  align="center">Notas de este Reto</h1>
+			<div>
+				{% if reto.jugado %}
+				<table class="table table-striped" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th>Lugar</th>
+							<th>Foto</th>
 							<th>Alumno</th>
 							<th>Equipo</th>
 							<th>Nota</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for nota in nota_list|dictsortreversed:"get_nota" %}
+						{% for nota in reto.notas.all|dictsortreversed:"nota" %}
 						<tr>
-							<td>{{ nota.get_lugar }}</td>
+							<td>{{ forloop.counter }}</td>
 							<td>
-								<a href="{% url "alumno_detail" id_alumno=nota.alumno.id%}" class="angled-img"><h4><img src="{{ nota.alumno.foto|thumbnail_url:'icon' }}"> {{ nota.alumno.nombre }} {{ nota.alumno.apellido }}</h4></a>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
+							</td>
+							<td>{{ nota.alumno }}</td>
+							<td>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
 							</td>
 							<td>
-								<a href="{% url "equipo_detail" id_equipo=nota.alumno.equipo.id %}" class="angled-img"><h4>{{ nota.alumno.equipo }}</h4></a>
+								{{ nota.nota }}
 							</td>
-							<td>{{ nota.get_nota }}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
 				</table>
-				{% if user.is_authenticated %}
-				<div class="row">
-					<div class="col-md-12">
-
-					</div>
-				</div>
+				{% else %}
+				<table class="table table-striped" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Equipo</th>
+							<th>Foto</th>
+							<th>Alumno</th>
+							<th>Tokens</th>
+							<th>Apoyar</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for nota in reto.notas.all %}
+						<tr>
+							<form method="post" action="{% url 'apuesta_create' nota_id=nota.id %}">
+								<td>
+									<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
+								</td>
+								<td>
+									<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
+								</td>
+								<td>{{ nota.alumno }}</td>
+								<td>
+									{% csrf_token %}
+									{{ apuesta_form.tokens }}
+								</td>
+								<td>
+									<input type="submit" value="Apoyar" class="btn btn-primary">
+								</td>
+							</form>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 				{% endif %}
 			</div>
-			<!-- Tabs -->
-			<div class="col-md-6" role="tabpanel">
+		</div>
 
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" role="tablist">
-					{% if form_apuesta %}
-					<li role="presentation" class="active success"><a href="#apoyar" class="btn btn-success" aria-controls="apoyar" role="tab" data-toggle="tab">¡Apoyar!</a>
-					</li>
-					<li role="presentation"><a href="#anteriores" class="btn btn-info" aria-controls="anteriores" role="tab" data-toggle="tab">Anteriores</a>
-					</li>
-					{% endif %}
-				</ul>
-
-				<div class="tab-content">
-					{% if form_apuesta %}
-					<div role="tabpanel" class="tab-pane active" id="apoyar">
-						<h3 class="block-title">Elige a quién apoyar</h3>
-						<form action="{{ action }}" method="post" class="form-apuesta">
-							<span class="alert alert-success">Tienes <span class="tokens-activos lead">{{ user.profile.tokens_activos }}</span> tokens disponibles</span>
-							<table class="table table-striped align-center">
-								{% csrf_token %}
-								<tr>
-									<td>
-										<div class="btn-group-vertical" data-toggle="buttons">
-											<label class="btn hide"></label>
-											{% for opcion in form_apuesta.nota %}
-											<label class="btn btn-sm">
-												{{ opcion }}
-											</label>
-											{% endfor %}
-										</div>
-									</td>
-									<td class="">
-										<label for="{{ form_apuesta.tokens.id_for_label }}">{{ form_apuesta.tokens.label }}</label><br>
-										{{ form_apuesta.tokens }}
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<button type="submit" class="btn btn-info" value="Guardar">¡Apoyar!</button>
-									</td>
-								</tr>
-							</table>
-						</form>
-					</div>
-					{% endif %}
-					{% if form_apuesta %}
-					<div role="tabpanel" class="tab-pane" id="anteriores">
-					{% else %}
-					<div role="tabpanel" class="tab-pane active" id="anteriores">
-					{% endif %}
-						<h3 class="block-title">Tus apoyos</h3>
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Equipo</th>
-									<th>Tokens</th>
-									<th>Puntos</th>
-								</tr>
-							</thead>
-							{% for apuesta in apuesta_list|dictsort:"fecha" %}
+		<div class="col-sm-4">
+			{% if reto.jugado %}
+				<h1  class="colorV" align="center">Apoyos</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Equipo</th>
+							<th>Tokens</th>
+							<th>Puntos</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for apuesta in apuesta_list %}
 							<tr>
-								<td>{{ apuesta.nota.alumno.equipo }}</td>
-								<td class="td-tokens">{{ apuesta.tokens }}</td>
-								<td class="td-puntos">{{ apuesta.get_punteo }}</td>
+								<td>
+									<img class="img-circle img-responsive" src="{{ apuesta.nota.alumno.equipo.logo|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
+								</td>
+								<td>{{ apuesta.tokens }}</td>
+								<td>{{ apuesta.get_punteo }}</td>
 							</tr>
-							{% endfor %}
+						{% endfor %}
+						<tr>
+							<td><b>Total</b></td>
+							<td>{{ reto.tokens_apostados }}</td>
+							<td>{{ reto.get_punteo }}</td>
+						</tr>
+					</tbody>
+				</table>
+			{% else %}
+				<h1  class="colorV" align="center">Tokens Disponibles: {{ user.perfil.tokens_activos }}<br>Apoyos</h1>
+				<h1  class="colorV" align="center">Apoyos</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Equipo</th>
+							<th>Tokens</th>
+							<th>Puntos</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for apuesta in apuesta_list %}
 							<tr>
-								<td><b>Total</b></td>
-								<td id="total-tokens"></td>
-								<td id="total-puntos"></td>
+								<td>
+									<img class="img-circle img-responsive" src="{{ apuesta.nota.alumno.equipo.logo|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt="">
+								</td>
+								<td>{{ apuesta.tokens }}</td>
+								<td>{{ apuesta.get_punteo }}</td>
 							</tr>
-						</table>
-					</div>
-				</div>
-
-			</div>
+						{% endfor %}
+						<tr>
+							<td><b>Total</b></td>
+							<td>{{ reto.tokens_apostados }}</td>
+							<td>{{ reto.get_punteo }}</td>
+						</tr>
+					</tbody>
+				</table>
+			{% endif %}
 		</div>
 	</div>
-</section>
+</div>
+
+
+
 {% endblock content %}
+
+
 {% block javascript %}
 {% if notificacion %}
 <script>

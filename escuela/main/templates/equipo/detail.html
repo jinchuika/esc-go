@@ -1,125 +1,32 @@
 {% extends "base/base.html" %}
 {% load thumbnail %}
+
 {% block content %}
-<section class="content-wrap container">
-	<!-- Banner -->
-	<div class="youplay-banner banner-top youplay-banner-parallax small">
-		<div class="image">
-			<img src="{{ equipo.portada|thumbnail_url:'background' }}" alt="Portada de equipo">
-		</div>
-		<div class="info">
-			<div>
-				<div class="container youplay-user">
-					<a href="#" class="angled-img image-popup">
-						<div class="img">
-							<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" alt="">
-						</div>
-					</a>
+<div>
+	<header class="cover1-header">
+		<img src="{{ equipo.logo|thumbnail_url:'avatar' }}" class="img-responsive img-center" width="250" height="250" align="center" >
+	</header>
+</div>
 
-					<div class="user-data">
-						<h2>{{ equipo }}</h2>
-						<div class="activity">
-							
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Banner -->
+<!-- Page Content -->
+<div class="container">
+
 	<div class="row">
-		<div class="col-md-9">
-			<div class="row">
-				<div class="col-sm-12">
-					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" class="active"><a href="#alumnos" aria-controls="alumnos" role="tab" data-toggle="tab">Alumnos</a></li>
-						<li role="presentation"><a href="#blog" aria-controls="blog" role="tab" data-toggle="tab">Blog</a></li>
-					</ul>
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="alumnos">
-							<!-- Lista alumnos -->
-							<h2 class="container h1">Integrantes</h2>
-							<section class="youplay-news container">
-								{% for alumno in alumno_list|dictsortreversed:"promedio" %}
-								<!-- Bloque alumno -->
-								<div class="news-one">
-									<div class="row vertical-gutter">
-										<div class="col-md-4">
-											<a href="{% url "alumno_detail" id_alumno=alumno.id%}" class="angled-img image-popup">
-												<div class="img">
-													<img src="{{alumno.foto|thumbnail_url:'avatar-lg'}}" alt="">
-												</div>
-											</a>
-											
-										</div>
-										<div class="col-md-8">
-											<div class="clearfix">
-												<h3 class="h2 pull-left m-0"><a href="{% url "alumno_detail" id_alumno=alumno.id%}">{{ alumno.nombre }} {{ alumno.apellido }}</a></h3>
-												<span class="date pull-right"><i class="fa fa-calendar"></i> {{ alumno.edad }} </span>
-											</div>
-											<div class="description">
-												<!-- Datos alumno -->
-												<div class="youplay-review-rating">
-													<div class="row">
-														<div class="col-md-4">
-														<div data-max="100"><h3>{{ alumno.promedio|floatformat:2 }}</h3>
-															</div>
-														</div>
-														<div class="col-md-8">
-															<a href="{% url "alumno_detail" id_alumno=alumno.id %}" class="btn read-more pull-left">Ver perfil</a>
-														</div>
-													</div>
-												</div>
-												<!-- /Datos alumno -->
-											</div>
+		{% for alumno in equipo.alumnos.all %}
+			<div class="col-sm-4" align="center">
+				<a href="{{ alumno.get_absolute_url }}">
+					<img class="img-circle img-responsive img-center" src="{{ alumno.foto|thumbnail_url:'avatar-circle' }}" width="200" height="200" alt="">
+					<h2 align="center">{{ alumno.nombre }} {{ alumno.apellido }}</h2>
+					<p>Promedio: {{ alumno.promedio }}</p>
+					<p>Ver Perfil</p>
 
-										</div>
-									</div>
-								</div>
-								<!-- /Bloque alumno -->
-								{% endfor %}
-							</section>
-							<!-- /Lista alumnos -->
-						</div>
-						<!-- Blog -->
-						<div role="tabpanel" class="tab-pane" id="blog">
-							<div class="youplay-timeline">
-								{% for post in equipo.blog %}
-								<div class="youplay-timeline-block">
-									<!-- icon -->
-									<div class="youplay-timeline-icon bg-warning">
-										<i class="fa fa-bell"></i>
-									</div>
-									<!-- /icon -->
-									<!-- content -->
-									<div class="youplay-timeline-content">
-
-										<h3 class="mb-0">{{ post.titulo }}</h3>
-										{{ post.cuerpo }}
-										<br><br>
-										<article>
-											<div class="comment-avatar pull-left">
-												<img src="{{ post.alumno.foto|thumbnail_url:'avatar-sm'}}">
-											</div> 
-											<div class="comment-cont clearfix">
-												<a class="comment-author h4" href="{% url "alumno_detail" id_alumno=post.alumno.id %}">{{ post.alumno.nombre }} {{ post.alumno.apellido }}</a> 
-												<div class="date"><i class="fa fa-calendar"></i>{{ post.fecha }}</div>
-											</div>
-										</article>
-									</div>
-									<!-- content -->
-								</div>
-								{% endfor %}
-							</div>
-						</div>
-						<!-- /Blog -->
-					</div>
-				</div>
+				</a>
 			</div>
-		</div>
-		<div class="col-md-3">
-			
-		</div>
+			{% if forloop.counter|divisibleby:3 %}
+			</div>
+			<div class="dividir-medio"></div>
+			<div class="row">
+			{% endif %}
+		{% endfor %}
 	</div>
-</section>
 {% endblock content %}

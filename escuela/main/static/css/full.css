@@ -1,0 +1,233 @@
+/*
+ * Start Bootstrap - Full (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css?family=Anton');
+
+
+body {
+
+    font-family: 'Poppins', sans-serif;
+    padding-top: 70px;
+}
+
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+ h1, h2, h3, h4 {
+   color: #2478c0;
+   font-family: 'Anton', sans-serif;
+ }
+
+.centrado{
+	display:block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+
+.margen{
+	margin-top: 50px;
+}
+
+
+@media (min-width: 601px) {
+
+  .cover-full {
+  	margin-top: 0px;
+        background-image: url('../img/bk-big.jpg');
+        background-position: center center;
+        background-repeat:  no-repeat;
+        background-attachment: fixed;
+        background-size:  cover;
+        width: 100%;
+        height: 650px;
+  }
+
+  .cover1-header {
+    height: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .cover-full {
+  	background-image: url('../img/bk-mobile.jpg');
+        background-position: center center;
+        background-repeat:  no-repeat;
+        background-attachment: scroll;
+        background-size:  cover;
+        width: 100%;
+        height: 850px;
+  }
+
+  .cover1-header {
+    height: 350px;
+  }
+}
+
+.dividir { 
+  height: 100px; 
+}
+
+.dividir-medio { 
+  height: 50px; 
+}
+
+.meta-header {
+    height: 400px;
+    background: center center no-repeat scroll;
+
+
+    background-repeat: no-repeat;        
+    position: relative;        
+    width: 85%;            
+    height: 400px;       
+    margin-left: auto;      
+    margin-right: auto;   
+}
+
+.cover1-header {
+    background: center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+
+.ea-header {
+    height: 250px;
+    background: url('../img/covers/ea.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+/* Customize the text color and shadow color and to optimize text legibility. */
+
+.tagline {
+    text-shadow: 0 0 10px #000;
+    color: #fff;
+}
+
+.img-center {
+    margin: 0 auto;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+h5 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #1fa850;
+    font-family: 'Poppins', sans-serif;
+ }
+
+ h6{
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #020202;
+    font-family: 'Poppins', sans-serif;
+ }
+
+ .h7{
+    display: block;
+    font-size: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: #020202;
+    font-family: 'Anton', sans-serif;
+ }
+
+ .colorV{
+  color: #1fa850;
+
+ }
+
+.portfolio-item {
+    margin-bottom: 25px;
+}
+
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #fdbe00;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+.credit-card-div  span {
+    padding-top:10px;
+        }
+.credit-card-div img {
+    padding-top:30px;
+}
+.credit-card-div .small-font {
+    font-size:9px;
+}
+.credit-card-div .pad-adjust {
+    padding-top:10px;
+}

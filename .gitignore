@@ -93,3 +93,4 @@ ENV/
 
 escuela/nohup.out
 *.sqlite3
+media/
