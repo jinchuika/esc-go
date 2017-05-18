@@ -312,7 +312,7 @@ class Post(models.Model):
 class PostAlumno(Post):
     alumno = models.ForeignKey('Alumno')
     categoria = models.ForeignKey('PostCategoria', null=True, blank=True)
-    para = models.ForeignKey(Profile)
+    para = models.ForeignKey(Profile, related_name='mensajes')
     visto = models.BooleanField(default=False, blank=True)
 
     def get_absolute_url(self):
