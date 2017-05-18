@@ -8,7 +8,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-escuela/escuela/settings.py
 .Python
 env/
 build/
@@ -54,6 +53,8 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
+dev_settings.py
+test.wgsgi.py
 
 # Flask stuff:
 instance/

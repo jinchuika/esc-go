@@ -1,24 +1,25 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from main.models import *
-from datetime import date
-from main.forms import *
-from django.contrib.auth import authenticate, login, update_session_auth_hash
-from django.views.generic import View, UpdateView, DetailView, CreateView, ListView
-from django.http import HttpResponse
 import json
+from datetime import date
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.views.generic import TemplateView, View, UpdateView, DetailView, CreateView, ListView
+
+from braces.views import LoginRequiredMixin, JSONResponseMixin
+
+from main.models import *
+from main.forms import *
 
 
-def index(request):
-    equipo_list = Equipo.objects.all()
-    jugador_list = Profile.objects.filter(es_jugador=True)
-    siguiente_meta = Meta.objects.filter(fecha__gte=date.today()).first()
-    context = {
-        'equipo_list': equipo_list,
-        'jugador_list': jugador_list,
-        'siguiente_meta': siguiente_meta,
-    }
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'index.html'
 
-    return render(request, 'index.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['equipo_list'] = Equipo.objects.all()
+        context['jugador_list'] = Profile.objects.filter(es_jugador=True)
+        context['siguiente_meta'] = Meta.objects.filter(fecha__gte=date.today()).first()
+        return context
+
 
 def post_add(request, id_alumno):
     alumno = get_object_or_404(Alumno, id=id_alumno)
@@ -137,32 +138,6 @@ def profile_edit(request):
     return render(request, 'user/update.html', {'form': form})
         
 
-class UserLoginView(View):
-    form_class = LoginForm
-    template_name = 'user/login.html'
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-
-    #nuevo registro
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            user = authenticate(username = username, password=password)
-
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('index')
-
-        return render(request, self.template_name, {'form': form})
-
 def password_change(request):
     if request.method == 'POST':
         form = PasswordChangeForm(user=request.user, data=request.POST)
@@ -175,7 +150,7 @@ def password_change(request):
     return render(request, 'user/password_change.html', {'form': form})
 
 
-class AlumnoDetailView(DetailView):
+class AlumnoDetailView(LoginRequiredMixin, DetailView):
     model = Alumno
     template_name = 'alumno/detail.html'
 
@@ -185,7 +160,7 @@ class AlumnoDetailView(DetailView):
         return context
 
 
-class MensajeCreateView(CreateView):
+class MensajeCreateView(LoginRequiredMixin, CreateView):
     model = Mensaje
     form_class = PostMensajeForm
 
@@ -195,7 +170,7 @@ class MensajeCreateView(CreateView):
         return super(MensajeCreateView, self).form_valid(form)
 
 
-class PostAlumnoList(ListView):
+class PostAlumnoList(LoginRequiredMixin, ListView):
     model = PostAlumno
     template_name = 'user/inbox.html'
 
@@ -203,7 +178,7 @@ class PostAlumnoList(ListView):
         return PostAlumno.objects.filter(escrito_por=self.request.user.perfil)
 
 
-class PostAlumnoDetail(DetailView):
+class PostAlumnoDetail(LoginRequiredMixin, DetailView):
     model = PostAlumno
     template_name = 'user/mensaje.html'
 
@@ -214,22 +189,22 @@ class PostAlumnoDetail(DetailView):
         return context
 
 
-class EquipoListView(ListView):
+class EquipoListView(LoginRequiredMixin, ListView):
     model = Equipo
     template_name = 'equipo/list.html'
 
 
-class EquipoDetailView(DetailView):
+class EquipoDetailView(LoginRequiredMixin, DetailView):
     model = Equipo
     template_name = 'equipo/detail.html'
 
 
-class RetoListView(ListView):
+class RetoListView(LoginRequiredMixin, ListView):
     model = Reto
     template_name = 'reto/list.html'
 
 
-class RetoDetailView(DetailView):
+class RetoDetailView(LoginRequiredMixin, DetailView):
     model = Reto
     template_name = 'reto/detail.html'
 
@@ -240,7 +215,7 @@ class RetoDetailView(DetailView):
         return context
 
 
-class StoreView(ListView):
+class StoreView(LoginRequiredMixin, ListView):
     model = Paquete
     template_name = 'store/store.html'
 
@@ -250,7 +225,7 @@ class StoreView(ListView):
         return context
 
 
-class CompraCreateView(CreateView):
+class CompraCreateView(LoginRequiredMixin, CreateView):
     model = Compra
     form_class = PagoForm
 
@@ -262,7 +237,7 @@ class CompraCreateView(CreateView):
         return reverse('store')
 
 
-class ApuestaCreateView(CreateView):
+class ApuestaCreateView(LoginRequiredMixin, CreateView):
     model = Apuesta
     form_class = ApuestaForm
 
@@ -275,6 +250,40 @@ class ApuestaCreateView(CreateView):
         return self.object.nota.reto.get_absolute_url()
 
 
-class PerfilDetailView(DetailView):
+class PerfilDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'user/detail.html'
+
+
+class PerfilUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'user/update.html'
+
+    def get_initial(self):
+        return {
+            'first_name': self.object.user.first_name,
+            'last_name': self.object.user.last_name,
+            'email': self.object.user.email}
+
+    def form_valid(self, form):
+        form.instance.user.first_name = form.cleaned_data['first_name']
+        form.instance.user.last_name = form.cleaned_data['last_name']
+        form.instance.user.email = form.cleaned_data['email']
+        form.instance.user.save()
+        return super(PerfilUpdateView, self).form_valid(form)
+
+
+class MensajeDetailView(JSONResponseMixin, View):
+    model = PostAlumno
+
+    def post(self, request, *args, **kwargs):
+        mensaje_id = request.POST.get('pk')
+        perfil_id = self.kwargs.get('perfil_id')
+        mensaje = PostAlumno.objects.get(id=mensaje_id, para__id=perfil_id)
+        context_dict = {
+            'titulo': mensaje.titulo,
+            'fecha': mensaje.fecha,
+            'cuerpo': mensaje.cuerpo,
+        }
+        return self.render_json_response(context_dict)

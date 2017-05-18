@@ -32,12 +32,14 @@ class ProfileModelForm(UserForm):
         fields = ['foto']
 
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(required=True, label='Nombre')
     last_name = forms.CharField(required=True, label='Apellido')
     email = forms.EmailField()
-    foto = forms.ImageField(required=False, widget=forms.FileInput(), label='Avatar')
-    portada = forms.ImageField(required=False, widget=forms.FileInput(), label='Portada')
+
+    class Meta:
+        model = Profile
+        fields = ('foto',)
 
 
 class LoginForm(AuthenticationForm):

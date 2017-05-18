@@ -2,100 +2,150 @@
 {% load thumbnail %}
 {% load staticfiles %}
 {% block content %}
-<div class="row">
-	<div class="col-sm-4">
-		<img class="img-circle img-responsive img-center" src="{{ profile.foto|thumbnail_url:"avatar-circle" }}" width="200" height="200" alt="">
-		<h4 align="center">{{ profile.user }}</h4>
-		<p align="center">{{ profile.user.get_full_name }}</p>
-	</div>
-	<div class="col-sm-4">
-		<img class="img-circle img-responsive img-center" src="{% static "img/corazon200.jpg" %}" width="200" height="200" alt="">
-	</div>
-	<div class="col-sm-4">
-		<a href="#">
-			<img class="img-circle img-responsive img-center" src="img/ninos/a.jpg" width="200" height="200" alt="">
-		</a>
-		<a href="perfil_nene.html"><h4 align="center">Pepita Juarez</h4></a>
-		<p align="center">Último Apoyo realizado: N Tokens</p>
-	</div>
-</div>
-<div class="dividir">
-	<a name="apoyo"></a>
-</div>
 <div class="container">
-	<ul class="nav nav-tabs">
-		<li class="active"><a data-toggle="tab" href="#home">Apoyos Realizados</a></li>
-		<li><a data-toggle="tab" href="#menu1">Historial de Compras</a></li>
-	</ul>
-	<div class="tab-content">
-		<div id="home" class="tab-pane fade in active">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1  align="center">Apoyos Realizados</h1>
-					</div>
-				</div>
-			</div>
-			<div>
-				<table id="tabla1" class="display" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Tokens Asignados</th>
-							<th>Foto</th>
-							<th>Alumno</th>
-							<th>Reto</th>
-							<th>Resultado</th>
-							<th>p/Token</th>
-							<th>Puntos Acumulados</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for apuesta in profile.apuestas.all %}
-						<tr>
-							<td>{{ apuesta.fecha|date:"Y-m-d" }}</td>
-							<td>{{ apuesta.tokens }}</td>
-							<td><img class="img-circle img-responsive" src="{{ apuesta.nota.alumno.foto|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt=""></td>
-							<td>{{ apuesta.nota.alumno.nombre }} {{ apuesta.nota.alumno.apellido }}</td>
-							<td>{{ apuesta.nota.reto.materia }}</td>
-							<td>{{ apuesta.nota.get_nota }}</td>
-							<td>{{ apuesta.nota.get_puntos_token }}</td>
-							<td>{{ apuesta.get_punteo }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+	<div class="row">
+		<div class="col-sm-4">
+			{% if profile.foto %}
+			<img class="img-circle img-responsive img-center" src="{{ profile.foto|thumbnail_url:"avatar-circle" }}" width="200" height="200" alt="">
+			{% else %}
+			<img class="img-circle img-responsive img-center" src="{% static "img/profile.jpg" %}" width="200" height="200" alt="">
+			{% endif %}
+			<h4 align="center">{{ profile.user }}</h4>
+			<p align="center">{{ profile.user.get_full_name }}</p>
 		</div>
-		<div id="menu1" class="tab-pane fade">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1  align="center">Historial de Compras</h1>
+		<div class="col-sm-4">
+			<img class="img-circle img-responsive img-center" src="{% static "img/corazon200.jpg" %}" width="200" height="200" alt="">
+		</div>
+		<div class="col-sm-4">
+			{% if profile.apuestas.count > 0 %}
+			<a href="{{ profile.apuestas.last.nota.alumno.get_absolute_url }}">
+				<img class="img-circle img-responsive img-center" src="{{ profile.apuestas.last.nota.alumno.foto|thumbnail_url:"avatar-circle" }}" width="200" height="200" alt="">
+			</a>
+			<a href="perfil_nene.html"><h4 align="center">{{ profile.apuestas.last.nota.alumno }}</h4></a>
+			<p align="center">Último Apoyo realizado: {{ profile.apuestas.last.tokens }} Tokens</p>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="dividir">
+		<a name="apoyo"></a>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#home">Apoyos Realizados</a></li>
+				<li><a data-toggle="tab" href="#menu1">Historial de Compras</a></li>
+				<li><a data-toggle="tab" href="#menu2"><span class="glyphicon glyphicon-envelope"></span> Mensajes</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div id="home" class="tab-pane fade in active">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1  align="center">Apoyos Realizados</h1>
+							</div>
+						</div>
+					</div>
+					<div>
+						<table id="tabla1" class="display" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Fecha</th>
+									<th>Tokens Asignados</th>
+									<th>Foto</th>
+									<th>Alumno</th>
+									<th>Reto</th>
+									<th>Resultado</th>
+									<th>p/Token</th>
+									<th>Puntos Acumulados</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for apuesta in profile.apuestas.all %}
+								<tr>
+									<td>{{ apuesta.fecha|date:"Y-m-d" }}</td>
+									<td>{{ apuesta.tokens }}</td>
+									<td><img class="img-circle img-responsive" src="{{ apuesta.nota.alumno.foto|thumbnail_url:"avatar-sm" }}" width="50" height="50" alt=""></td>
+									<td>{{ apuesta.nota.alumno.nombre }} {{ apuesta.nota.alumno.apellido }}</td>
+									<td>{{ apuesta.nota.reto.materia }}</td>
+									<td>{{ apuesta.nota.get_nota }}</td>
+									<td>{{ apuesta.nota.get_puntos_token }}</td>
+									<td>{{ apuesta.get_punteo }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div id="menu1" class="tab-pane fade">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1  align="center">Historial de Compras</h1>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<table id="tabla2" class="display" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>Fecha</th>
+											<th>Paquete</th>
+											<th>Tokens</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for compra in profile.compras.all %}
+										<tr>
+											<td>{{ compra.fecha|date:"Y-m-d" }}</td>
+											<td>{{ compra.paquete }}</td>
+											<td>{{ compra.paquete.tokens }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="menu2" class="tab-pane fade">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1 align="center">Mensajes</h1>
+							</div>
+						</div>
+						<div class="row">
+							<div class="conversation-wrap col-lg-3">
+								{% for mensaje in profile.mensajes.all %}
+								<div class="media conversation" id="menu_2">
+									<a class="pull-left message-link" href="#" data-mensaje="{{ mensaje.id }}">
+										{% csrf_token %}
+										<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 50px; height: 50px;" src="{{ mensaje.alumno.foto|thumbnail_url:"avatar-circle" }}">
+									</a>
+									<div class="media-body">
+										<h5 class="media-heading">{{ mensaje.alumno }}</h5>
+										<small>{{ mensaje.alumno.equipo }}</small>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="message-wrap col-lg-8" id="msg-wrap">
+								<div class="media msg">
+									<div class="media-body">
+										<small class="pull-right time"><i class="fa fa-clock-o"></i> <span id="message-date"></span></small>
+										<h5 class="media-heading" id="message-title"></h5>
+										<small class="col-lg-10" id="message-body">
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div>
-				<table id="tabla2" class="display" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Paquete</th>
-							<th>Tokens</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for compra in profile.compras.all %}
-						<tr>
-							<td>{{ compra.fecha|date:"Y-m-d" }}</td>
-							<td>{{ compra.paquete }}</td>
-							<td>{{ compra.paquete.tokens }}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-
 		</div>
 	</div>
 </div>
@@ -105,9 +155,28 @@
 <script src="{% static 'js/chart.min.js' %}"></script>
 <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script>
-$(document).ready(function () {
-	$('#tabla1').DataTable();
-	$('#tabla2').DataTable();
-} );
+	function get_mensaje(id) {
+		
+	}
+	$(document).ready(function () {
+		$('#tabla1').DataTable();
+		$('#tabla2').DataTable();
+		$('.message-link').on('click', function () {
+			$.ajax({
+				url: '{% url 'mensaje_detail' perfil_id=request.user.perfil.id %}',
+				data: {
+					csrfmiddlewaretoken: $(this).find('input').val(),
+					pk: $(this).data('mensaje')
+				},
+				method: 'post',
+				dataType: 'json',
+				success: function (response) {
+					$('#message-title').html(response.titulo);
+					$('#message-body').html(response.cuerpo);
+					$('#message-date').html(response.fecha);
+				}
+			});
+		})
+	});
 </script>
 {% endblock extra_js %}

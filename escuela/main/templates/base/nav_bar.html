@@ -24,9 +24,9 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ request.user.perfil.foto|thumbnail_url:"icon" }}" width="15" height="15" class="img-circle"> {{ user.get_full_name }} <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="{% url 'perfil_detail' pk=request.user.perfil.id %}"><span class="glyphicon glyphicon-heart"></span> Ver mi Perfil</a></li>
-							<li><a href="perfil.html"><span class="glyphicon glyphicon-pencil"></span> Editar mi Perfil</a></li>
+							<li><a href="{% url 'perfil_update' pk=request.user.perfil.id %}"><span class="glyphicon glyphicon-pencil"></span> Editar mi Perfil</a></li>
 							<li class="divider"></li>
-							<li><a href=""><span class="glyphicon glyphicon glyphicon-remove-sign"></span> Cerrar Sesión</a></li>
+							<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon glyphicon-remove-sign"></span> Cerrar Sesión</a></li>
 						</ul>
 					</li>
 				</ul>
