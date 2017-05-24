@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.views.generic import TemplateView, View, UpdateView, DetailView, CreateView, ListView
 
-from braces.views import LoginRequiredMixin, JSONResponseMixin
+from braces.views import LoginRequiredMixin, JSONResponseMixin, StaffuserRequiredMixin
 
 from main.models import *
 from main.forms import *
