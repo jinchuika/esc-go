@@ -34,17 +34,17 @@
 					</thead>
 					<tbody>
 						{% for nota in reto.notas.all|dictsortreversed:"nota" %}
-							<tr>
-								<th scope="row">{{ forloop.counter }}</th>
-								<td>
-									<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
-								</td>
-								<td>{{ nota.alumno }}</td>
-								<td>
-									<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
-								</td>
-								<td>{{ nota.nota }}</td>
-							</tr>
+						<tr>
+							<th scope="row">{{ forloop.counter }}</th>
+							<td>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
+							</td>
+							<td>{{ nota.alumno }}</td>
+							<td>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
+							</td>
+							<td>{{ nota.nota }}</td>
+						</tr>
 						{% endfor %}
 					</tbody>
 				</table>
@@ -72,17 +72,17 @@
 					</thead>
 					<tbody>
 						{% for nota in reto.notas.all %}
-							<tr>
-								<th scope="row"> - </th>
-								<td>
-									<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
-								</td>
-								<td><a href="{{ nota.alumno.get_absolute_url }}">{{ nota.alumno }}</a></td>
-								<td>
-									<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
-								</td>
-								<td> - -</td>
-							</tr>
+						<tr>
+							<th scope="row"> - </th>
+							<td>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.foto|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
+							</td>
+							<td><a href="{{ nota.alumno.get_absolute_url }}">{{ nota.alumno }}</a></td>
+							<td>
+								<img class="img-circle img-responsive" src="{{ nota.alumno.equipo.logo|thumbnail_url:'avatar-sm' }}" width="25" height="25" alt="">
+							</td>
+							<td> - -</td>
+						</tr>
 						{% endfor %}
 					</tbody>
 				</table>
@@ -92,5 +92,4 @@
 		{% endif %}
 	{% endfor %}
 
-	
 {% endblock content %}
