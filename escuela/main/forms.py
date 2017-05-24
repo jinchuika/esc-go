@@ -223,3 +223,15 @@ class PagoForm(forms.ModelForm):
                     err_text += err['issue'] + " "
             raise forms.ValidationError("Error during payment due to invalid credit card. Please check your credentials." + err_text)
         print(cleaned_data)
+
+
+class AlumnoForm(forms.ModelForm):
+    class Meta:
+        model = Alumno
+        fields = '__all__'
+
+
+class EquipoForm(forms.ModelForm):
+    class Meta:
+        model = Equipo
+        fields = '__all__'

@@ -9,12 +9,16 @@ urlpatterns = [
 
     url(r'^equipo/list/$', views.EquipoListView.as_view(), name='equipo_list'),
     url(r'^equipo/(?P<pk>[0-9]+)/$', views.EquipoDetailView.as_view(), name='equipo_detail'),
+    url(r'^equipo/add/$', views.EquipoCreateView.as_view(), name='equipo_add'),
 
     url(r'^alumno/(?P<pk>[0-9]+)/$', views.AlumnoDetailView.as_view(), name='alumno_detail_'),
     url(r'^alumno/(?P<pk>[0-9]+)/mensaje$', views.MensajeCreateView.as_view(), name='mensaje_add_'),
-    
-    url(r'^reto/list$', views.RetoListView.as_view(), name='reto_list'),
+    url(r'^alumno/add/$', views.AlumnoCreateView.as_view(), name='alumno_add'),
+
+    url(r'^reto/list/$', views.RetoListView.as_view(), name='reto_list'),
+    url(r'^reto/add/$', views.RetoCreateView.as_view(), name='reto_add'),
     url(r'^reto/(?P<pk>[0-9]+)/$', views.RetoDetailView.as_view(), name='reto_detail'),
+    url(r'^reto/materia/$', views.MateriaCreateView.as_view(), name='materia_add'),
 
     url(r'^n/add/$', views.NotaFormView.as_view(), name='nota_add'),
 
