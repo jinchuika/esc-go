@@ -252,6 +252,25 @@ class PerfilUpdateView(LoginRequiredMixin, UpdateView):
         return super(PerfilUpdateView, self).form_valid(form)
 
 
+class PerfilCrearView(LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+    model = Profile
+    template_name = 'user/add.html'
+    form_class = PerfilCrearForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        user = User.objects.create_user(
+            username=form.cleaned_data['username'],
+            email=form.cleaned_data['email'],
+            password=form.cleaned_data['password'])
+        self.object.user = user
+        self.object.user.first_name = form.cleaned_data['first_name']
+        self.object.user.last_name = form.cleaned_data['last_name']
+        self.object.user.save()
+        self.object.save()
+        return super(PerfilCrearView, self).form_valid(form)
+
+
 class MensajeDetailView(JSONResponseMixin, View):
     model = PostAlumno
 

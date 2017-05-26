@@ -42,6 +42,18 @@ class ProfileForm(forms.ModelForm):
         fields = ('foto',)
 
 
+class PerfilCrearForm(forms.ModelForm):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    first_name = forms.CharField(label='Nombre', max_length=30)
+    last_name = forms.CharField(label='Apellido', max_length=30)
+    email = forms.EmailField(label='Correo electrónico', max_length=150)
+
+    class Meta:
+        model = Profile
+        fields = ['es_jugador', ]
+
+
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)

@@ -28,6 +28,7 @@ urlpatterns = [
 
     url(r'^perfil/(?P<pk>[0-9]+)/$', views.PerfilDetailView.as_view(), name='perfil_detail'),
     url(r'^perfil/(?P<pk>[0-9]+)/edit$', views.PerfilUpdateView.as_view(), name='perfil_update'),
+    url(r'^perfil/add/$', views.PerfilCrearView.as_view(), name='perfil_add'),
 
     url(r'^mensaje/(?P<perfil_id>[0-9]+)/$', views.MensajeDetailView.as_view(), name='mensaje_detail'),
 
